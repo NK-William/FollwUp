@@ -1,0 +1,10 @@
+export const primary = '#3E5AA9';
+export const primaryLight = '#94A3CF';
+export const accent = '#0ADD19';
+export const grayLight = '#D9D9D9';
+export const gray = '#717171';
+export const lightText = '#FFFFFF';
+export const darkText = '#202020';
+export const whiteChatBackground = '#FFFFFF';
+export const primaryButtonText = '#FFFFFF';
+export const replierChatBackground = '#C1CBE8';
