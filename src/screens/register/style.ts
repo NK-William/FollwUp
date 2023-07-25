@@ -16,12 +16,16 @@ const getStyling = () => {
       justifyContent: 'flex-end',
       paddingHorizontal: 35,
     },
-    image: {width: 200, height: 200},
+
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 35,
+    },
+    image: {width: 90, height: 90},
     titleContainer: {
-      width: '100%',
       paddingHorizontal: 22,
-      marginTop: 30,
-      marginBottom: 16,
+      flex: 1,
     },
     title: {fontSize: 35, fontWeight: '600', color: lightText},
     line: {width: 160, height: 1, backgroundColor: primaryLight, marginTop: 4},
@@ -30,11 +34,8 @@ const getStyling = () => {
       justifyContent: 'space-between',
     },
     buttonTextContainer: {
-      marginTop: 30,
+      marginTop: 50,
       alignItems: 'center',
-    },
-    forgotPasswordText: {
-      marginTop: 6,
     },
     footerContainer: {
       alignItems: 'center',

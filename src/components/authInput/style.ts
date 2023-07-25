@@ -18,6 +18,7 @@ const getStyling = ({containerStyle, focused}: IStyleProps) => {
       },
       containerStyle,
     ]),
+    icon: {alignSelf: 'flex-end', marginBottom: focused ? 4 : 10},
     textInput: {
       justifyContent: 'space-between',
       flex: 1,
@@ -26,12 +27,18 @@ const getStyling = ({containerStyle, focused}: IStyleProps) => {
     text: {
       color: lightText,
       fontSize: 13,
+      marginTop: focused ? 0 : 20,
     },
     input: {
       padding: 0,
       fontSize: 18,
       color: lightText,
       fontWeight: 'bold',
+      flex: 1,
+    },
+    inputContainer: {
+      flexDirection: 'row',
+      display: focused ? 'flex' : 'none',
     },
   });
 };
