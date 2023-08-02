@@ -1,5 +1,8 @@
 export enum authFocusedEntry {
-  email = 'email',
-  password = 'password',
-  none = 'none',
+  FirstName,
+  LastName,
+  PhoneNumber,
+  Email,
+  Password,
+  None,
 }

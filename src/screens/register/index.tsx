@@ -6,14 +6,20 @@ import {authFocusedEntry} from '../../utils/enums';
 
 const Register = () => {
   const [focused, setFocused] = useState<authFocusedEntry>(
-    authFocusedEntry.none,
+    authFocusedEntry.None,
   );
   const styles = getStyling();
 
   const handleFocusedEntry = (entry: authFocusedEntry) => {
-    if (entry === authFocusedEntry.email || entry === authFocusedEntry.password)
+    if (
+      entry === authFocusedEntry.FirstName ||
+      entry === authFocusedEntry.LastName ||
+      entry === authFocusedEntry.PhoneNumber ||
+      entry === authFocusedEntry.Email ||
+      entry === authFocusedEntry.Password
+    )
       setFocused(entry);
-    else setFocused(authFocusedEntry.none);
+    else setFocused(authFocusedEntry.None);
   };
 
   return (
@@ -29,54 +35,56 @@ const Register = () => {
             style={styles.image}
           />
         </View>
-        <AuthInput
-          title="EMAIL"
-          entryName={authFocusedEntry.email}
-          setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.email === focused}
-          onChangeText={() => {}}
-          iconName="envelope-o"
-          containerStyle={styles.emailAuthInput}
-        />
-        <AuthInput
-          title="PASSWORD"
-          entryName={authFocusedEntry.password}
-          secureTextEntry
-          setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.password === focused}
-          onChangeText={() => {}}
-          iconName="lock"
-          containerStyle={styles.passwordAuthInput}
-        />
-        <AuthInput
-          title="EMAIL"
-          entryName={authFocusedEntry.email}
-          setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.email === focused}
-          onChangeText={() => {}}
-          iconName="envelope-o"
-          containerStyle={styles.emailAuthInput}
-        />
-        <AuthInput
-          title="PASSWORD"
-          entryName={authFocusedEntry.password}
-          secureTextEntry
-          setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.password === focused}
-          onChangeText={() => {}}
-          iconName="lock"
-          containerStyle={styles.passwordAuthInput}
-        />
-        <AuthInput
-          title="PASSWORD"
-          entryName={authFocusedEntry.password}
-          secureTextEntry
-          setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.password === focused}
-          onChangeText={() => {}}
-          iconName="lock"
-          containerStyle={styles.passwordAuthInput}
-        />
+        <ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
+          <AuthInput
+            title="FIRST NAME"
+            entryName={authFocusedEntry.FirstName}
+            setFocused={handleFocusedEntry}
+            focused={authFocusedEntry.FirstName === focused}
+            onChangeText={() => {}}
+            iconName="envelope-o"
+            containerStyle={styles.authInput}
+          />
+          <AuthInput
+            title="LAST NAME"
+            entryName={authFocusedEntry.LastName}
+            setFocused={handleFocusedEntry}
+            focused={authFocusedEntry.LastName === focused}
+            onChangeText={() => {}}
+            iconName="lock"
+            containerStyle={styles.authInput}
+          />
+          <AuthInput
+            title="PHONE NUMBER"
+            entryName={authFocusedEntry.PhoneNumber}
+            setFocused={handleFocusedEntry}
+            focused={authFocusedEntry.PhoneNumber === focused}
+            onChangeText={() => {}}
+            iconName="envelope-o"
+            containerStyle={styles.authInput}
+          />
+          <AuthInput
+            title="EMAIL"
+            entryName={authFocusedEntry.Email}
+            setFocused={handleFocusedEntry}
+            focused={authFocusedEntry.Email === focused}
+            onChangeText={() => {}}
+            iconName="lock"
+            containerStyle={styles.authInput}
+          />
+          <AuthInput
+            title="PASSWORD"
+            entryName={authFocusedEntry.Password}
+            secureTextEntry
+            setFocused={handleFocusedEntry}
+            focused={authFocusedEntry.Password === focused}
+            onChangeText={() => {}}
+            iconName="lock"
+            containerStyle={styles.bottomAuthInput}
+          />
+        </ScrollView>
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>

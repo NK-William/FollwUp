@@ -6,14 +6,14 @@ import {authFocusedEntry} from '../../utils/enums';
 
 const Login = () => {
   const [focused, setFocused] = useState<authFocusedEntry>(
-    authFocusedEntry.none,
+    authFocusedEntry.None,
   );
   const styles = getStyling();
 
   const handleFocusedEntry = (entry: authFocusedEntry) => {
-    if (entry === authFocusedEntry.email || entry === authFocusedEntry.password)
+    if (entry === authFocusedEntry.Email || entry === authFocusedEntry.Password)
       setFocused(entry);
-    else setFocused(authFocusedEntry.none);
+    else setFocused(authFocusedEntry.None);
   };
 
   return (
@@ -29,19 +29,19 @@ const Login = () => {
         </View>
         <AuthInput
           title="EMAIL"
-          entryName={authFocusedEntry.email}
+          entryName={authFocusedEntry.Email}
           setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.email === focused}
+          focused={authFocusedEntry.Email === focused}
           onChangeText={() => {}}
           iconName="envelope-o"
           containerStyle={styles.emailAuthInput}
         />
         <AuthInput
           title="PASSWORD"
-          entryName={authFocusedEntry.password}
+          entryName={authFocusedEntry.Password}
           secureTextEntry
           setFocused={handleFocusedEntry}
-          focused={authFocusedEntry.password === focused}
+          focused={authFocusedEntry.Password === focused}
           onChangeText={() => {}}
           iconName="lock"
           containerStyle={styles.passwordAuthInput}

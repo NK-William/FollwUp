@@ -33,6 +33,9 @@ const getStyling = () => {
       flex: 1.1,
       justifyContent: 'space-between',
     },
+    scrollView: {
+      width: '100%',
+    },
     buttonTextContainer: {
       marginTop: 50,
       alignItems: 'center',
@@ -46,10 +49,10 @@ const getStyling = () => {
     footerText: {
       color: gray,
     },
-    emailAuthInput: {
+    authInput: {
       marginBottom: 8,
     },
-    passwordAuthInput: {
+    bottomAuthInput: {
       marginBottom: 30,
     },
   });
