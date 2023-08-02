@@ -1,20 +1,13 @@
 import {View, Text, Image} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import getStyling from './style';
 import {PositiveButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
+import {useLogin} from './util';
 
 const Login = () => {
-  const [focused, setFocused] = useState<authFocusedEntry>(
-    authFocusedEntry.None,
-  );
   const styles = getStyling();
-
-  const handleFocusedEntry = (entry: authFocusedEntry) => {
-    if (entry === authFocusedEntry.Email || entry === authFocusedEntry.Password)
-      setFocused(entry);
-    else setFocused(authFocusedEntry.None);
-  };
+  const {focused, handleFocusedEntry} = useLogin();
 
   return (
     <View style={styles.container}>

@@ -3,24 +3,11 @@ import React, {useState} from 'react';
 import getStyling from './style';
 import {PositiveButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
+import {useRegister} from './util';
 
 const Register = () => {
-  const [focused, setFocused] = useState<authFocusedEntry>(
-    authFocusedEntry.None,
-  );
   const styles = getStyling();
-
-  const handleFocusedEntry = (entry: authFocusedEntry) => {
-    if (
-      entry === authFocusedEntry.FirstName ||
-      entry === authFocusedEntry.LastName ||
-      entry === authFocusedEntry.PhoneNumber ||
-      entry === authFocusedEntry.Email ||
-      entry === authFocusedEntry.Password
-    )
-      setFocused(entry);
-    else setFocused(authFocusedEntry.None);
-  };
+  const {focused, handleFocusedEntry} = useRegister();
 
   return (
     <View style={styles.container}>
