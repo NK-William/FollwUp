@@ -10,13 +10,12 @@ const getStyling = () => {
     formContainer: {
       flex: 3,
       backgroundColor: primary,
-      borderBottomLeftRadius: 60,
+      borderBottomLeftRadius: 50,
       borderBottomRightRadius: 50,
       alignItems: 'center',
       justifyContent: 'flex-end',
       paddingHorizontal: 35,
     },
-
     header: {
       flexDirection: 'row',
       alignItems: 'center',

@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {primary, primaryButtonText} from '../../constants/colors';
-import type {PositiveButtonProps} from './interface';
+import type {IPositiveButtonProps} from './interface';
 import {flatten} from '../../utils';
 
-const getStyling = (props: PositiveButtonProps) => {
+const getStyling = (props: IPositiveButtonProps) => {
   return StyleSheet.create({
     container: flatten([
       {

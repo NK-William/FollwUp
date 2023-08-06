@@ -1,7 +1,5 @@
 import type {StyleProp, ViewStyle} from 'react-native';
 
-export interface IPositiveButtonProps {
-  text?: string;
-  onPress?: () => void;
+export interface IProgressBarProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
