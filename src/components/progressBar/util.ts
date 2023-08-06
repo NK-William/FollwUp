@@ -1,52 +1,18 @@
 import {useState} from 'react';
 import {LayoutChangeEvent} from 'react-native';
+import {IMutatedIProgressTasks, IProgressBarProps} from './interface';
 
-export interface IMutatedTasks {
-  name: string;
-  color: string;
-  progress: number;
-  Width?: number;
-}
-
-const tasks = [
-  {
-    name: 'engine rebuild',
-    color: 'green',
-    progress: 100,
-  },
-  {
-    name: 'name2',
-    color: 'orange',
-    progress: 90,
-  },
-  {
-    name: 'name3',
-    color: 'purple',
-    progress: 83,
-  },
-  {
-    name: 'name4',
-    color: 'red',
-    progress: 50,
-  },
-  {
-    name: 'name5',
-    color: 'blue',
-    progress: 21,
-  },
-];
-
-export const useProgressBar = () => {
+export const useProgressBar = (props: IProgressBarProps) => {
   const [viewWidth, setViewWidth] = useState(0);
-
-  let mutatedTasks: IMutatedTasks[] = [];
+  const {progressTasks} = props;
+  let mutatedTasks: IMutatedIProgressTasks[] = [];
 
   if (viewWidth) {
-    const taskWidthSpace = viewWidth / tasks.length;
+    const taskWidthSpace = viewWidth / progressTasks.length;
 
-    mutatedTasks = tasks.map(task => ({
-      ...task,
-      Width: (task.progress / 100) * taskWidthSpace,
+    mutatedTasks = progressTasks.map(progressTask => ({
+      ...progressTask,
+      width: (progressTask.progressToHundred / 100) * taskWidthSpace,
     }));
   }
 

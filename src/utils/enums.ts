@@ -6,3 +6,16 @@ export enum authFocusedEntry {
   Password,
   None,
 }
+
+export enum taskStatus {
+  Rejected,
+  Accepted,
+  Completed,
+  Pending,
+}
+
+export enum taskPhaseStatus {
+  Pending,
+  InProgress,
+  Completed,
+}
