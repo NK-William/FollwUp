@@ -7,7 +7,7 @@ const getStyling = (props: any) => {
     container: flatten([
       {
         flexDirection: 'row',
-        marginHorizontal: 26,
+        marginHorizontal: 14,
         alignItems: 'center',
       },
       props.containerStyle,

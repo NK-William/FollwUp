@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {primary, gray, lightText, primaryLight} from '../../constants/colors';
+import {primary, accent, lightText, primaryLight} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -8,6 +8,7 @@ const getStyling = () => {
       flex: 1,
     },
     statsContainer: {
+      paddingHorizontal: 12,
       flex: 1,
       backgroundColor: primary,
       borderBottomLeftRadius: 50,
@@ -15,7 +16,6 @@ const getStyling = () => {
     },
     profilePlaceholderContainer: {
       height: 50,
-      marginHorizontal: 8,
       marginTop: 8,
       alignItems: 'flex-end',
       justifyContent: 'center',
@@ -26,7 +26,6 @@ const getStyling = () => {
     },
     progressContainer: {
       marginTop: 23,
-      marginHorizontal: 12,
     },
     progressText: {
       alignSelf: 'center',
@@ -46,7 +45,12 @@ const getStyling = () => {
       marginTop: 8,
     },
     tasksContainer: {
+      paddingHorizontal: 12,
       flex: 1,
+    },
+    tabContainer: {
+      marginTop: 20,
+      flexDirection: 'row',
     },
   });
 };

@@ -2,7 +2,7 @@ import {View, Text, Image, FlatList, ColorValue} from 'react-native';
 import React from 'react';
 import getStyling from './style';
 import {useHome} from './util';
-import {ProgressBar, ProgressTaskName} from '../../components';
+import {ProgressBar, ProgressTaskName, TaskTabOption} from '../../components';
 import {fakeTasks} from '../../fakeJSON';
 
 const Home = () => {
@@ -39,7 +39,10 @@ const Home = () => {
         </View>
       </View>
       <View style={styles.tasksContainer}>
-        <Text>Home</Text>
+        <View style={styles.tabContainer}>
+          <TaskTabOption />
+          <TaskTabOption />
+        </View>
       </View>
     </View>
   );
