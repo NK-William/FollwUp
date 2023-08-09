@@ -1,12 +1,21 @@
-import {View, Text, Image, FlatList, ColorValue} from 'react-native';
-import React from 'react';
+import {View, Text, Image, FlatList} from 'react-native';
+import React, {useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
-import {ProgressBar, ProgressTaskName, TaskTabOption} from '../../components';
+import {
+  ProgressBar,
+  ProgressTaskName,
+  TaskTabOption,
+  TaskListItem,
+} from '../../components';
 import {fakeTasks} from '../../fakeJSON';
+import {TaskTabOptionEnum} from '../../utils/enums';
 
 const Home = () => {
   const styles = getStyling();
+  const [selectedTabOption, setSelectedTabOption] = useState(
+    TaskTabOptionEnum.Track,
+  );
   const {progressBarTasks} = useHome();
 
   return (
@@ -40,9 +49,20 @@ const Home = () => {
       </View>
       <View style={styles.tasksContainer}>
         <View style={styles.tabContainer}>
-          <TaskTabOption />
-          <TaskTabOption />
+          <TaskTabOption
+            text="Track"
+            isSelected={selectedTabOption === TaskTabOptionEnum.Track}
+            onPress={setSelectedTabOption}
+            option={TaskTabOptionEnum.Track}
+          />
+          <TaskTabOption
+            text="Edit"
+            isSelected={selectedTabOption === TaskTabOptionEnum.Edit}
+            onPress={setSelectedTabOption}
+            option={TaskTabOptionEnum.Edit}
+          />
         </View>
+        <TaskListItem />
       </View>
     </View>
   );

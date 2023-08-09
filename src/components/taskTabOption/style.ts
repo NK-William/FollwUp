@@ -4,16 +4,26 @@ import {ITaskTabOptionProps} from './interface';
 import {flatten} from '../../utils';
 
 const getStyling = (props: ITaskTabOptionProps) => {
+  const {isSelected} = props;
   return StyleSheet.create({
     container: flatten([
       {
         flex: 1,
         alignItems: 'center',
+        justifyContent: 'center',
       },
       props.containerStyle,
     ]),
-    text: {color: '#B4B4B4', fontWeight: 'bold', fontSize: 16},
-    line: {height: 1.2, width: '100%', backgroundColor: accent},
+    text: {
+      color: isSelected ? accent : '#B4B4B4',
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+    line: {
+      height: isSelected ? 2.5 : 1,
+      width: '100%',
+      backgroundColor: isSelected ? accent : '#B4B4B4',
+    },
   });
 };
 

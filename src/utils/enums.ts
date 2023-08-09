@@ -19,3 +19,8 @@ export enum taskPhaseStatus {
   InProgress,
   Completed,
 }
+
+export enum TaskTabOptionEnum {
+  Edit,
+  Track,
+}
