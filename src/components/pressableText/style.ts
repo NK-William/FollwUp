@@ -8,7 +8,7 @@ const getStyling = (props: IPressableTextProps) => {
     text: flatten([
       {
         fontWeight: 'bold',
-        color: primary,
+        color: props.color ?? primary,
         fontSize: 15,
       },
       props.textStyle,

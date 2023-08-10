@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {primary, accent, lightText, primaryLight} from '../../constants/colors';
+import {lightText, primary} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -52,6 +52,10 @@ const getStyling = () => {
       marginTop: 20,
       flexDirection: 'row',
     },
+    taskListContainer: {
+      marginTop: 16,
+    },
+    taskListItemContainer: {marginBottom: 12},
   });
 };
 

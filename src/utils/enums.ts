@@ -1,3 +1,5 @@
+import {gray} from '../constants/colors';
+
 export enum authFocusedEntry {
   FirstName,
   LastName,
@@ -23,4 +25,11 @@ export enum taskPhaseStatus {
 export enum TaskTabOptionEnum {
   Edit,
   Track,
+}
+
+export enum TaskStatusColor {
+  Rejected = '#DE4343',
+  Accepted = '#2D3DCD',
+  Completed = '#2C8C2C',
+  Pending = gray,
 }

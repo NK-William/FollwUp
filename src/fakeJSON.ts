@@ -64,7 +64,7 @@ export const fakeTasks: ITask[] = [
       },
     ],
     reference: '123wffdsw',
-    status: taskStatus.Accepted,
+    status: taskStatus.Rejected,
     id: '1',
   },
   {
@@ -81,12 +81,10 @@ export const fakeTasks: ITask[] = [
     eta: new Date(),
     phases: [],
     reference: '123wffdsw',
-    status: taskStatus.Accepted,
+    status: taskStatus.Pending,
     id: '2',
   },
   {
-    clientFirstName: 'Gift',
-    clientLastName: 'Thubane',
     name: 'Engine rebuild',
     color: 'purple',
     progressToHundred: 83,
@@ -98,7 +96,7 @@ export const fakeTasks: ITask[] = [
     eta: new Date(),
     phases: [],
     reference: '123wffdsw',
-    status: taskStatus.Accepted,
+    status: taskStatus.Pending,
     id: '3',
   },
   {
@@ -132,7 +130,7 @@ export const fakeTasks: ITask[] = [
     eta: new Date(),
     phases: [],
     reference: '123wffdsw',
-    status: taskStatus.Accepted,
+    status: taskStatus.Completed,
     id: '5',
   },
   {
@@ -166,7 +164,7 @@ export const fakeTasks: ITask[] = [
     eta: new Date(),
     phases: [],
     reference: '123wffdsw',
-    status: taskStatus.Accepted,
+    status: taskStatus.Completed,
     id: '7',
   },
 ];

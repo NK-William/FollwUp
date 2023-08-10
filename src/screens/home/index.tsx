@@ -62,7 +62,18 @@ const Home = () => {
             option={TaskTabOptionEnum.Edit}
           />
         </View>
-        <TaskListItem />
+        <View style={styles.taskListContainer}>
+          <FlatList
+            data={fakeTasks}
+            renderItem={task => (
+              <TaskListItem
+                {...task.item}
+                containerStyle={styles.taskListItemContainer}
+              />
+            )}
+            keyExtractor={task => task.id}
+          />
+        </View>
       </View>
     </View>
   );
