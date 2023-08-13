@@ -29,6 +29,7 @@ const getStyling = (props: any) => {
     nameCapsLetters: {
       fontSize: 10,
       color: lightText,
+      fontWeight: 'bold',
     },
     taskName: {color: lightText, marginHorizontal: 8, fontSize: 16},
   });
