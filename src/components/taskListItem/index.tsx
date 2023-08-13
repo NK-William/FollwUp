@@ -7,13 +7,24 @@ import {PressableText} from '../';
 import {accent} from '../../constants/colors';
 
 const TaskListItem: FC<ITaskListItemProps> = props => {
-  const {statusViewColor, statusText, names, inviteLinkVisible} =
-    useTaskListItem(props);
-  const styles = getStyling(props, statusViewColor, inviteLinkVisible);
+  const {
+    statusViewColor,
+    statusText,
+    names,
+    inviteLinkVisible,
+    handleLayout,
+    progressWidth,
+  } = useTaskListItem(props);
+  const styles = getStyling(
+    props,
+    statusViewColor,
+    inviteLinkVisible,
+    progressWidth,
+  );
   return (
     <View style={styles.container}>
       <View style={styles.taskInfoContainer}>
-        <View style={styles.taskInfo}>
+        <View>
           <Text style={styles.taskName}>{props.name}</Text>
           <Text style={styles.names}>{names}</Text>
         </View>
@@ -31,8 +42,11 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
           )}
         </View>
       </View>
-      <View style={styles.progressView}>
+      <View style={styles.progressView} onLayout={handleLayout}>
         <View style={styles.progress} />
+      </View>
+      <View style={styles.badge}>
+        <Text style={styles.badgeText}>2</Text>
       </View>
     </View>
   );

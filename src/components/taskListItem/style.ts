@@ -7,6 +7,7 @@ const getStyling = (
   props: ITaskListItemProps,
   statusViewColor: ColorValue,
   inviteLinkVisible: boolean,
+  progressWidth: number,
 ) => {
   return StyleSheet.create({
     container: flatten([
@@ -23,7 +24,7 @@ const getStyling = (
       justifyContent: 'space-between',
       flex: 1,
     },
-    taskInfo: {},
+    // taskInfo: {},
     taskName: {color: lightText, fontWeight: 'bold', fontSize: 16},
     names: {color: inviteLinkVisible ? '#A9A9A9' : lightText},
     rightView: {
@@ -49,7 +50,21 @@ const getStyling = (
       height: 6,
       backgroundColor: accent,
       borderRadius: 10,
-      width: '40%',
+      width: progressWidth,
+    },
+    badge: {
+      height: 30,
+      width: 30,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: accent,
+      borderRadius: 30,
+      position: 'absolute',
+      right: -8,
+      top: -5,
+    },
+    badgeText: {
+      color: lightText,
     },
   });
 };

@@ -6,5 +6,6 @@ export interface ITaskListItemProps {
   clientFirstName?: string;
   clientLastName?: string;
   status: taskStatus;
+  progressToHundred: number;
   containerStyle?: StyleProp<ViewStyle>;
 }
