@@ -6,7 +6,6 @@ import {useProgressBar} from './util';
 
 const ProgressBar: FC<IProgressBarProps> = props => {
   const {handleLayout, mutatedTasks} = useProgressBar(props);
-  console.log('mutatedTasks:: ', mutatedTasks);
   const styles = getStyling(props);
   return (
     <View onLayout={handleLayout} style={styles.container}>

@@ -37,7 +37,6 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
-    console.log(width);
     if (width > 0) handleProgressWidth(width);
   };
 
