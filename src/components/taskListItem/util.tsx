@@ -53,18 +53,22 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
   };
 
   const showInviteLink = () => {
-    if (props.clientFirstName && props.clientLastName) return false;
+    if (!props.isTracker || (props.clientFirstName && props.clientLastName))
+      return false;
     else return true;
   };
 
+  let namesOrOrganization = '';
+
   const statusViewColor = getStatusViewColor();
   const statusText = getStatusText();
-  const names = getFirstLastName();
+  if (props.isTracker) namesOrOrganization = getFirstLastName();
+  else namesOrOrganization = props.organization;
   const inviteLinkVisible = showInviteLink();
   return {
     statusViewColor,
     statusText,
-    names,
+    namesOrOrganization,
     inviteLinkVisible,
     handleLayout,
     progressWidth,

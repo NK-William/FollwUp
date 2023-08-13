@@ -5,5 +5,12 @@ export const useProgressTaskName = (props: any) => {
   if (firstNameLetter && lastNameLetter)
     letters = `${firstNameLetter}${lastNameLetter}`;
 
-  return {letters};
+  const showInviteIcon = () => {
+    if (props.clientFirstName && props.clientLastName) return false;
+    else return true;
+  };
+
+  const inviteIconVisible = showInviteIcon();
+
+  return {letters, inviteIconVisible};
 };

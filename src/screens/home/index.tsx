@@ -67,6 +67,7 @@ const Home = () => {
             data={fakeTasks}
             renderItem={task => (
               <TaskListItem
+                isTracker={selectedTabOption === TaskTabOptionEnum.Track}
                 {...task.item}
                 containerStyle={styles.taskListItemContainer}
               />

@@ -73,7 +73,7 @@ export const fakeTasks: ITask[] = [
     name: 'Radiator replacement',
     color: 'orange',
     progressToHundred: 90,
-    organization: 'KIA Lazarus',
+    organization: 'Cylinder head service',
     clientPhoneNumber: '0712345678',
     creatorId: 'hgdt6376v3r3g363',
     description:

@@ -10,7 +10,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
   const {
     statusViewColor,
     statusText,
-    names,
+    namesOrOrganization,
     inviteLinkVisible,
     handleLayout,
     progressWidth,
@@ -26,7 +26,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
       <View style={styles.taskInfoContainer}>
         <View>
           <Text style={styles.taskName}>{props.name}</Text>
-          <Text style={styles.names}>{names}</Text>
+          <Text style={styles.subName}>{namesOrOrganization}</Text>
         </View>
         <View style={styles.rightView}>
           <View style={styles.statusView}>

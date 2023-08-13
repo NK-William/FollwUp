@@ -20,6 +20,12 @@ const getStyling = (props: any) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    image: {width: 25, height: 26},
+    inviteContainer: {
+      flex: 1,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+    },
     nameCapsLetters: {
       fontSize: 10,
       color: lightText,
