@@ -46,13 +46,15 @@ const getStyling = () => {
     },
     tasksContainer: {
       paddingHorizontal: 12,
-      flex: 1,
+      flex: 1.2,
+      marginTop: 1,
     },
     tabContainer: {
       marginTop: 20,
       flexDirection: 'row',
     },
     taskListContainer: {
+      flex: 1,
       marginTop: 16,
     },
     taskListItemContainer: {marginBottom: 12},
