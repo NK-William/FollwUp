@@ -74,6 +74,24 @@ const Home = () => {
             )}
             keyExtractor={task => task.id}
           />
+          <View style={styles.floatingButtonContainer}>
+            <View style={styles.floatingButton}>
+              <View style={styles.innerFloatingButtonContainer}>
+                {selectedTabOption === TaskTabOptionEnum.Track ? (
+                  <Image
+                    source={require('../../assets/images/add.png')}
+                    style={styles.addIcon}
+                  />
+                ) : (
+                  <Text style={styles.innerFloatingButtonText}>2</Text>
+                )}
+              </View>
+              <Image
+                source={require('../../assets/images/taskTrack.png')}
+                style={styles.floatingButtonIcon}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
