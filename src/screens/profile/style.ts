@@ -5,13 +5,14 @@ const getStyling = () => {
   return StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: 'white',
     },
     backArrowContainer: {
-      backgroundColor: 'white',
+      backgroundColor: primary,
       position: 'absolute',
-      height: 40,
-      width: 40,
-      borderRadius: 24,
+      height: 50,
+      width: 50,
+      borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
       top: 12,
@@ -19,14 +20,14 @@ const getStyling = () => {
     },
 
     cameraIconContainer: {
-      backgroundColor: 'white',
+      backgroundColor: primary,
       position: 'absolute',
-      height: 40,
-      width: 40,
-      borderRadius: 24,
+      height: 50,
+      width: 50,
+      borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      top: 62,
+      top: 70,
       left: 12,
     },
     profilePicContainer: {flex: 4},

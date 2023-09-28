@@ -2,7 +2,9 @@ import {Image, Text, View} from 'react-native';
 import React from 'react';
 import getStyling from './style';
 import {useProfile} from './util';
+import Feather from 'react-native-vector-icons/Feather';
 import {ProfileInput} from '../../components';
+import {accent} from '../../constants/colors';
 
 const Profile = () => {
   const styles = getStyling();
@@ -49,16 +51,10 @@ const Profile = () => {
         </View>
       </View>
       <View style={styles.backArrowContainer}>
-        <Image
-          style={styles.icon}
-          source={require('../../assets/images/backArrow.png')}
-        />
+        <Feather name="arrow-left" size={18} color={accent} />
       </View>
       <View style={styles.cameraIconContainer}>
-        <Image
-          style={styles.icon}
-          source={require('../../assets/images/camera.png')}
-        />
+        <Feather name="camera" size={18} color={accent} />
       </View>
     </View>
   );
