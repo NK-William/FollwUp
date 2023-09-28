@@ -19,7 +19,7 @@ const Profile = () => {
       </View>
       <View style={styles.profileInfoCardContainer}>
         <View style={styles.profileInfoCard}>
-          <ScrollView>
+          <ScrollView style={styles.scrollView}>
             <ProfileInput
               title="First Name"
               iconType="Ionicons"

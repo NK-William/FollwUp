@@ -49,7 +49,6 @@ const getStyling = () => {
       height: '150%',
       marginHorizontal: 20,
       marginTop: -150,
-      paddingHorizontal: 16,
       paddingVertical: 20,
       borderRadius: 20,
       elevation: 5,
@@ -60,6 +59,10 @@ const getStyling = () => {
       },
       shadowOpacity: 0.3,
       shadowRadius: 5,
+    },
+    scrollView: {
+      paddingHorizontal: 16,
+      borderRadius: 20,
     },
     ProfileInputContainer: {marginTop: 20},
   });
