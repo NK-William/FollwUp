@@ -1,10 +1,10 @@
-import {Image, Text, View} from 'react-native';
+import {Image, ScrollView, Text, View} from 'react-native';
 import React from 'react';
 import getStyling from './style';
 import {useProfile} from './util';
 import Feather from 'react-native-vector-icons/Feather';
 import {ProfileInput} from '../../components';
-import {accent} from '../../constants/colors';
+import {accent, lightText} from '../../constants/colors';
 
 const Profile = () => {
   const styles = getStyling();
@@ -19,35 +19,42 @@ const Profile = () => {
       </View>
       <View style={styles.profileInfoCardContainer}>
         <View style={styles.profileInfoCard}>
-          <ProfileInput
-            title="First Name"
-            iconType="Ionicons"
-            iconName="person-outline"
-          />
-          <ProfileInput
-            title="Last Name"
-            iconType="Ionicons"
-            iconName="person-outline"
-            containerStyle={styles.ProfileInputContainer}
-          />
-          <ProfileInput
-            title="ID Number"
-            iconType="Ionicons"
-            iconName="person-outline"
-            containerStyle={styles.ProfileInputContainer}
-          />
-          <ProfileInput
-            title="Email Address"
-            iconType="Ionicons"
-            iconName="person-outline"
-            containerStyle={styles.ProfileInputContainer}
-          />
-          <ProfileInput
-            title="Phone Number"
-            iconType="Ionicons"
-            iconName="person-outline"
-            containerStyle={styles.ProfileInputContainer}
-          />
+          <ScrollView>
+            <ProfileInput
+              title="First Name"
+              iconType="Ionicons"
+              iconName="person-outline"
+              iconStyle={{color: lightText}}
+            />
+            <ProfileInput
+              title="Last Name"
+              iconType="Ionicons"
+              iconName="person-outline"
+              containerStyle={styles.ProfileInputContainer}
+              iconStyle={{color: lightText}}
+            />
+            <ProfileInput
+              title="ID Number"
+              iconType="AntDesign"
+              iconName="idcard"
+              containerStyle={styles.ProfileInputContainer}
+              iconStyle={{color: lightText}}
+            />
+            <ProfileInput
+              title="Email Address"
+              iconType="Fontisto"
+              iconName="email"
+              containerStyle={styles.ProfileInputContainer}
+              iconStyle={{color: lightText}}
+            />
+            <ProfileInput
+              title="Phone Number"
+              iconType="Feather"
+              iconName="phone"
+              containerStyle={styles.ProfileInputContainer}
+              iconStyle={{color: lightText}}
+            />
+          </ScrollView>
         </View>
       </View>
       <View style={styles.backArrowContainer}>
