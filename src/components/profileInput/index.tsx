@@ -7,37 +7,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
+import Icon from '../Icon';
 
 const ProfileInput: FC<IProfileInputProps> = props => {
   const styles = getStyling(props);
-
-  const Icon = (p: {
-    iconType: 'Ionicons' | 'AntDesign' | 'Fontisto' | 'Feather';
-    iconName: string;
-    size?: number;
-    style?: any;
-  }) => {
-    switch (p.iconType) {
-      case 'Ionicons':
-        return (
-          <Ionicons name={p.iconName} size={p.size ?? 20} style={p.style} />
-        );
-      case 'AntDesign':
-        return (
-          <AntDesign name={p.iconName} size={p.size ?? 20} style={p.style} />
-        );
-      case 'Fontisto':
-        return (
-          <Fontisto name={p.iconName} size={p.size ?? 20} style={p.style} />
-        );
-      case 'Feather':
-        return (
-          <Feather name={p.iconName} size={p.size ?? 20} style={p.style} />
-        );
-      default:
-        return null;
-    }
-  };
   return (
     <View style={styles.container}>
       <Icon

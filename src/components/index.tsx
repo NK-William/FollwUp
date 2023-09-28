@@ -6,3 +6,4 @@ export {default as ProgressTaskName} from './progressTaskName';
 export {default as TaskTabOption} from './taskTabOption';
 export {default as TaskListItem} from './taskListItem';
 export {default as ProfileInput} from './profileInput';
+export {default as Icon} from './Icon';
