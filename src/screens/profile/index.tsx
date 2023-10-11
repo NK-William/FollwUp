@@ -1,16 +1,23 @@
 import React from 'react';
-import {Image, ScrollView, View} from 'react-native';
+import {Image, ScrollView, TouchableOpacity, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ProfileInput} from '../../components';
 import {lightText} from '../../constants/colors';
 import getStyling from './style';
 import {useProfile} from './util';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const Profile = () => {
   const styles = getStyling();
   const {firstName, lastName, idNumber, emailAddress, phoneNumber, setState} =
     useProfile();
+
+  const cameraClicked = async () => {
+    // const result = await launchCamera({mediaType: 'photo'}, () => {});
+    const result = await launchImageLibrary({mediaType: 'photo'}, () => {});
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.profilePicContainer}>
@@ -74,12 +81,14 @@ const Profile = () => {
           </ScrollView>
         </View>
       </View>
-      <View style={styles.backArrowContainer}>
+      <TouchableOpacity style={styles.backArrowContainer}>
         <Feather name="arrow-left" size={18} color={'white'} />
-      </View>
-      <View style={styles.cameraIconContainer}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={cameraClicked}
+        style={styles.cameraIconContainer}>
         <FontAwesome name="camera" size={18} color={'white'} />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
