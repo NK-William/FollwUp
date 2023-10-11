@@ -6,5 +6,8 @@ export interface IProfileInputProps {
   iconName: string;
   iconSize?: number;
   iconStyle?: any;
+  value: string;
+  savedText: string;
+  onChangeText: (text: string) => void;
   containerStyle?: StyleProp<ViewStyle>;
 }

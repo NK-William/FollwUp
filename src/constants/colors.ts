@@ -1,6 +1,6 @@
 export const primary = '#3E5AA9';
 export const primaryLight = '#94A3CF';
-export const accent = '#0ADD19';
+export const accent = '#94A3CF';
 export const grayLight = '#D9D9D9';
 export const gray = '#7A7A7A';
 export const lightText = '#FFFFFF';

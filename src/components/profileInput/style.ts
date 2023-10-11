@@ -17,8 +17,9 @@ const getStyling = (props: IProfileInputProps) => {
       },
       props.containerStyle,
     ]),
-    penIcon: {color: accent},
-    title: {color: lightText, fontSize: 13},
+
+    penIcon: {color: 'white'},
+    title: {color: grayLight, fontSize: 13},
     inputContainer: {flex: 1, marginHorizontal: 16},
     inputLine: {height: 0.5, backgroundColor: primaryLight},
     input: {

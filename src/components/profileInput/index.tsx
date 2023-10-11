@@ -1,13 +1,9 @@
-import {View, Text, TextInput} from 'react-native';
 import React, {FC} from 'react';
+import {Text, TextInput, View} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Icon} from '..';
 import type {IProfileInputProps} from './interface';
 import getStyling from './style';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import Feather from 'react-native-vector-icons/Feather';
-import Icon from '../Icon';
 
 const ProfileInput: FC<IProfileInputProps> = props => {
   const styles = getStyling(props);
@@ -21,11 +17,16 @@ const ProfileInput: FC<IProfileInputProps> = props => {
       />
       <View style={styles.inputContainer}>
         <Text style={styles.title}>{props.title}</Text>
-        <TextInput style={styles.input} />
+        <TextInput
+          value={props.value}
+          onChangeText={text => props.onChangeText(text)}
+          style={styles.input}
+        />
         <View style={styles.inputLine} />
       </View>
-      {/* <Icon iconType="FontAwesome6" iconName="pencil" style={styles.penIcon} /> */}
-      <FontAwesome6 name="pencil" size={20} style={styles.penIcon} />
+      {props.savedText !== props.value ? (
+        <Ionicons name="save" size={20} style={styles.penIcon} />
+      ) : null}
     </View>
   );
 };
