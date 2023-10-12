@@ -4,4 +4,5 @@ export interface IProfileState {
   readonly idNumber: string;
   readonly emailAddress: string;
   readonly phoneNumber: string;
+  readonly showPopup: boolean;
 }

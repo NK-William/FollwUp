@@ -65,6 +65,18 @@ const getStyling = () => {
       borderRadius: 20,
     },
     ProfileInputContainer: {marginTop: 20},
+    popupContainer: {
+      alignItems: 'center',
+      borderRadius: 20,
+      height: 200,
+      width: 300,
+      backgroundColor: 'white',
+    },
+    optionButtonContainer: {
+      flex: 1,
+      marginTop: 16,
+      justifyContent: 'center',
+    },
   });
 };
 
