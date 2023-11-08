@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {UnderlinedText} from '../../components';
+import {UnderlinedText, TaskInput} from '../../components';
 import getStyling from './style';
 
 const AddTaskDetails = () => {
@@ -8,6 +8,7 @@ const AddTaskDetails = () => {
   return (
     <View>
       <UnderlinedText text="Task" containerStyle={styles.underlinedText} />
+      <TaskInput label="Name" />
     </View>
   );
 };
