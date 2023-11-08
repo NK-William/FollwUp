@@ -46,6 +46,7 @@ const getStyling = () => {
     },
     profileInfoCard: {
       backgroundColor: primary,
+      opacity: 0.85,
       height: '150%',
       marginHorizontal: 20,
       marginTop: -150,
