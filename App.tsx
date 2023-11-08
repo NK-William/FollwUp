@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Login, Register, Home, Profile} from './src/screens';
+import {View, Text, SafeAreaView, StatusBar} from 'react-native';
+import {Login, Register, Home, Profile, AddTask} from './src/screens';
+import {primary} from './src/constants/colors';
 
 const App = () => {
   return (
-    <View style={{flex: 1}}>
-      <Profile />
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <StatusBar backgroundColor={primary} />
+      <AddTask />
+    </SafeAreaView>
   );
 };
 
