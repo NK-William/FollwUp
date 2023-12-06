@@ -4,6 +4,10 @@ const getStyling = () => {
   return StyleSheet.create({
     container: {},
     underlinedText: {alignSelf: 'center', marginTop: 16},
+    entryLabel: {
+      marginHorizontal: 22,
+      marginVertical: 10,
+    },
   });
 };
 

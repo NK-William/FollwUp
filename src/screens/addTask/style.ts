@@ -6,6 +6,12 @@ const getStyling = () => {
       flex: 1,
       backgroundColor: 'white',
     },
+    rightUnderlinedText: {
+      textAlign: 'right',
+      marginHorizontal: 22,
+      fontSize: 16,
+    },
+    positiveButton: {alignSelf: 'center', marginTop: 30, marginBottom: 10},
   });
 };
 
