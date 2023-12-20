@@ -11,7 +11,7 @@ const getStyling = (props: IUnderlinedTextProps) => {
     ]),
     text: {
       color: darkText,
-      fontSize: 30,
+      fontSize: 22,
       fontWeight: 'bold',
       marginBottom: 4,
     },

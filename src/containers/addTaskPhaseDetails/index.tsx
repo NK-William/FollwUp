@@ -14,7 +14,7 @@ const AddTaskPhaseDetails = () => {
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
-        <UnderlinedText text="Task" containerStyle={styles.underlinedText} />
+        <UnderlinedText text="Phase 1" containerStyle={styles.underlinedText} />
       </View>
       <IconPicker containerStyle={styles.iconPicker} />
       <TaskInput
