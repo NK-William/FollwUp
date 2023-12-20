@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {primary, primaryButtonText} from '../../constants/colors';
-import type {IPositiveButtonProps} from './interface';
+import type {IFollwUpButtonProps} from './interface';
 import {flatten} from '../../utils';
 
-const getStyling = (props: IPositiveButtonProps) => {
+const getStyling = (props: IFollwUpButtonProps) => {
   return StyleSheet.create({
     container: flatten([
       {
@@ -16,11 +16,14 @@ const getStyling = (props: IPositiveButtonProps) => {
       },
       props.containerStyle,
     ]),
-    text: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: primaryButtonText,
-    },
+    text: flatten([
+      {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: primaryButtonText,
+      },
+      props.textStyle,
+    ]),
   });
 };
 

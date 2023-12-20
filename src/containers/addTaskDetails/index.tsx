@@ -1,8 +1,12 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
-import {UnderlinedText, TaskInput} from '../../components';
+import {
+  UnderlinedText,
+  TaskInput,
+  FollwUpButton,
+  PressableText,
+} from '../../components';
 import getStyling from './style';
-import {PositiveButton, PressableText} from '../../components';
 
 const AddTaskDetails = () => {
   const styles = getStyling();
@@ -28,8 +32,12 @@ const AddTaskDetails = () => {
         entryText="Description test"
         containerStyle={styles.entryLabel}
       />
-      <PressableText text="Add Phases" textStyle={styles.rightUnderlinedText} />
-      <PositiveButton text="Save" containerStyle={styles.positiveButton} />
+      <PressableText text="Add Phases" textStyle={styles.rightPressableText} />
+      <FollwUpButton
+        text="Cancel"
+        textStyle={styles.follwUpButtonText}
+        containerStyle={styles.follwUpButton}
+      />
     </View>
   );
 };

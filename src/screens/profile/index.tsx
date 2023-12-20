@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, ScrollView, TouchableOpacity, View, Text} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {PositiveButton, PressableText, ProfileInput} from '../../components';
+import {follwUpButton, PressableText, ProfileInput} from '../../components';
 import {lightText} from '../../constants/colors';
 import getStyling from './style';
 import {useProfile} from './util';
@@ -97,12 +97,12 @@ const Profile = () => {
         <OpicFiller>
           <View style={styles.popupContainer}>
             <View style={styles.optionButtonContainer}>
-              <PositiveButton
+              <follwUpButton
                 text="Take a picture"
                 onPress={() => cameraClicked(cameraPickerType.CAMERA)}
                 containerStyle={{height: 50, marginBottom: 10}}
               />
-              <PositiveButton
+              <follwUpButton
                 text="Select a picture"
                 onPress={() => cameraClicked(cameraPickerType.GALLERY)}
                 containerStyle={{height: 50, marginTop: 10}}

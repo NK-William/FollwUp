@@ -9,23 +9,36 @@ const getStyling = () => {
       marginHorizontal: 22,
       marginVertical: 10,
     },
-    rightPressableText: {
-      textAlign: 'right',
+    iconPicker: {
+      alignItems: 'center',
+      marginVertical: 16,
+    },
+    pressableTextContainer: {
       marginHorizontal: 30,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    pressableText: {
       fontSize: 16,
     },
-    follwUpButtonText: {
-      color: accent,
-    },
-    follwUpButton: {
+    follwUpPositiveButton: {
       alignSelf: 'center',
       marginTop: 40,
+      marginBottom: 10,
+      width: 160,
+      height: 50,
+    },
+    follwUpNegativeButton: {
+      alignSelf: 'center',
       marginBottom: 10,
       width: 160,
       height: 50,
       borderWidth: 3,
       borderColor: accent,
       backgroundColor: 'white',
+    },
+    follwUpNegativeButtonText: {
+      color: accent,
     },
   });
 };

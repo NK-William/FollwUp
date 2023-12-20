@@ -1,7 +1,7 @@
 import {View, Text, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import getStyling from './style';
-import {PositiveButton, PressableText, AuthInput} from '../../components';
+import {follwUpButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
 import {useRegister} from './util';
 
@@ -75,7 +75,7 @@ const Register = () => {
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <PositiveButton
+          <follwUpButton
             text="Register"
             onPress={() => console.log('Button pressed')}
           />

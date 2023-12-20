@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import getStyling from './style';
-import {PositiveButton, PressableText, AuthInput} from '../../components';
+import {follwUpButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
 import {useLogin} from './util';
 
@@ -42,7 +42,7 @@ const Login = () => {
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <PositiveButton
+          <follwUpButton
             text="Login"
             onPress={() => console.log('Button pressed')}
           />
