@@ -13,11 +13,12 @@ const getStyling = (props: IUnderlinedTextProps) => {
       color: darkText,
       fontSize: 30,
       fontWeight: 'bold',
+      marginBottom: 4,
     },
     line: {
-      height: 1.5,
-      width: '80%',
-      backgroundColor: grayLight,
+      height: 1.4,
+      width: '60%',
+      backgroundColor: primaryLight,
     },
   });
 };

@@ -7,7 +7,7 @@ const getStyling = (props: ITaskInputProps) => {
   return StyleSheet.create({
     container: flatten([{}, props.containerStyle]),
     label: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: 'bold',
       color: darkText,
       marginBottom: 6,
@@ -20,9 +20,8 @@ const getStyling = (props: ITaskInputProps) => {
     },
     input: {
       paddingHorizontal: 10,
-      fontSize: 18,
+      fontSize: 16,
       color: lightText,
-      fontWeight: 'bold',
       flex: 1,
       textAlignVertical: props.multiline ? 'top' : 'center',
     },
