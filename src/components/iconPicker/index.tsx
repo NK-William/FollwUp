@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import {IIconPicker} from './interface';
 import getStyling from './style';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const IconPicker: FC<IIconPicker> = props => {
   const styles = getStyling(props);
@@ -10,7 +10,7 @@ const IconPicker: FC<IIconPicker> = props => {
     <View style={styles.container}>
       <Text style={styles.text}>Task Icon</Text>
       <TouchableOpacity>
-        <Ionicons name="image-outline" size={45} style={styles.icon} />
+        <MCI name="file-image-plus-outline" size={45} style={styles.icon} />
       </TouchableOpacity>
     </View>
   );

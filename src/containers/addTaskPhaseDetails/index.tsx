@@ -19,14 +19,14 @@ const AddTaskPhaseDetails = () => {
       <IconPicker containerStyle={styles.iconPicker} />
       <TaskInput
         label="Name"
-        entryText="Diagnosing"
+        // entryText="Diagnosing"
         containerStyle={styles.entryLabel}
       />
       <TaskInput
         label="Description"
         multiline={true}
         numberOfLines={9}
-        entryText="Description test"
+        // entryText="Description test"
         containerStyle={styles.entryLabel}
       />
       <View style={styles.pressableTextContainer}>

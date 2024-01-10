@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
   UnderlinedText,
   TaskInput,
@@ -7,9 +7,11 @@ import {
   PressableText,
 } from '../../components';
 import getStyling from './style';
+import {IAddTaskDetailsProps} from './interface';
 
-const AddTaskDetails = () => {
+const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
+  const {name, clientPhoneNumber, description} = props.task ?? {};
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -17,19 +19,19 @@ const AddTaskDetails = () => {
       </View>
       <TaskInput
         label="Name"
-        entryText="Body polishing"
+        entryText={name}
         containerStyle={styles.entryLabel}
       />
       <TaskInput
         label="Customer contact number"
-        entryText="0711111111"
+        entryText={clientPhoneNumber}
         containerStyle={styles.entryLabel}
       />
       <TaskInput
         label="Description"
         multiline={true}
         numberOfLines={9}
-        entryText="Description test"
+        entryText={description}
         containerStyle={styles.entryLabel}
       />
       <PressableText text="Add Phases" textStyle={styles.rightPressableText} />
