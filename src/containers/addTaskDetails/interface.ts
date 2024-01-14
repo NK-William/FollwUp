@@ -1,6 +1,8 @@
-import {ITask} from '../../interfaces';
+import {TaskFormFieldEnum} from '../../utils/enums';
 
 export interface IAddTaskDetailsProps {
-  task?: ITask;
-  updateTask?: (values: ITask) => void;
+  name?: string;
+  phoneNumber?: string;
+  description?: string;
+  updateTaskFormDetails: (value: string, field: TaskFormFieldEnum) => void;
 }

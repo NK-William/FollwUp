@@ -33,3 +33,9 @@ export enum TaskStatusColor {
   Completed = '#2C8C2C',
   Pending = gray,
 }
+
+export enum TaskFormFieldEnum {
+  name,
+  phoneNumber,
+  description,
+}

@@ -8,10 +8,11 @@ import {
 } from '../../components';
 import getStyling from './style';
 import {IAddTaskDetailsProps} from './interface';
+import {TaskFormFieldEnum} from '../../utils/enums';
 
 const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
-  const {name, clientPhoneNumber, description} = props.task ?? {};
+  const {name, phoneNumber, description, updateTaskFormDetails} = props;
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -21,11 +22,17 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         label="Name"
         entryText={name}
         containerStyle={styles.entryLabel}
+        onChangeText={text =>
+          updateTaskFormDetails(text, TaskFormFieldEnum.name)
+        }
       />
       <TaskInput
         label="Customer contact number"
-        entryText={clientPhoneNumber}
+        entryText={phoneNumber}
         containerStyle={styles.entryLabel}
+        onChangeText={text =>
+          updateTaskFormDetails(text, TaskFormFieldEnum.phoneNumber)
+        }
       />
       <TaskInput
         label="Description"
@@ -33,6 +40,9 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         numberOfLines={9}
         entryText={description}
         containerStyle={styles.entryLabel}
+        onChangeText={text =>
+          updateTaskFormDetails(text, TaskFormFieldEnum.description)
+        }
       />
       <PressableText text="Add Phases" textStyle={styles.rightPressableText} />
       <FollwUpButton
