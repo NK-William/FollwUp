@@ -3,29 +3,31 @@ import React, {useState} from 'react';
 import getStyling from './style';
 import {ITask} from '../../interfaces';
 import {AddTaskDetails, AddTaskPhaseDetails} from '../../containers';
-import {TaskFormFieldEnum} from '../../utils/enums';
+import {TaskFormFieldEnum, taskStatus} from '../../utils/enums';
+
+const taskInit: ITask = {
+  name: '',
+  clientPhoneNumber: '',
+  description: '',
+  phases: [],
+  status: taskStatus.Pending,
+};
 
 const AddTask = () => {
   const [showTasPhaseContainer, setShowTaskPhaseContainer] = useState(false);
-  const [task, setTask] = useState<ITask | undefined>(undefined);
+  const [task, setTask] = useState<ITask>(taskInit);
 
   const styles = getStyling();
 
-  console.log('Task details: ' + task);
-
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
-    console.log('Test');
     switch (field) {
       case TaskFormFieldEnum.name:
-        console.log('NAME');
-        if (task) setTask({...task, name: value});
+        setTask({...task, name: value});
         break;
       case TaskFormFieldEnum.phoneNumber:
-        console.log('Number');
         if (task) setTask({...task, clientPhoneNumber: value});
         break;
       case TaskFormFieldEnum.description:
-        console.log('DESCR');
         if (task) setTask({...task, description: value});
         break;
       default:
