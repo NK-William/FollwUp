@@ -19,19 +19,21 @@ const AddTask = () => {
 
   const styles = getStyling();
 
+  console.log('taskInit', task);
+
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
     switch (field) {
       case TaskFormFieldEnum.name:
         setTask({...task, name: value});
         break;
       case TaskFormFieldEnum.phoneNumber:
-        if (task) setTask({...task, clientPhoneNumber: value});
+        setTask({...task, clientPhoneNumber: value});
         break;
       case TaskFormFieldEnum.description:
-        if (task) setTask({...task, description: value});
+        setTask({...task, description: value});
         break;
       default:
-        if (task) setTask(task);
+        setTask(task);
     }
   };
 
