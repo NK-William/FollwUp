@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {FC} from 'react';
 import getStyling from './style';
 import {
   PressableText,
@@ -8,30 +8,50 @@ import {
   FollwUpButton,
   IconPicker,
 } from '../../components';
+import {IAddTaskPhaseDetailsProps} from './interface';
 
-const AddTaskPhaseDetails = () => {
+const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
   const styles = getStyling();
+
+  const {name, description, phaseNumber, setName, setDescription, addPhase} =
+    props;
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
-        <UnderlinedText text="Phase 1" containerStyle={styles.underlinedText} />
+        <UnderlinedText
+          text={`Phase ${phaseNumber}`}
+          containerStyle={styles.underlinedText}
+        />
       </View>
       <IconPicker containerStyle={styles.iconPicker} />
       <TaskInput
         label="Name"
-        // entryText="Diagnosing"
+        entryText={name}
         containerStyle={styles.entryLabel}
+        onChangeText={text => {
+          if (setName) setName(text);
+        }}
       />
       <TaskInput
         label="Description"
         multiline={true}
         numberOfLines={9}
-        // entryText="Description test"
+        entryText={description}
         containerStyle={styles.entryLabel}
+        onChangeText={text => {
+          if (setDescription) setDescription(text);
+        }}
       />
       <View style={styles.pressableTextContainer}>
         <PressableText text="Previous" textStyle={styles.pressableText} />
-        <PressableText text="Add Another" textStyle={styles.pressableText} />
+        <PressableText
+          text="Add Another"
+          textStyle={styles.pressableText}
+          onPress={() => {
+            if (addPhase) addPhase();
+          }}
+        />
       </View>
       <FollwUpButton
         text="Finish"
