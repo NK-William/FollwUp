@@ -13,8 +13,16 @@ import {IAddTaskPhaseDetailsProps} from './interface';
 const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
   const styles = getStyling();
 
-  const {name, description, phaseNumber, setName, setDescription, addPhase} =
-    props;
+  const {
+    name,
+    description,
+    phaseNumber,
+    setName,
+    setDescription,
+    addPhase,
+    updateShowTaskPhaseContainer,
+    displayPreviousPhase,
+  } = props;
 
   return (
     <View style={{flex: 1}}>
@@ -44,9 +52,17 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         }}
       />
       <View style={styles.pressableTextContainer}>
-        <PressableText text="Previous" textStyle={styles.pressableText} />
         <PressableText
-          text="Add Another"
+          text={phaseNumber === 1 ? 'Return to task details' : 'Previous'}
+          textStyle={styles.pressableText}
+          onPress={
+            phaseNumber === 1
+              ? () => updateShowTaskPhaseContainer(false)
+              : () => displayPreviousPhase()
+          }
+        />
+        <PressableText
+          text="Add another"
           textStyle={styles.pressableText}
           onPress={() => {
             if (addPhase) addPhase();

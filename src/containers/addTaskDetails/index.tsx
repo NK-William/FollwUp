@@ -12,7 +12,13 @@ import {TaskFormFieldEnum} from '../../utils/enums';
 
 const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
-  const {name, phoneNumber, description, updateTaskFormDetails} = props;
+  const {
+    name,
+    phoneNumber,
+    description,
+    updateTaskFormDetails,
+    updateShowTaskPhaseContainer,
+  } = props;
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -44,7 +50,11 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
           updateTaskFormDetails(text, TaskFormFieldEnum.description)
         }
       />
-      <PressableText text="Add Phases" textStyle={styles.rightPressableText} />
+      <PressableText
+        text="Add Phases"
+        textStyle={styles.rightPressableText}
+        onPress={() => updateShowTaskPhaseContainer()}
+      />
       <FollwUpButton
         text="Cancel"
         textStyle={styles.follwUpButtonText}

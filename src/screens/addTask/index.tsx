@@ -12,18 +12,31 @@ import {
 const taskInit: ITask = {
   name: '',
   clientPhoneNumber: '',
-  description: '',
   phases: [],
   status: taskStatus.Pending,
 };
 
 const AddTask = () => {
-  const [showTasPhaseContainer, setShowTaskPhaseContainer] = useState(true);
+  const [showTasPhaseContainer, setShowTaskPhaseContainer] = useState(false);
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  console.log('task: ', task);
+
   const styles = getStyling();
+
+  const validateTaskDetails = () => {
+    if (!task.name && !task.clientPhoneNumber) {
+      console.log('Please enter name and client phone number.');
+    } else if (!task.name) {
+      console.log('Please enter name.');
+    } else if (!task.clientPhoneNumber) {
+      console.log('Please enter client phone number.');
+    } else {
+      setShowTaskPhaseContainer(true);
+    }
+  };
 
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
     switch (field) {
@@ -38,6 +51,18 @@ const AddTask = () => {
         break;
       default:
         setTask(task);
+    }
+  };
+
+  const displayPreviousPhase = () => {
+    console.log('phases length before: ', task.phases);
+    let poppedPhase = task.phases.pop();
+
+    console.log('phases length after: ', task.phases);
+
+    if (poppedPhase) {
+      setName(poppedPhase.name);
+      setDescription(poppedPhase.description ?? '');
     }
   };
 
@@ -82,6 +107,8 @@ const AddTask = () => {
           setName={setName}
           setDescription={setDescription}
           addPhase={addPhase}
+          updateShowTaskPhaseContainer={setShowTaskPhaseContainer}
+          displayPreviousPhase={displayPreviousPhase}
         />
       ) : (
         <AddTaskDetails
@@ -89,6 +116,7 @@ const AddTask = () => {
           phoneNumber={task?.clientPhoneNumber}
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}
+          updateShowTaskPhaseContainer={validateTaskDetails}
         />
       )}
     </View>
