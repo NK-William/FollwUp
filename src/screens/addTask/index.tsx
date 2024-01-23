@@ -22,17 +22,12 @@ const AddTask = () => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
-  console.log('task: ', task);
-
   const styles = getStyling();
 
   const validateTaskDetails = () => {
     if (!task.name && !task.clientPhoneNumber) {
-      console.log('Please enter name and client phone number.');
     } else if (!task.name) {
-      console.log('Please enter name.');
     } else if (!task.clientPhoneNumber) {
-      console.log('Please enter client phone number.');
     } else {
       setShowTaskPhaseContainer(true);
     }
@@ -54,11 +49,14 @@ const AddTask = () => {
     }
   };
 
-  const displayPreviousPhase = () => {
-    console.log('phases length before: ', task.phases);
-    let poppedPhase = task.phases.pop();
+  const showTaskForm = (value: boolean) => {
+    setName('');
+    setDescription('');
+    setShowTaskPhaseContainer(value);
+  };
 
-    console.log('phases length after: ', task.phases);
+  const displayPreviousPhase = () => {
+    let poppedPhase = task.phases.pop();
 
     if (poppedPhase) {
       setName(poppedPhase.name);
@@ -68,11 +66,8 @@ const AddTask = () => {
 
   const addPhase = () => {
     if (!name && !description) {
-      console.log('Please enter both name and description for the phase.');
     } else if (!name) {
-      console.log('Please enter a name for the phase.');
     } else if (!description) {
-      console.log('Please enter a description for the phase.');
     } else {
       let taskNumber = task.phases.length + 1;
       let taskPhase = task.phases;
@@ -93,10 +88,6 @@ const AddTask = () => {
     }
   };
 
-  // Task (pass setter, name, number and description) // Phase (pass setter,
-  // and the last phase item props (name, icon and description))
-
-  // ToDo: Work on TaskInput text input updater.
   return (
     <View style={styles.container}>
       {showTasPhaseContainer ? (
@@ -107,7 +98,7 @@ const AddTask = () => {
           setName={setName}
           setDescription={setDescription}
           addPhase={addPhase}
-          updateShowTaskPhaseContainer={setShowTaskPhaseContainer}
+          updateShowTaskPhaseContainer={value => showTaskForm(value)}
           displayPreviousPhase={displayPreviousPhase}
         />
       ) : (
