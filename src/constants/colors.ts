@@ -8,3 +8,4 @@ export const darkText = '#202020';
 export const whiteChatBackground = '#FFFFFF';
 export const primaryButtonText = '#FFFFFF';
 export const replierChatBackground = '#C1CBE8';
+export const close = '#E32A40';

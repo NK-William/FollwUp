@@ -8,6 +8,7 @@ const getStyling = (props: IIconPicker) => {
     container: flatten([{}, props.containerStyle]),
     text: {color: darkText, fontWeight: 'bold'},
     icon: {color: accent},
+    placeholderText: {marginTop: 6},
   });
 };
 

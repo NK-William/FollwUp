@@ -1,17 +1,24 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import React, {FC} from 'react';
 import {IIconPicker} from './interface';
 import getStyling from './style';
-import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const IconPicker: FC<IIconPicker> = props => {
+  const {iconName, setShowPickerPopup} = props;
   const styles = getStyling(props);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Task Icon</Text>
-      <TouchableOpacity>
-        <MCI name="file-image-plus-outline" size={45} style={styles.icon} />
-      </TouchableOpacity>
+      <Pressable
+        style={{marginTop: 8}}
+        onPress={() => setShowPickerPopup(true)}>
+        {iconName ? (
+          <Ionicons name={iconName} size={45} style={styles.icon} />
+        ) : (
+          <Text>Tab to add icon</Text>
+        )}
+      </Pressable>
     </View>
   );
 };

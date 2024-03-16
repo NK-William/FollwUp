@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Pressable} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {
@@ -17,8 +17,10 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     name,
     description,
     phaseNumber,
+    iconName,
     setName,
     setDescription,
+    setShowPickerPopup,
     addPhase,
     updateShowTaskPhaseContainer,
     displayPreviousPhase,
@@ -32,7 +34,13 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
           containerStyle={styles.underlinedText}
         />
       </View>
-      <IconPicker containerStyle={styles.iconPicker} />
+      <Pressable>
+        <IconPicker
+          setShowPickerPopup={setShowPickerPopup}
+          iconName={iconName}
+          containerStyle={styles.iconPicker}
+        />
+      </Pressable>
       <TaskInput
         label="Name"
         entryText={name}
