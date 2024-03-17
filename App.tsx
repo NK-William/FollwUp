@@ -7,6 +7,7 @@ import {
   Profile,
   AddTask,
   TasksToTrack,
+  TaskToTrackDetails,
 } from './src/screens';
 import {primary} from './src/constants/colors';
 
@@ -14,7 +15,7 @@ const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={primary} />
-      <TasksToTrack />
+      <TaskToTrackDetails />
     </SafeAreaView>
   );
 };

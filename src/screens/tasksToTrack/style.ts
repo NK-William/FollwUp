@@ -14,7 +14,7 @@ const getStyling = () => {
       justifyContent: 'flex-end',
       paddingHorizontal: 22,
     },
-    button: {width: 240, alignSelf: 'center'},
+    button: {width: 240, height: 50, alignSelf: 'center'},
     flatList: {marginTop: 45, marginBottom: 90, paddingHorizontal: 22},
     listItemContainer: {
       backgroundColor: primary,
