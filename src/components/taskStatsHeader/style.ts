@@ -42,6 +42,7 @@ const getStyling = () => {
     positiveButtonText: {
       fontSize: 14,
       fontWeight: 'normal',
+      color: lightText,
     },
   });
 };

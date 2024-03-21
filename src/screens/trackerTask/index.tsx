@@ -1,14 +1,19 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import getStyling from './style';
-import {TaskStatsHeader} from '../../components';
+import {
+  TaskStatsHeader,
+  TaskNumberBadge,
+  TaskTrackLine,
+} from '../../components';
 
 const TrackerTask = () => {
   const styles = getStyling();
   return (
     <View>
       <TaskStatsHeader />
-      <Text>TrackerTask</Text>
+      <TaskNumberBadge number={2} />
+      <TaskTrackLine />
     </View>
   );
 };

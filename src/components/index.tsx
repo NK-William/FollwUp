@@ -12,3 +12,5 @@ export {default as TaskInput} from './taskInput';
 export {default as IconPicker} from './iconPicker';
 export {default as TaskStatsHeader} from './taskStatsHeader';
 export {default as ProgressBar} from './progressBar';
+export {default as TaskNumberBadge} from './taskNumberBadge';
+export {default as TaskTrackLine} from './taskTrackLine';
