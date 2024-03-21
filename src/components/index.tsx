@@ -14,3 +14,4 @@ export {default as TaskStatsHeader} from './taskStatsHeader';
 export {default as ProgressBar} from './progressBar';
 export {default as TaskNumberBadge} from './taskNumberBadge';
 export {default as TaskTrackLine} from './taskTrackLine';
+export {default as TaskPhaseDetails} from './taskPhaseDetails';
