@@ -1,7 +1,7 @@
 export {default as FollwUpButton} from './follwUpButton';
 export {default as PressableText} from './pressableText';
 export {default as AuthInput} from './authInput';
-export {default as ProgressBar} from './progressBar';
+export {default as StatsProgressBar} from './statsProgressBar';
 export {default as ProgressTaskName} from './progressTaskName';
 export {default as TaskTabOption} from './taskTabOption';
 export {default as TaskListItem} from './taskListItem';
@@ -10,3 +10,5 @@ export {default as Icon} from './icon';
 export {default as UnderlinedText} from './underlinedText';
 export {default as TaskInput} from './taskInput';
 export {default as IconPicker} from './iconPicker';
+export {default as TaskStatsHeader} from './taskStatsHeader';
+export {default as ProgressBar} from './progressBar';

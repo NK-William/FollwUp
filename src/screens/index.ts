@@ -5,3 +5,4 @@ export {default as Profile} from './profile';
 export {default as AddTask} from './addTask';
 export {default as TasksToTrack} from './tasksToTrack';
 export {default as TaskToTrackDetails} from './taskToTrackDetails';
+export {default as TrackerTask} from './trackerTask';

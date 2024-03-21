@@ -7,7 +7,6 @@ const getStyling = (
   props: ITaskListItemProps,
   statusViewColor: ColorValue,
   inviteLinkVisible: boolean,
-  progressWidth: number,
 ) => {
   return StyleSheet.create({
     container: flatten([
@@ -40,18 +39,6 @@ const getStyling = (
       justifyContent: 'center',
     },
     statusText: {color: grayLight, fontSize: 12},
-    progressView: {
-      height: 6,
-      backgroundColor: 'white',
-      marginTop: 4,
-      borderRadius: 10,
-    },
-    progress: {
-      height: 6,
-      backgroundColor: accent,
-      borderRadius: 10,
-      width: progressWidth,
-    },
     badge: {
       height: 25,
       width: 25,

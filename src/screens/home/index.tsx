@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
 import {
-  ProgressBar,
+  StatsProgressBar,
   ProgressTaskName,
   TaskTabOption,
   TaskListItem,
@@ -29,7 +29,7 @@ const Home = () => {
         </View>
         <View style={styles.progressContainer}>
           <Text style={styles.progressText}>All Tasks Progress</Text>
-          <ProgressBar
+          <StatsProgressBar
             progressTasks={progressBarTasks(fakeTasks)}
             containerStyle={styles.progressBar}
           />

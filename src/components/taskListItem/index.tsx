@@ -5,22 +5,12 @@ import {ITaskListItemProps} from './interface';
 import {useTaskListItem} from './util';
 import {PressableText} from '../';
 import {accent} from '../../constants/colors';
+import {ProgressBar} from '..';
 
 const TaskListItem: FC<ITaskListItemProps> = props => {
-  const {
-    statusViewColor,
-    statusText,
-    namesOrOrganization,
-    inviteLinkVisible,
-    handleLayout,
-    progressWidth,
-  } = useTaskListItem(props);
-  const styles = getStyling(
-    props,
-    statusViewColor,
-    inviteLinkVisible,
-    progressWidth,
-  );
+  const {statusViewColor, statusText, namesOrOrganization, inviteLinkVisible} =
+    useTaskListItem(props);
+  const styles = getStyling(props, statusViewColor, inviteLinkVisible);
   return (
     <View style={styles.container}>
       <View style={styles.taskInfoContainer}>
@@ -42,9 +32,12 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
           )}
         </View>
       </View>
-      <View style={styles.progressView} onLayout={handleLayout}>
-        <View style={styles.progress} />
-      </View>
+      <ProgressBar
+        progressToHundred={props.progressToHundred}
+        containerStyle={{
+          marginTop: 4,
+        }}
+      />
       <View style={styles.badge}>
         <Text style={styles.badgeText}>2</Text>
       </View>

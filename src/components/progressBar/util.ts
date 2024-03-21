@@ -1,24 +1,22 @@
 import {useState} from 'react';
+import {IProgressBarProps} from './interface';
 import {LayoutChangeEvent} from 'react-native';
-import {IMutatedIProgressTasks, IProgressBarProps} from './interface';
 
 export const useProgressBar = (props: IProgressBarProps) => {
-  const [viewWidth, setViewWidth] = useState(0);
-  const {progressTasks} = props;
-  let mutatedTasks: IMutatedIProgressTasks[] = [];
-
-  if (viewWidth) {
-    const taskWidthSpace = viewWidth / progressTasks.length;
-
-    mutatedTasks = progressTasks.map(progressTask => ({
-      ...progressTask,
-      width: (progressTask.progressToHundred / 100) * taskWidthSpace,
-    }));
-  }
+  const [progressWidth, setProgressWidth] = useState(0);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
-    setViewWidth(width);
+    if (width > 0) handleProgressWidth(width);
   };
-  return {handleLayout, mutatedTasks};
+
+  const handleProgressWidth = (width: number) => {
+    const progress = (props.progressToHundred / 100) * width;
+    setProgressWidth(progress);
+  };
+
+  return {
+    progressWidth,
+    handleLayout,
+  };
 };

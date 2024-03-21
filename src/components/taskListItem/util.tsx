@@ -1,10 +1,8 @@
 import {useState} from 'react';
 import {ITaskListItemProps} from './interface';
 import {taskStatus, TaskStatusColor} from '../../utils/enums';
-import {LayoutChangeEvent} from 'react-native';
 
 export const useTaskListItem = (props: ITaskListItemProps) => {
-  const [progressWidth, setProgressWidth] = useState(0);
   const getStatusViewColor = () => {
     switch (props.status) {
       case taskStatus.Rejected:
@@ -35,16 +33,6 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
     }
   };
 
-  const handleLayout = (event: LayoutChangeEvent) => {
-    const {width} = event.nativeEvent.layout;
-    if (width > 0) handleProgressWidth(width);
-  };
-
-  const handleProgressWidth = (width: number) => {
-    const progress = (props.progressToHundred / 100) * width;
-    setProgressWidth(progress);
-  };
-
   const getFirstLastName = () => {
     if (props.clientFirstName && props.clientLastName)
       return `${props.clientFirstName} ${props.clientLastName}`;
@@ -69,7 +57,5 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
     statusText,
     namesOrOrganization,
     inviteLinkVisible,
-    handleLayout,
-    progressWidth,
   };
 };
