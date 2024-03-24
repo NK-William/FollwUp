@@ -19,7 +19,7 @@ export interface ITask {
 }
 
 export interface ITaskPhase {
-  id?: string;
+  id: string;
   taskId?: string; // fk
   name: string;
   description?: string;

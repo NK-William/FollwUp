@@ -16,12 +16,18 @@ const getStyling = (props: ITaskPhaseDetailsProps) => {
         borderBottomLeftRadius: 20,
         paddingVertical: 6,
         paddingHorizontal: 14,
-        maxWidth: 160,
+        maxWidth: 250,
       },
       props.containerStyle,
     ]),
-    title: {fontWeight: 'bold', fontSize: 14, color: darkText},
-    description: {fontSize: 14, color: darkText, marginTop: 5},
+    title: flatten([
+      {fontWeight: 'bold', fontSize: 14, color: darkText},
+      props.textStyle,
+    ]),
+    description: flatten([
+      {fontSize: 14, color: darkText, marginTop: 5},
+      props.textStyle,
+    ]),
   });
 };
 
