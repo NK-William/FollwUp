@@ -23,11 +23,15 @@ const getStyling = () => {
     },
     taskNumberBadge: {transform: [{translateX: -25}]},
     taskPhaseDetails: {position: 'absolute', right: 0, maxWidth: 145},
-    taskTrackLine: {
+    taskTrackLine: {},
+    trackContainer: {
+      height: 48,
+      minWidth: 20,
+      flexDirection: 'row',
       alignSelf: 'center',
       marginTop: -11,
       marginBottom: -11,
-      transform: [{translateX: -10}],
+      transform: [{translateX: 8}],
     },
   });
 };

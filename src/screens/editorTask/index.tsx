@@ -11,6 +11,7 @@ import {
   TaskTrackLine,
 } from '../../components';
 import getStyling from './style';
+import {primary} from '../../constants/colors';
 
 const demoPhaseData: ITaskPhase[] = [
   {
@@ -77,6 +78,19 @@ const EditorTask = () => {
 
     return (
       <View>
+        {number === 1 ? (
+          <Pressable
+            style={{marginLeft: 20, alignSelf: 'center'}}
+            onPress={() => console.log('Add new phase')}>
+            <Icon
+              iconType="Ionicons"
+              iconName="add-circle-outline"
+              size={30}
+              style={styles.actionIcon}
+            />
+          </Pressable>
+        ) : null}
+
         <View style={styles.rowContainer}>
           <View style={styles.actionIconContainer}>
             <Pressable onPress={() => console.log('Edit')}>
@@ -125,13 +139,23 @@ const EditorTask = () => {
             textStyle={taskPhaseDetailsTextStyleOverride}
           />
         </View>
-        <View style={{height: 20}}>
+        <View style={styles.trackContainer}>
           <TaskTrackLine
             containerStyle={{
               ...styles.taskTrackLine,
               ...taskTrackLineStyleOverride,
             }}
           />
+          <Pressable
+            style={{marginLeft: 6, alignSelf: 'center'}}
+            onPress={() => console.log('Add new phase')}>
+            <Icon
+              iconType="Ionicons"
+              iconName="add-circle-outline"
+              size={30}
+              style={styles.actionIcon}
+            />
+          </Pressable>
         </View>
       </View>
     );
@@ -141,7 +165,9 @@ const EditorTask = () => {
     <View style={{flex: 1}}>
       <TaskStatsHeader />
       <FlatList
-        style={{marginVertical: 10}}
+        style={{
+          marginVertical: 10,
+        }}
         data={demoPhaseData}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
