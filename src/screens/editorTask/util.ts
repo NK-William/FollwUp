@@ -26,13 +26,15 @@ export const useRow = (
   // taskTrackLine
   let taskTrackLineStyleOverride;
 
+  // taskIcon
+  let taskIconStyleOverride;
+
   if (status === taskPhaseStatus.InProgress) {
     taskNumberBadgeStyleOverride = {
       backgroundColor: grayLight,
       borderWidth: 3,
       borderColor: primary,
     };
-
     taskTrackLineStyleOverride = {backgroundColor: grayLight};
     taskNumberBadgeNumberStyleOverride = {color: primary};
   } else if (status === taskPhaseStatus.Pending) {
@@ -43,6 +45,7 @@ export const useRow = (
       borderColor: grayLight,
     };
     taskPhaseDetailsTextStyleOverride = {color: gray};
+    taskIconStyleOverride = {color: grayLight};
   }
 
   if (number === dataLength)
@@ -55,5 +58,6 @@ export const useRow = (
     taskPhaseDetailsStyleOverride,
     taskPhaseDetailsTextStyleOverride,
     taskTrackLineStyleOverride,
+    taskIconStyleOverride,
   };
 };

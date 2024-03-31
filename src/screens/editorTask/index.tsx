@@ -1,4 +1,4 @@
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, Pressable} from 'react-native';
 import React from 'react';
 import {ITaskPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
@@ -72,14 +72,35 @@ const EditorTask = () => {
       taskPhaseDetailsStyleOverride,
       taskPhaseDetailsTextStyleOverride,
       taskTrackLineStyleOverride,
+      taskIconStyleOverride,
     } = useRow(description, number, demoPhaseData.length, status);
 
     return (
       <View>
         <View style={styles.rowContainer}>
+          <View style={styles.actionIconContainer}>
+            <Pressable onPress={() => console.log('Edit')}>
+              <Icon
+                iconType="FontAwesome5"
+                iconName="pen"
+                size={20}
+                style={styles.actionIcon}
+              />
+            </Pressable>
+            <Pressable
+              style={{marginLeft: 12}}
+              onPress={() => console.log('Delete')}>
+              <Icon
+                iconType="FontAwesome5"
+                iconName="trash"
+                size={20}
+                style={styles.actionIcon}
+              />
+            </Pressable>
+          </View>
           {icon ? (
             <Icon
-              style={styles.rowIcon}
+              style={{...styles.rowIcon, ...taskIconStyleOverride}}
               size={30}
               iconType="Ionicons"
               iconName={icon}

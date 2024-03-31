@@ -26,6 +26,9 @@ export const useRow = (
   // taskTrackLine
   let taskTrackLineStyleOverride;
 
+  // taskIcon
+  let taskIconStyleOverride;
+
   if (status === taskPhaseStatus.InProgress) {
     taskNumberBadgeStyleOverride = {
       backgroundColor: grayLight,
@@ -43,6 +46,7 @@ export const useRow = (
       borderColor: grayLight,
     };
     taskPhaseDetailsTextStyleOverride = {color: gray};
+    taskIconStyleOverride = {color: grayLight};
   }
 
   if (number === dataLength)
@@ -55,5 +59,6 @@ export const useRow = (
     taskPhaseDetailsStyleOverride,
     taskPhaseDetailsTextStyleOverride,
     taskTrackLineStyleOverride,
+    taskIconStyleOverride,
   };
 };

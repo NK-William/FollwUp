@@ -74,6 +74,7 @@ const TrackerTask = () => {
       taskPhaseDetailsStyleOverride,
       taskPhaseDetailsTextStyleOverride,
       taskTrackLineStyleOverride,
+      taskIconStyleOverride,
     } = useRow(description, number, demoPhaseData.length, status);
 
     return (
@@ -81,7 +82,7 @@ const TrackerTask = () => {
         <View style={styles.rowContainer}>
           {icon ? (
             <Icon
-              style={styles.rowIcon}
+              style={{...styles.rowIcon, ...taskIconStyleOverride}}
               size={30}
               iconType="Ionicons"
               iconName={icon}

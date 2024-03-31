@@ -6,20 +6,28 @@ const getStyling = () => {
     rowContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       height: 76,
+    },
+    actionIconContainer: {
+      position: 'absolute',
+      left: 8,
+      flexDirection: 'row',
+    },
+    actionIcon: {
+      color: accent,
     },
     rowIcon: {
       color: primary,
-      marginLeft: 6,
+      transform: [{translateX: -33}],
     },
-    taskNumberBadge: {position: 'absolute', left: '12%'},
-    taskPhaseDetails: {position: 'absolute', right: 0},
+    taskNumberBadge: {transform: [{translateX: -25}]},
+    taskPhaseDetails: {position: 'absolute', right: 0, maxWidth: 145},
     taskTrackLine: {
       alignSelf: 'center',
       marginTop: -11,
       marginBottom: -11,
-      position: 'absolute',
-      left: '19%',
+      transform: [{translateX: -10}],
     },
   });
 };
