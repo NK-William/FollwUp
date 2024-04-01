@@ -39,6 +39,14 @@ const getStyling = () => {
       alignSelf: 'center',
       marginVertical: 8,
     },
+    RemoveTaskButton: {
+      width: 120,
+      backgroundColor: primary,
+      borderColor: accent,
+      borderWidth: 2,
+      marginLeft: 15,
+    },
+    RequestLinkButton: {width: 120, marginRight: 15},
     positiveButtonText: {
       fontSize: 14,
       fontWeight: 'normal',

@@ -3,6 +3,7 @@ import React, {FC} from 'react';
 import getStyling from './style';
 import {ITaskStatsHeader} from './interface';
 import {ProgressBar, FollwUpButton} from '..';
+import {accent, primary} from '../../constants/colors';
 
 const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
   const {notLinked} = props;
@@ -17,15 +18,25 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
       {notLinked ? (
         <View>
           <Text style={styles.phasesTrackText}>Link has been declined</Text>
-          <View style={{flexDirection: 'row'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
             <FollwUpButton
-              text="View reference"
-              containerStyle={styles.positiveButton}
+              text="Request link"
+              containerStyle={{
+                ...styles.positiveButton,
+                ...styles.RequestLinkButton,
+              }}
               textStyle={styles.positiveButtonText}
             />
             <FollwUpButton
-              text="View reference"
-              containerStyle={styles.positiveButton}
+              text="Remove task"
+              containerStyle={{
+                ...styles.positiveButton,
+                ...styles.RemoveTaskButton,
+              }}
               textStyle={styles.positiveButtonText}
             />
           </View>
