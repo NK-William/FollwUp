@@ -163,7 +163,7 @@ const EditorTask = () => {
   const styles = getStyling();
   return (
     <View style={{flex: 1}}>
-      <TaskStatsHeader />
+      <TaskStatsHeader notLinked />
       <FlatList
         style={{
           marginVertical: 10,

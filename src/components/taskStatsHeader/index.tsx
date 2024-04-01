@@ -5,6 +5,7 @@ import {ITaskStatsHeader} from './interface';
 import {ProgressBar, FollwUpButton} from '..';
 
 const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
+  const {notLinked} = props;
   const styles = getStyling();
   return (
     <View style={styles.container}>
@@ -13,25 +14,45 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
         style={styles.profilePlaceholder}
       />
       <Text style={styles.title}>Engine rebuild</Text>
-      <Text style={styles.phasesTrackText}>3 of 5 phases completed</Text>
-      <Text style={styles.estimationText}>
-        Estimated completion time is 12 July 2023
-      </Text>
-      <View
-        style={{
-          justifyContent: 'space-between',
-          flex: 1,
-        }}>
-        <ProgressBar
-          progressToHundred={70}
-          containerStyle={styles.progressBar}
-        />
-        <FollwUpButton
-          text="View reference"
-          containerStyle={styles.positiveButton}
-          textStyle={styles.positiveButtonText}
-        />
-      </View>
+      {notLinked ? (
+        <View>
+          <Text style={styles.phasesTrackText}>Link has been declined</Text>
+          <View style={{flexDirection: 'row'}}>
+            <FollwUpButton
+              text="View reference"
+              containerStyle={styles.positiveButton}
+              textStyle={styles.positiveButtonText}
+            />
+            <FollwUpButton
+              text="View reference"
+              containerStyle={styles.positiveButton}
+              textStyle={styles.positiveButtonText}
+            />
+          </View>
+        </View>
+      ) : (
+        <View>
+          <Text style={styles.phasesTrackText}>3 of 5 phases completed</Text>
+          <Text style={styles.estimationText}>
+            Estimated completion time is 12 July 2023
+          </Text>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flex: 1,
+            }}>
+            <ProgressBar
+              progressToHundred={70}
+              containerStyle={styles.progressBar}
+            />
+            <FollwUpButton
+              text="View reference"
+              containerStyle={styles.positiveButton}
+              textStyle={styles.positiveButtonText}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 };
