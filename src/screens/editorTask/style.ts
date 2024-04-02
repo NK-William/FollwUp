@@ -17,6 +17,15 @@ const getStyling = () => {
     actionIcon: {
       color: accent,
     },
+    chatIcon: {
+      color: primary,
+    },
+    chatIconContainer: {
+      height: 60,
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+      justifyContent: 'center',
+    },
     rowIcon: {
       color: primary,
       transform: [{translateX: -33}],

@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Icon: FC<IIconProps> = props => {
   switch (props.iconType) {
@@ -44,6 +45,14 @@ const Icon: FC<IIconProps> = props => {
     case 'FontAwesome5':
       return (
         <FontAwesome5
+          name={props.iconName}
+          size={props.size ?? 20}
+          style={props.style}
+        />
+      );
+    case 'Entypo':
+      return (
+        <Entypo
           name={props.iconName}
           size={props.size ?? 20}
           style={props.style}

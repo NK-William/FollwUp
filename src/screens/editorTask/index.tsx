@@ -60,6 +60,33 @@ const demoPhaseData: ITaskPhase[] = [
     status: taskPhaseStatus.Pending,
     taskId: '1',
   },
+  {
+    id: '6',
+    name: 'Completed 2',
+    description: 'Your car is ready for collection.',
+    number: 6,
+    icon: 'save-outline',
+    status: taskPhaseStatus.Pending,
+    taskId: '1',
+  },
+  {
+    id: '7',
+    name: 'Completed 3',
+    description: 'Your car is ready for collection.',
+    number: 7,
+    icon: 'save-outline',
+    status: taskPhaseStatus.Pending,
+    taskId: '1',
+  },
+  {
+    id: '8',
+    name: 'Completed 8',
+    description: 'Your car is ready for collection.',
+    number: 8,
+    icon: 'save-outline',
+    status: taskPhaseStatus.Pending,
+    taskId: '1',
+  },
 ];
 
 const EditorTask = () => {
@@ -172,6 +199,14 @@ const EditorTask = () => {
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />
+      <View style={styles.chatIconContainer}>
+        <Icon
+          iconName="chat"
+          iconType="Entypo"
+          size={40}
+          style={styles.chatIcon}
+        />
+      </View>
     </View>
   );
 };
