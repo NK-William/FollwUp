@@ -3,6 +3,7 @@ import {accent, lightText, primary} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
+    container: {flex: 1, backgroundColor: 'white'},
     rowContainer: {
       flexDirection: 'row',
       alignItems: 'center',

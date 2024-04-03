@@ -120,10 +120,9 @@ const TrackerTask = () => {
   };
   const styles = getStyling();
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <TaskStatsHeader />
       <FlatList
-        style={{marginVertical: 10}}
         data={demoPhaseData}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}

@@ -1,9 +1,10 @@
-import {View, Text, FlatList, Pressable} from 'react-native';
+import {View, Text, FlatList, Pressable, Modal} from 'react-native';
 import React from 'react';
 import {ITaskPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
 import {useRow} from './util';
 import {
+  ChatBubble,
   Icon,
   TaskNumberBadge,
   TaskPhaseDetails,
@@ -189,12 +190,9 @@ const EditorTask = () => {
   };
   const styles = getStyling();
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <TaskStatsHeader notLinked />
       <FlatList
-        style={{
-          marginVertical: 10,
-        }}
         data={demoPhaseData}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
@@ -203,10 +201,18 @@ const EditorTask = () => {
         <Icon
           iconName="chat"
           iconType="Entypo"
-          size={40}
+          size={35}
           style={styles.chatIcon}
         />
       </View>
+      <Modal animationType="fade" transparent visible={true}>
+        <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1}}>
+          <TaskStatsHeader />
+          <View>
+            <ChatBubble />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
