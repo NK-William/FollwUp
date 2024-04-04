@@ -1,1 +1,4 @@
-export interface IChatBubbleProps {}
+export interface IChatBubbleProps {
+  text: string;
+  fromSender?: boolean;
+}

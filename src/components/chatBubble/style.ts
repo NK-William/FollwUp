@@ -1,24 +1,38 @@
 import {StyleSheet} from 'react-native';
 import {flatten} from '../../utils';
-import {accent, darkText} from '../../constants/colors';
+import {
+  darkText,
+  senderChatBackground,
+  whiteChatBackground,
+} from '../../constants/colors';
+import {IChatBubbleProps} from './interface';
 
-const getStyling = () => {
+const getStyling = (props: IChatBubbleProps) => {
   return StyleSheet.create({
     container: flatten([
       {
-        flexWrap: 'wrap',
-        paddingHorizontal: 4,
+        flexWrap: props.fromSender ? 'wrap' : 'wrap-reverse',
+        paddingHorizontal: 8,
         paddingVertical: 7,
       },
     ]),
     senderContainer: {
-      backgroundColor: accent,
+      backgroundColor: senderChatBackground,
       alignSelf: 'flex-end',
       maxWidth: '70%',
       paddingHorizontal: 14,
       paddingVertical: 12,
       borderRadius: 30,
       borderBottomLeftRadius: 0,
+    },
+    receiverContainer: {
+      backgroundColor: whiteChatBackground,
+      alignSelf: 'flex-end',
+      maxWidth: '70%',
+      paddingHorizontal: 14,
+      paddingVertical: 12,
+      borderRadius: 30,
+      borderBottomRightRadius: 0,
     },
     text: {
       color: darkText,

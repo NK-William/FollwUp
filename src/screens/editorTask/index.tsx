@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Pressable, Modal} from 'react-native';
+import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
 import {ITaskPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
@@ -206,11 +206,20 @@ const EditorTask = () => {
         />
       </View>
       <Modal animationType="fade" transparent visible={true}>
-        <View style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1}}>
+        <View style={styles.modalTransparentContainer}>
           <TaskStatsHeader />
-          <View>
-            <ChatBubble />
-          </View>
+          <ScrollView>
+            <ChatBubble
+              text="Good day, we will be starting with the diagnostics today to find out the cost of the issue, this process should take us long."
+              fromSender
+            />
+            <ChatBubble text="Hi, thanks for the update, hope that will not be a major issue." />
+            <ChatBubble text="Keep me posted." />
+            <ChatBubble
+              text="It won’t be a major issue they way it sounds, if we find the issue we might fix it tomorrow and ready to be collected."
+              fromSender
+            />
+          </ScrollView>
         </View>
       </Modal>
     </View>

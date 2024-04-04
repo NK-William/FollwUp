@@ -43,6 +43,7 @@ const getStyling = () => {
       marginBottom: -11,
       transform: [{translateX: 8}],
     },
+    modalTransparentContainer: {backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1},
   });
 };
 
