@@ -1,9 +1,16 @@
 import {ColorValue} from 'react-native';
 import {taskPhaseStatus} from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
+import {useState} from 'react';
 
 export const useEditorTask = () => {
-  return {};
+  const [showModal, setShowModal] = useState(false);
+
+  const modalVisible = (value: boolean) => {
+    setShowModal(value);
+  };
+
+  return {showModal, modalVisible};
 };
 
 export const useRow = (

@@ -5,6 +5,7 @@ export interface IIconProps {
     | 'Fontisto'
     | 'Feather'
     | 'FontAwesome5'
+    | 'FontAwesome'
     | 'Entypo';
   iconName: string;
   size?: number;

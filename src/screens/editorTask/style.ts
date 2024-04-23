@@ -21,10 +21,10 @@ const getStyling = () => {
     chatIcon: {
       color: primary,
     },
+
     chatIconContainer: {
       height: 60,
       alignItems: 'center',
-      backgroundColor: 'transparent',
       justifyContent: 'center',
     },
     rowIcon: {

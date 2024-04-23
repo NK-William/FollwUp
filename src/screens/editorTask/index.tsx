@@ -2,7 +2,7 @@ import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
 import {ITaskPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
-import {useRow} from './util';
+import {useEditorTask, useRow} from './util';
 import {
   ChatBubble,
   Icon,
@@ -12,7 +12,6 @@ import {
   TaskTrackLine,
 } from '../../components';
 import getStyling from './style';
-import {primary} from '../../constants/colors';
 
 const demoPhaseData: ITaskPhase[] = [
   {
@@ -91,6 +90,9 @@ const demoPhaseData: ITaskPhase[] = [
 ];
 
 const EditorTask = () => {
+  const {showModal, modalVisible} = useEditorTask();
+  const styles = getStyling();
+
   const Row = ({item}: {item: ITaskPhase}) => {
     const {name, description, number, icon, status} = item;
 
@@ -188,24 +190,28 @@ const EditorTask = () => {
       </View>
     );
   };
-  const styles = getStyling();
+
   return (
     <View style={styles.container}>
-      <TaskStatsHeader notLinked />
+      <TaskStatsHeader />
       <FlatList
         data={demoPhaseData}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />
       <View style={styles.chatIconContainer}>
-        <Icon
-          iconName="chat"
-          iconType="Entypo"
-          size={35}
-          style={styles.chatIcon}
-        />
+        {!showModal && (
+          <Pressable onPress={() => modalVisible(true)}>
+            <Icon
+              iconName="chat"
+              iconType="Entypo"
+              size={35}
+              style={styles.chatIcon}
+            />
+          </Pressable>
+        )}
       </View>
-      <Modal animationType="fade" transparent visible={true}>
+      <Modal animationType="fade" transparent visible={showModal}>
         <View style={styles.modalTransparentContainer}>
           <TaskStatsHeader />
           <ScrollView>
@@ -220,6 +226,16 @@ const EditorTask = () => {
               fromSender
             />
           </ScrollView>
+          <View style={styles.chatIconContainer}>
+            <Pressable onPress={() => modalVisible(false)}>
+              <Icon
+                iconName="tasks"
+                iconType="FontAwesome"
+                size={32}
+                style={{color: 'white'}}
+              />
+            </Pressable>
+          </View>
         </View>
       </Modal>
     </View>
