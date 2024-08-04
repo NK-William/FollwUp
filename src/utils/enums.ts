@@ -10,10 +10,10 @@ export enum authFocusedEntry {
 }
 
 export enum taskStatus {
-  Rejected,
+  Pending,
   Accepted,
   Completed,
-  Pending,
+  Rejected,
 }
 
 export enum taskPhaseStatus {

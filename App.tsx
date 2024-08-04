@@ -17,7 +17,7 @@ const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={primary} />
-      <EditorTask />
+      <Login />
     </SafeAreaView>
   );
 };
