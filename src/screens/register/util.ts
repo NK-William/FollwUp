@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {authFocusedEntry} from '../../utils/enums';
 
-export const useRegister = () => {
+export const useRegister = (navigation: any) => {
   const [focused, setFocused] = useState<authFocusedEntry>(
     authFocusedEntry.None,
   );
@@ -18,5 +18,7 @@ export const useRegister = () => {
     else setFocused(authFocusedEntry.None);
   };
 
-  return {focused, handleFocusedEntry};
+  const navigateToRegisterPage = () => navigation.goBack();
+
+  return {focused, handleFocusedEntry, navigateToRegisterPage};
 };

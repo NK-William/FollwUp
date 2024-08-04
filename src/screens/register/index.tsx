@@ -1,13 +1,16 @@
 import {View, Text, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import getStyling from './style';
-import {follwUpButton, PressableText, AuthInput} from '../../components';
+import {FollwUpButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
 import {useRegister} from './util';
 
-const Register = () => {
+const Register = (props: any) => {
+  const {navigation} = props;
+
   const styles = getStyling();
-  const {focused, handleFocusedEntry} = useRegister();
+  const {focused, handleFocusedEntry, navigateToRegisterPage} =
+    useRegister(navigation);
 
   return (
     <View style={styles.container}>
@@ -75,14 +78,14 @@ const Register = () => {
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <follwUpButton
+          <FollwUpButton
             text="Register"
             onPress={() => console.log('Button pressed')}
           />
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Already have an account? </Text>
-          <PressableText text="Sign In" />
+          <PressableText onPress={navigateToRegisterPage} text="Sign In" />
         </View>
       </View>
     </View>

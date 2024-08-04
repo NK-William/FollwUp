@@ -5,9 +5,12 @@ import {FollwUpButton, PressableText, AuthInput} from '../../components';
 import {authFocusedEntry} from '../../utils/enums';
 import {useLogin} from './util';
 
-const Login = () => {
+const Login = (props: any) => {
+  const {navigation} = props;
+
   const styles = getStyling();
-  const {focused, handleFocusedEntry} = useLogin();
+  const {focused, handleFocusedEntry, navigateToRegisterPage} =
+    useLogin(navigation);
 
   return (
     <View style={styles.container}>
@@ -53,7 +56,7 @@ const Login = () => {
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Don't have an account? </Text>
-          <PressableText text="Sign Up" />
+          <PressableText onPress={navigateToRegisterPage} text="Sign Up" />
         </View>
       </View>
     </View>
