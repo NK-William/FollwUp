@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, StatusBar} from 'react-native';
 import {
   Login,
@@ -10,17 +10,24 @@ import {
   TaskToTrackDetails,
   TrackerTask,
   EditorTask,
+  Splash,
 } from './src/screens';
 import {primary} from './src/constants/colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {accessTokenKey} from './src/constants/cacheKeys';
 
 const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Home"
+        component={Home}
+      />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="AddTask" component={AddTask} />
       <Stack.Screen name="TasksToTrack" component={TasksToTrack} />
@@ -48,9 +55,29 @@ const AuthStack = () => {
   );
 };
 
-let accessToken = false;
-
 const App = () => {
+  const [cacheLoaded, setCacheLoaded] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    setTimeout(() => {
+      AsyncStorage.getItem(accessTokenKey)
+        .then((token: string | null) => {
+          if (token) {
+            setAccessToken(token);
+          }
+          setCacheLoaded(true);
+        })
+        .catch(() => {
+          setCacheLoaded(true);
+        });
+    }, 3000);
+  }, []);
+
+  if (!cacheLoaded) {
+    return <Splash />;
+  }
+
   return (
     <NavigationContainer>
       <SafeAreaView style={{flex: 1}}>
