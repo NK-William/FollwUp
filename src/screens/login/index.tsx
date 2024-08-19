@@ -9,8 +9,16 @@ const Login = (props: any) => {
   const {navigation} = props;
 
   const styles = getStyling();
-  const {focused, handleFocusedEntry, navigateToRegisterPage} =
-    useLogin(navigation);
+  const {
+    email,
+    password,
+    focused,
+    setEmail,
+    setPassword,
+    handleFocusedEntry,
+    navigateToRegisterPage,
+    login,
+  } = useLogin(navigation);
 
   return (
     <View style={styles.container}>
@@ -28,9 +36,10 @@ const Login = (props: any) => {
           entryName={authFocusedEntry.Email}
           setFocused={handleFocusedEntry}
           focused={authFocusedEntry.Email === focused}
-          onChangeText={() => {}}
+          onChangeText={setEmail}
           iconName="envelope-o"
           containerStyle={styles.emailAuthInput}
+          value={email}
         />
         <AuthInput
           title="PASSWORD"
@@ -38,17 +47,15 @@ const Login = (props: any) => {
           secureTextEntry
           setFocused={handleFocusedEntry}
           focused={authFocusedEntry.Password === focused}
-          onChangeText={() => {}}
+          onChangeText={setPassword}
           iconName="lock"
           containerStyle={styles.passwordAuthInput}
+          value={password}
         />
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <FollwUpButton
-            text="Login"
-            onPress={() => console.log('Button pressed')}
-          />
+          <FollwUpButton text="Login" onPress={login} />
           <PressableText
             text="Forgot Password?"
             textStyle={styles.forgotPasswordText}

@@ -2,6 +2,7 @@ import {ColorValue} from 'react-native';
 import {taskStatus, taskPhaseStatus} from '../utils/enums';
 
 export interface ITask {
+  // Create a file for this interface
   id?: string;
   creatorId?: string; // fk
   name: string;
@@ -19,6 +20,7 @@ export interface ITask {
 }
 
 export interface ITaskPhase {
+  // Create a file for this interface
   id: string;
   taskId?: string; // fk
   name: string;
@@ -27,3 +29,5 @@ export interface ITaskPhase {
   number: number;
   status: taskPhaseStatus;
 }
+
+export type {ILogin} from './login';
