@@ -17,6 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {accessTokenKey} from './src/constants/cacheKeys';
+import {RestfulProvider} from 'restful-react';
 
 const Stack = createNativeStackNavigator();
 
@@ -79,12 +80,20 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <SafeAreaView style={{flex: 1}}>
-        <StatusBar backgroundColor={primary} />
-        {accessToken ? <MainStack /> : <AuthStack />}
-      </SafeAreaView>
-    </NavigationContainer>
+    <RestfulProvider
+      base="https://408e-160-19-36-36.ngrok-free.app"
+      requestOptions={() => ({
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : '',
+        },
+      })}>
+      <NavigationContainer>
+        <SafeAreaView style={{flex: 1}}>
+          <StatusBar backgroundColor={primary} />
+          {accessToken ? <MainStack /> : <AuthStack />}
+        </SafeAreaView>
+      </NavigationContainer>
+    </RestfulProvider>
   );
 };
 
