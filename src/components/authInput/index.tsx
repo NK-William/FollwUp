@@ -45,6 +45,7 @@ const AuthInput: FC<IAuthInputProps> = props => {
             onChangeText={onChangeText}
             style={styles.input}
             secureTextEntry={hidePassword}
+            {...props}
           />
 
           {secureTextEntry &&

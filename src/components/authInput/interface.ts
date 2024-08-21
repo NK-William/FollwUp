@@ -1,4 +1,4 @@
-import type {StyleProp, ViewStyle} from 'react-native';
+import type {KeyboardTypeOptions, StyleProp, ViewStyle} from 'react-native';
 import {authFocusedEntry} from '../../utils/enums';
 
 export interface IAuthInputProps {
@@ -8,6 +8,7 @@ export interface IAuthInputProps {
   secureTextEntry?: boolean;
   focused: boolean;
   entryName: authFocusedEntry;
+  keyboardType?: KeyboardTypeOptions | undefined;
   setFocused: (entry: authFocusedEntry) => void;
   onChangeText?: (text: string) => void;
   containerStyle?: StyleProp<ViewStyle>;

@@ -6,17 +6,20 @@ import {useMutate} from 'restful-react';
 import {ILogin} from '../../interfaces';
 
 export const useLogin = (navigation: any) => {
+  // States
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [focused, setFocused] = useState<authFocusedEntry>(
     authFocusedEntry.None,
   );
 
+  // API requests
   const {mutate: apiLogin, loading: isLoginIn} = useMutate({
     verb: 'POST',
     path: 'api/Auth/Login',
   });
 
+  // Methods
   const handleFocusedEntry = (entry: authFocusedEntry) => {
     if (entry === authFocusedEntry.Email || entry === authFocusedEntry.Password)
       setFocused(entry);
