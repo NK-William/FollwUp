@@ -69,6 +69,7 @@ export const useLogin = (navigation: any) => {
     email,
     password,
     focused,
+    isLoginIn,
     setEmail,
     setPassword,
     handleFocusedEntry,

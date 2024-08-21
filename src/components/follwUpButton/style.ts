@@ -24,6 +24,7 @@ const getStyling = (props: IFollwUpButtonProps) => {
       },
       props.textStyle,
     ]),
+    loader: {width: 40, height: 40},
   });
 };
 

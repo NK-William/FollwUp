@@ -13,6 +13,7 @@ const Login = (props: any) => {
     email,
     password,
     focused,
+    isLoginIn,
     setEmail,
     setPassword,
     handleFocusedEntry,
@@ -55,15 +56,25 @@ const Login = (props: any) => {
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <FollwUpButton text="Login" onPress={login} />
+          <FollwUpButton text="Login" onPress={login} loading={isLoginIn} />
           <PressableText
             text="Forgot Password?"
             textStyle={styles.forgotPasswordText}
+            onPress={
+              isLoginIn
+                ? undefined
+                : () => {
+                    console.log('Forgot Password?');
+                  }
+            }
           />
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Don't have an account? </Text>
-          <PressableText onPress={navigateToRegisterPage} text="Sign Up" />
+          <PressableText
+            onPress={isLoginIn ? undefined : navigateToRegisterPage}
+            text="Sign Up"
+          />
         </View>
       </View>
     </View>
