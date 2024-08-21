@@ -3,10 +3,7 @@ import {authFocusedEntry} from '../../utils/enums';
 import {Alert} from 'react-native';
 import {isEmailValid} from '../../utils';
 import {useMutate} from 'restful-react';
-import {loginApi} from '../../constants/apis';
 import {ILogin} from '../../interfaces';
-import {accessTokenKey} from '../../constants/cacheKeys';
-import {AsyncStorage} from 'react-native';
 
 export const useLogin = (navigation: any) => {
   const [email, setEmail] = useState('');
@@ -46,6 +43,10 @@ export const useLogin = (navigation: any) => {
       .then(async response => {
         if (response) {
           if (response.jwtToken) {
+            console.log(
+              'Successfully signed in with token: ',
+              response.jwtToken,
+            );
             // await AsyncStorage.setItem(accessTokenKey, response.jwtToken);
             // navigation.navigate('Home');
             return;
