@@ -45,7 +45,7 @@ const Login = (props: any) => {
         <AuthInput
           title="PASSWORD"
           entryName={authFocusedEntry.Password}
-          secureTextEntry
+          secureEntry
           setFocused={handleFocusedEntry}
           focused={authFocusedEntry.Password === focused}
           onChangeText={setPassword}

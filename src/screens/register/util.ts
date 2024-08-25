@@ -2,16 +2,12 @@ import {useState} from 'react';
 import {authFocusedEntry} from '../../utils/enums';
 import {Alert} from 'react-native';
 import {isEmailValid} from '../../utils';
+import {useMutate} from 'restful-react';
+import {IRegister} from '../../interfaces/register';
+import {Commands} from 'react-native-screens/lib/typescript/fabric/SearchBarNativeComponent';
+import Toast from 'react-native-toast-message';
 
-interface IForm {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-}
-
-const initialForm: IForm = {
+const initialForm: IRegister = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
@@ -24,7 +20,13 @@ export const useRegister = (navigation: any) => {
   const [focused, setFocused] = useState<authFocusedEntry>(
     authFocusedEntry.None,
   );
-  const [form, setForm] = useState<IForm>(initialForm);
+  const [form, setForm] = useState<IRegister>(initialForm);
+
+  // API requests
+  const {mutate: apiRegister, loading: isRegistering} = useMutate({
+    verb: 'POST',
+    path: 'api/Auth/Register',
+  });
 
   // Methods
   const handleFocusedEntry = (entry: authFocusedEntry) => {
@@ -58,7 +60,19 @@ export const useRegister = (navigation: any) => {
       return;
     }
 
-    console.log('register');
+    apiRegister(form)
+      .then(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Account created successfully',
+          text2: 'You can now login',
+        });
+        navigateToRegisterPage();
+      })
+      .catch(error => {
+        console.log('error: ', error);
+        Alert.alert('Error', error.data ?? error.message);
+      });
   };
 
   const fieldsAreAllFilled = () => {
@@ -70,6 +84,7 @@ export const useRegister = (navigation: any) => {
   return {
     focused,
     form,
+    isRegistering,
     setForm,
     register,
     handleFocusedEntry,

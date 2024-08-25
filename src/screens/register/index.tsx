@@ -12,6 +12,7 @@ const Register = (props: any) => {
   const {
     focused,
     form,
+    isRegistering,
     setForm,
     register,
     handleFocusedEntry,
@@ -78,7 +79,7 @@ const Register = (props: any) => {
           <AuthInput
             title="PASSWORD"
             entryName={authFocusedEntry.Password}
-            secureTextEntry
+            secureEntry
             setFocused={handleFocusedEntry}
             focused={authFocusedEntry.Password === focused}
             onChangeText={text => setForm(f => ({...f, password: text}))}
@@ -90,11 +91,18 @@ const Register = (props: any) => {
       </View>
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
-          <FollwUpButton text="Register" onPress={register} />
+          <FollwUpButton
+            text="Register"
+            onPress={register}
+            loading={isRegistering}
+          />
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Already have an account? </Text>
-          <PressableText onPress={navigateToRegisterPage} text="Sign In" />
+          <PressableText
+            onPress={isRegistering ? undefined : navigateToRegisterPage}
+            text="Sign In"
+          />
         </View>
       </View>
     </View>

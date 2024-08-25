@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {
   Login,
   Register,
@@ -18,6 +18,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {accessTokenKey} from './src/constants/cacheKeys';
 import {RestfulProvider} from 'restful-react';
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,16 @@ const MainStack = () => {
       <Stack.Screen name="TaskToTrackDetails" component={TaskToTrackDetails} />
       <Stack.Screen name="TrackerTask" component={TrackerTask} />
       <Stack.Screen name="EditorTask" component={EditorTask} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Login"
+        component={Login}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Register"
+        component={Register}
+      />
     </Stack.Navigator>
   );
 };
@@ -52,6 +63,17 @@ const AuthStack = () => {
         name="Register"
         component={Register}
       />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Home"
+        component={Home}
+      />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="AddTask" component={AddTask} />
+      <Stack.Screen name="TasksToTrack" component={TasksToTrack} />
+      <Stack.Screen name="TaskToTrackDetails" component={TaskToTrackDetails} />
+      <Stack.Screen name="TrackerTask" component={TrackerTask} />
+      <Stack.Screen name="EditorTask" component={EditorTask} />
     </Stack.Navigator>
   );
 };
@@ -80,20 +102,23 @@ const App = () => {
   }
 
   return (
-    <RestfulProvider
-      base="https://d57f-160-19-36-36.ngrok-free.app"
-      requestOptions={() => ({
-        headers: {
-          Authorization: accessToken ? `Bearer ${accessToken}` : '',
-        },
-      })}>
-      <NavigationContainer>
-        <SafeAreaView style={{flex: 1}}>
-          <StatusBar backgroundColor={primary} />
-          {accessToken ? <MainStack /> : <AuthStack />}
-        </SafeAreaView>
-      </NavigationContainer>
-    </RestfulProvider>
+    <>
+      <RestfulProvider
+        base="https://dc66-160-19-36-36.ngrok-free.app"
+        requestOptions={() => ({
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : '',
+          },
+        })}>
+        <NavigationContainer>
+          <SafeAreaView style={{flex: 1}}>
+            <StatusBar backgroundColor={primary} />
+            {accessToken ? <MainStack /> : <AuthStack />}
+          </SafeAreaView>
+        </NavigationContainer>
+      </RestfulProvider>
+      <Toast />
+    </>
   );
 };
 

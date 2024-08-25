@@ -5,7 +5,7 @@ export interface IAuthInputProps {
   title?: string;
   value?: string;
   iconName?: string;
-  secureTextEntry?: boolean;
+  secureEntry?: boolean;
   focused: boolean;
   entryName: authFocusedEntry;
   keyboardType?: KeyboardTypeOptions | undefined;

@@ -11,7 +11,7 @@ const AuthInput: FC<IAuthInputProps> = props => {
     title,
     value,
     iconName,
-    secureTextEntry,
+    secureEntry,
     onChangeText,
     entryName,
     focused,
@@ -19,7 +19,7 @@ const AuthInput: FC<IAuthInputProps> = props => {
     containerStyle,
   } = props;
 
-  const [hidePassword, setHidePassword] = useState(secureTextEntry);
+  const [hidePassword, setHidePassword] = useState(secureEntry);
   const textInputRef = useRef<TextInput | null>(null);
 
   const styles = getStyling({containerStyle, focused});
@@ -48,7 +48,7 @@ const AuthInput: FC<IAuthInputProps> = props => {
             {...props}
           />
 
-          {secureTextEntry &&
+          {secureEntry &&
             (hidePassword ? (
               <Pressable onPress={() => setHidePassword(!hidePassword)}>
                 <Icon name="eye-off-outline" size={20} color={lightText} />

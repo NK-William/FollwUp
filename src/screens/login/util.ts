@@ -4,6 +4,8 @@ import {Alert} from 'react-native';
 import {isEmailValid} from '../../utils';
 import {useMutate} from 'restful-react';
 import {ILogin} from '../../interfaces';
+import {accessTokenKey} from '../../constants/cacheKeys';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useLogin = (navigation: any) => {
   // States
@@ -50,8 +52,8 @@ export const useLogin = (navigation: any) => {
               'Successfully signed in with token: ',
               response.jwtToken,
             );
-            // await AsyncStorage.setItem(accessTokenKey, response.jwtToken);
-            // navigation.navigate('Home');
+            await AsyncStorage.setItem(accessTokenKey, response.jwtToken);
+            navigation.replace('Home');
             return;
           }
           loginErrorAlert();
