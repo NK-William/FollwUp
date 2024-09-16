@@ -18,11 +18,7 @@ const getStyling = () => {
       height: 50,
       marginTop: 8,
       alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
-    profilePlaceholder: {
-      height: 50,
-      width: 50,
+      justifyContent: 'center'
     },
     progressContainer: {
       marginTop: 23,

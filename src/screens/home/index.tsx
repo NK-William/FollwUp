@@ -1,4 +1,4 @@
-import {View, Text, Image, FlatList} from 'react-native';
+import {View, Text, Image, FlatList, Pressable} from 'react-native';
 import React, {useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
@@ -7,6 +7,7 @@ import {
   ProgressTaskName,
   TaskTabOption,
   TaskListItem,
+  ProfileButton,
 } from '../../components';
 import {fakeTasks} from '../../fakeJSON';
 import {TaskTabOptionEnum} from '../../utils/enums';
@@ -22,10 +23,7 @@ const Home = () => {
     <View style={styles.container}>
       <View style={styles.statsContainer}>
         <View style={styles.profilePlaceholderContainer}>
-          <Image
-            source={require('../../assets/images/profilePlaceholder.png')}
-            style={styles.profilePlaceholder}
-          />
+          <ProfileButton />          
         </View>
         <View style={styles.progressContainer}>
           <Text style={styles.progressText}>All Tasks Progress</Text>

@@ -16,3 +16,4 @@ export {default as TaskNumberBadge} from './taskNumberBadge';
 export {default as TaskTrackLine} from './taskTrackLine';
 export {default as TaskPhaseDetails} from './taskPhaseDetails';
 export {default as ChatBubble} from './chatBubble';
+export {default as ProfileButton} from './profileButton';
