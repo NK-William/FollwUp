@@ -8,13 +8,7 @@ const getStyling = () => {
       backgroundColor: 'white',
     },
     backArrowContainer: {
-      backgroundColor: primary,
       position: 'absolute',
-      height: 50,
-      width: 50,
-      borderRadius: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
       top: 12,
       left: 12,
     },

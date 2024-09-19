@@ -1,0 +1,9 @@
+export const home = 'Home';
+export const login = 'Login';
+export const register = 'Register';
+export const profile = 'Profile';
+export const addTask = 'AddTask';
+export const tasksToTrack = 'TasksToTrack';
+export const taskToTrackDetails = 'TaskToTrackDetails';
+export const trackerTask = 'TrackerTask';
+export const editorTask = 'EditorTask';
