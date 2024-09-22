@@ -22,7 +22,7 @@ import {
   taskToTrackDetails,
   trackerTask,
   editorTask,
-} from './src/constants/PageNames';
+} from './src/constants/pageNames';
 import {primary} from './src/constants/colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';

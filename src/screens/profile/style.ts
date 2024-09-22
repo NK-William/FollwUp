@@ -12,8 +12,7 @@ const getStyling = () => {
       top: 12,
       left: 12,
     },
-
-    cameraIconContainer: {
+    logoutIconContainer: {
       backgroundColor: primary,
       position: 'absolute',
       height: 50,
@@ -24,6 +23,18 @@ const getStyling = () => {
       top: 70,
       left: 12,
     },
+
+    // cameraIconContainer: {
+    //   backgroundColor: primary,
+    //   position: 'absolute',
+    //   height: 50,
+    //   width: 50,
+    //   borderRadius: 30,
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   top: 70,
+    //   left: 12,
+    // },
     profileIconContainer: {
       flex: 4,
       backgroundColor: primaryLight,
@@ -62,18 +73,18 @@ const getStyling = () => {
       borderRadius: 20,
     },
     ProfileInputContainer: {marginTop: 20},
-    popupContainer: {
-      alignItems: 'center',
-      borderRadius: 20,
-      height: 200,
-      width: 300,
-      backgroundColor: 'white',
-    },
-    optionButtonContainer: {
-      flex: 1,
-      marginTop: 16,
-      justifyContent: 'center',
-    },
+    // popupContainer: {
+    //   alignItems: 'center',
+    //   borderRadius: 20,
+    //   height: 200,
+    //   width: 300,
+    //   backgroundColor: 'white',
+    // },
+    // optionButtonContainer: {
+    //   flex: 1,
+    //   marginTop: 16,
+    //   justifyContent: 'center',
+    // },
   });
 };
 

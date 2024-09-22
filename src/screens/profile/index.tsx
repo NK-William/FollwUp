@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, ScrollView, TouchableOpacity, View, Text} from 'react-native';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 import {
   // FollwUpButton,
   // PressableText,
@@ -13,17 +13,19 @@ import {useProfile} from './util';
 // import {OpicFiller} from '../../containers';
 // import {cameraPickerType} from './enum';
 
-const Profile = () => {
+const Profile = (props: any) => {
+  const {navigation} = props;
   const styles = getStyling();
   const {
     firstName,
     lastName,
     emailAddress,
     phoneNumber,
+    signOut,
     setState,
     showPopup,
     // cameraClicked,
-  } = useProfile();
+  } = useProfile(navigation);
 
   return (
     <View style={styles.container}>
@@ -79,6 +81,9 @@ const Profile = () => {
         </View>
       </View>
       <BackButton containerStyle={styles.backArrowContainer} />
+      <TouchableOpacity onPress={signOut} style={styles.logoutIconContainer}>
+        <Feather name="log-out" size={18} color={'white'} />
+      </TouchableOpacity>
       {/* <TouchableOpacity
         onPress={() => setState(s => ({...s, showPopup: true}))}
         style={styles.cameraIconContainer}>

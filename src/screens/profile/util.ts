@@ -1,5 +1,9 @@
 import {useState} from 'react';
 import {IProfileState} from './interface';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {resetToScreen} from '../../utils';
+import {login} from '../../constants/PageNames';
+import {accessTokenKey} from '../../constants/cacheKeys';
 // import {
 //   launchCamera,
 //   launchImageLibrary,
@@ -15,11 +19,16 @@ const initialState: IProfileState = {
   showPopup: false,
 };
 
-export const useProfile = () => {
+export const useProfile = (navigation: any) => {
   const [
     {firstName, lastName, emailAddress, phoneNumber, showPopup},
     setState,
   ] = useState<IProfileState>(initialState);
+
+  const signOut = async () => {
+    await AsyncStorage.removeItem(accessTokenKey);
+    resetToScreen(navigation, login);
+  };
 
   // const cameraClicked = async (type: cameraPickerType) => {
   //   let result: ImagePickerResponse;
@@ -39,6 +48,7 @@ export const useProfile = () => {
     phoneNumber,
     showPopup,
     setState,
+    signOut,
     // cameraClicked,
   };
 };

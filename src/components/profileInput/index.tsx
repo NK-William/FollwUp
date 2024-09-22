@@ -20,7 +20,9 @@ const ProfileInput: FC<IProfileInputProps> = props => {
         <TextInput
           editable={!props.isReadOnly}
           value={props.value}
-          onChangeText={text => props.onChangeText(text)}
+          onChangeText={text =>
+            props.onChangeText ? props.onChangeText(text) : null
+          }
           style={styles.input}
         />
         <View style={styles.inputLine} />

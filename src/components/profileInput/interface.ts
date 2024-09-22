@@ -9,6 +9,6 @@ export interface IProfileInputProps {
   value: string;
   savedText: string;
   isReadOnly?: boolean;
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
   containerStyle?: StyleProp<ViewStyle>;
 }
