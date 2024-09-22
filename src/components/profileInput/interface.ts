@@ -8,6 +8,7 @@ export interface IProfileInputProps {
   iconStyle?: any;
   value: string;
   savedText: string;
+  isReadOnly?: boolean;
   onChangeText: (text: string) => void;
   containerStyle?: StyleProp<ViewStyle>;
 }

@@ -1,37 +1,36 @@
 import React from 'react';
 import {Image, ScrollView, TouchableOpacity, View, Text} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
-  FollwUpButton,
-  PressableText,
+  // FollwUpButton,
+  // PressableText,
   ProfileInput,
   BackButton,
 } from '../../components';
 import {lightText} from '../../constants/colors';
 import getStyling from './style';
 import {useProfile} from './util';
-import {OpicFiller} from '../../containers';
-import {cameraPickerType} from './enum';
+// import {OpicFiller} from '../../containers';
+// import {cameraPickerType} from './enum';
 
 const Profile = () => {
   const styles = getStyling();
   const {
     firstName,
     lastName,
-    idNumber,
     emailAddress,
     phoneNumber,
     setState,
     showPopup,
-    cameraClicked,
+    // cameraClicked,
   } = useProfile();
 
   return (
     <View style={styles.container}>
-      <View style={styles.profilePicContainer}>
+      <View style={styles.profileIconContainer}>
         <Image
-          style={styles.profilePic}
-          source={require('../../assets/images/profilePicture.jpeg')}
+          style={styles.profileIcon}
+          source={require('../../assets/images/profileIcon.png')}
         />
       </View>
       <View style={styles.profileInfoCardContainer}>
@@ -57,20 +56,10 @@ const Profile = () => {
               iconStyle={{color: lightText}}
             />
             <ProfileInput
-              value={idNumber}
-              onChangeText={text => setState(s => ({...s, idNumber: text}))}
-              title="ID Number"
-              savedText="9701010000000"
-              iconType="AntDesign"
-              iconName="idcard"
-              containerStyle={styles.ProfileInputContainer}
-              iconStyle={{color: lightText}}
-            />
-            <ProfileInput
               value={emailAddress}
-              onChangeText={text => setState(s => ({...s, emailAddress: text}))}
               title="Email Address"
               savedText="Tebog@gmail.com"
+              isReadOnly
               iconType="Fontisto"
               iconName="email"
               containerStyle={styles.ProfileInputContainer}
@@ -90,7 +79,7 @@ const Profile = () => {
         </View>
       </View>
       <BackButton containerStyle={styles.backArrowContainer} />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => setState(s => ({...s, showPopup: true}))}
         style={styles.cameraIconContainer}>
         <FontAwesome name="camera" size={18} color={'white'} />
@@ -118,7 +107,7 @@ const Profile = () => {
             />
           </View>
         </OpicFiller>
-      )}
+      )} */}
     </View>
   );
 };

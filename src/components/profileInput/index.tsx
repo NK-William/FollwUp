@@ -18,6 +18,7 @@ const ProfileInput: FC<IProfileInputProps> = props => {
       <View style={styles.inputContainer}>
         <Text style={styles.title}>{props.title}</Text>
         <TextInput
+          editable={!props.isReadOnly}
           value={props.value}
           onChangeText={text => props.onChangeText(text)}
           style={styles.input}

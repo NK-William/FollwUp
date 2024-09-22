@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {primary} from '../../constants/colors';
+import {primary, primaryLight} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -24,14 +24,18 @@ const getStyling = () => {
       top: 70,
       left: 12,
     },
-    profilePicContainer: {flex: 4},
+    profileIconContainer: {
+      flex: 4,
+      backgroundColor: primaryLight,
+      alignItems: 'center',
+    },
     profileInfoCardContainer: {
       flex: 2,
     },
-    profilePic: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
+    profileIcon: {
+      height: 250,
+      resizeMode: 'contain',
+      marginTop: 80,
     },
     icon: {
       height: 20,
@@ -40,11 +44,9 @@ const getStyling = () => {
     },
     profileInfoCard: {
       backgroundColor: primary,
-      opacity: 0.85,
-      height: '150%',
       marginHorizontal: 20,
       marginTop: -150,
-      paddingVertical: 20,
+      paddingVertical: 30,
       borderRadius: 20,
       elevation: 5,
       shadowColor: 'black',

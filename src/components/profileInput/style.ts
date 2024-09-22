@@ -26,7 +26,7 @@ const getStyling = (props: IProfileInputProps) => {
       paddingVertical: 1,
       paddingHorizontal: 0,
       fontSize: 18,
-      color: lightText,
+      color: props?.isReadOnly ? primaryLight : lightText,
       fontWeight: 'bold',
     },
   });

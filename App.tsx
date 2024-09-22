@@ -12,6 +12,17 @@ import {
   EditorTask,
   Splash,
 } from './src/screens';
+import {
+  home,
+  login,
+  register,
+  profile,
+  addTask,
+  tasksToTrack,
+  taskToTrackDetails,
+  trackerTask,
+  editorTask,
+} from './src/constants/PageNames';
 import {primary} from './src/constants/colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -24,26 +35,30 @@ const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName={home}>
       <Stack.Screen
         options={{headerShown: false}}
-        name="Home"
+        name={home}
         component={Home}
       />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="AddTask" component={AddTask} />
-      <Stack.Screen name="TasksToTrack" component={TasksToTrack} />
-      <Stack.Screen name="TaskToTrackDetails" component={TaskToTrackDetails} />
-      <Stack.Screen name="TrackerTask" component={TrackerTask} />
-      <Stack.Screen name="EditorTask" component={EditorTask} />
       <Stack.Screen
         options={{headerShown: false}}
-        name="Login"
+        name={profile}
+        component={Profile}
+      />
+      <Stack.Screen name={addTask} component={AddTask} />
+      <Stack.Screen name={tasksToTrack} component={TasksToTrack} />
+      <Stack.Screen name={taskToTrackDetails} component={TaskToTrackDetails} />
+      <Stack.Screen name={trackerTask} component={TrackerTask} />
+      <Stack.Screen name={editorTask} component={EditorTask} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={login}
         component={Login}
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name="Register"
+        name={register}
         component={Register}
       />
     </Stack.Navigator>
@@ -52,28 +67,28 @@ const MainStack = () => {
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName={login}>
       <Stack.Screen
         options={{headerShown: false}}
-        name="Login"
+        name={login}
         component={Login}
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name="Register"
+        name={register}
         component={Register}
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name="Home"
+        name={home}
         component={Home}
       />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="AddTask" component={AddTask} />
-      <Stack.Screen name="TasksToTrack" component={TasksToTrack} />
-      <Stack.Screen name="TaskToTrackDetails" component={TaskToTrackDetails} />
-      <Stack.Screen name="TrackerTask" component={TrackerTask} />
-      <Stack.Screen name="EditorTask" component={EditorTask} />
+      <Stack.Screen name={profile} component={Profile} />
+      <Stack.Screen name={addTask} component={AddTask} />
+      <Stack.Screen name={tasksToTrack} component={TasksToTrack} />
+      <Stack.Screen name={taskToTrackDetails} component={TaskToTrackDetails} />
+      <Stack.Screen name={trackerTask} component={TrackerTask} />
+      <Stack.Screen name={editorTask} component={EditorTask} />
     </Stack.Navigator>
   );
 };
@@ -104,7 +119,7 @@ const App = () => {
   return (
     <>
       <RestfulProvider
-        base="https://4bfc-160-19-36-36.ngrok-free.app"
+        base="https://18a7-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
