@@ -17,6 +17,7 @@ export const useHome = () => {
   const fetchProfile = (emailAddress: string) => {
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
+        console.log('Response: ', JSON.stringify(response));
         if (response) {
           console.log('Successfully fetched profile: ', response);
           return;
@@ -27,6 +28,7 @@ export const useHome = () => {
   };
 
   const fetchErrorToast = (message: string) => {
+    console.log('Error: ', message);
     Toast.show({
       type: 'error',
       text1: 'Error',

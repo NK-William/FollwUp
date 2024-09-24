@@ -2,7 +2,7 @@ import {View, Text, Pressable, Image} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {useNavigation} from '@react-navigation/native';
-import {profile} from '../../constants/PageNames';
+import {profile} from '../../constants/pageNames';
 
 const ProfileButton: FC = () => {
   const navigation = useNavigation();

@@ -6,8 +6,13 @@ import {useMutate} from 'restful-react';
 import {ILogin} from '../../interfaces';
 import {accessTokenKey} from '../../constants/cacheKeys';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {setEmail as reduxSetEmail} from '../../redux/features/user/userSlice';
 
 export const useLogin = (navigation: any) => {
+  // Redux
+  const dispatch = useDispatch();
+
   // States
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -53,7 +58,8 @@ export const useLogin = (navigation: any) => {
               response.jwtToken,
             );
             await AsyncStorage.setItem(accessTokenKey, response.jwtToken);
-            navigation.replace('Home');
+            dispatch(reduxSetEmail({email}));
+            // navigation.replace('Home');
             return;
           }
           loginErrorAlert();

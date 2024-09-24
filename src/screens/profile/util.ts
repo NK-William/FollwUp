@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {IProfileState} from './interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {resetToScreen} from '../../utils';
-import {login} from '../../constants/PageNames';
+import {login} from '../../constants/pageNames';
 import {accessTokenKey} from '../../constants/cacheKeys';
 // import {
 //   launchCamera,

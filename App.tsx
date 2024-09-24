@@ -30,6 +30,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {accessTokenKey} from './src/constants/cacheKeys';
 import {RestfulProvider} from 'restful-react';
 import Toast from 'react-native-toast-message';
+import {selectUser} from './src/redux/features/user/userSlice';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +96,8 @@ const AuthStack = () => {
 };
 
 const App = () => {
+  const user = useSelector(selectUser);
+
   const [cacheLoaded, setCacheLoaded] = useState(false);
   const [accessToken, setAccessToken] = useState('');
 
@@ -116,10 +120,14 @@ const App = () => {
     return <Splash />;
   }
 
+  var a = user;
+
+  console.log('in app with user: ', a);
+
   return (
     <>
       <RestfulProvider
-        base="https://18a7-160-19-36-36.ngrok-free.app"
+        base="https://a29c-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
