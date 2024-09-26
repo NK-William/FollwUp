@@ -70,7 +70,7 @@ export const useRegister = (navigation: any) => {
         navigateToRegisterPage();
       })
       .catch(error => {
-        console.log('error: ', error);
+        console.log('Register error: ', error);
         Alert.alert('Error', error.data ?? error.message);
       });
   };

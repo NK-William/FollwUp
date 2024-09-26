@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {IProfileState} from './interface';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {resetToScreen} from '../../utils';
 import {login} from '../../constants/pageNames';
-import {accessTokenKey} from '../../constants/cacheKeys';
+import {useDispatch} from 'react-redux';
+import {signUserOut} from '../../redux/features/user/userSlice';
 // import {
 //   launchCamera,
 //   launchImageLibrary,
@@ -20,14 +20,19 @@ const initialState: IProfileState = {
 };
 
 export const useProfile = (navigation: any) => {
+  const dispatch = useDispatch();
+
   const [
     {firstName, lastName, emailAddress, phoneNumber, showPopup},
     setState,
   ] = useState<IProfileState>(initialState);
 
-  const signOut = async () => {
-    await AsyncStorage.removeItem(accessTokenKey);
-    resetToScreen(navigation, login);
+  const signOut = () => {
+    console.log('Signing out');
+    console.log('Method: ', signUserOut);
+    dispatch(signUserOut());
+    // await AsyncStorage.removeItem(accessTokenKey);
+    // resetToScreen(navigation, login);
   };
 
   // const cameraClicked = async (type: cameraPickerType) => {

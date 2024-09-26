@@ -4,10 +4,10 @@ import {Alert} from 'react-native';
 import {isEmailValid} from '../../utils';
 import {useMutate} from 'restful-react';
 import {ILogin} from '../../interfaces';
-import {accessTokenKey} from '../../constants/cacheKeys';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {setEmail as reduxSetEmail} from '../../redux/features/user/userSlice';
+import {setUser} from '../../redux/features/user/userSlice';
+import {IUser} from '../../interfaces';
 
 export const useLogin = (navigation: any) => {
   // Redux
@@ -57,9 +57,8 @@ export const useLogin = (navigation: any) => {
               'Successfully signed in with token: ',
               response.jwtToken,
             );
-            await AsyncStorage.setItem(accessTokenKey, response.jwtToken);
-            dispatch(reduxSetEmail({email}));
-            // navigation.replace('Home');
+            var user: IUser = {email, accessToken: response.jwtToken};
+            dispatch(setUser(user));
             return;
           }
           loginErrorAlert();

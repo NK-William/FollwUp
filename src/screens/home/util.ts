@@ -28,7 +28,7 @@ export const useHome = () => {
   };
 
   const fetchErrorToast = (message: string) => {
-    console.log('Error: ', message);
+    console.log('Home error: ', message);
     Toast.show({
       type: 'error',
       text1: 'Error',

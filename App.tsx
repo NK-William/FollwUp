@@ -26,12 +26,11 @@ import {
 import {primary} from './src/constants/colors';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {accessTokenKey} from './src/constants/cacheKeys';
 import {RestfulProvider} from 'restful-react';
 import Toast from 'react-native-toast-message';
-import {selectUser} from './src/redux/features/user/userSlice';
-import {useSelector} from 'react-redux';
+import {loadUser, selectUser} from './src/redux/features/user/userSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {IUser} from './src/interfaces';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,20 +47,30 @@ const MainStack = () => {
         name={profile}
         component={Profile}
       />
-      <Stack.Screen name={addTask} component={AddTask} />
-      <Stack.Screen name={tasksToTrack} component={TasksToTrack} />
-      <Stack.Screen name={taskToTrackDetails} component={TaskToTrackDetails} />
-      <Stack.Screen name={trackerTask} component={TrackerTask} />
-      <Stack.Screen name={editorTask} component={EditorTask} />
       <Stack.Screen
         options={{headerShown: false}}
-        name={login}
-        component={Login}
+        name={addTask}
+        component={AddTask}
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name={register}
-        component={Register}
+        name={tasksToTrack}
+        component={TasksToTrack}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={taskToTrackDetails}
+        component={TaskToTrackDetails}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={trackerTask}
+        component={TrackerTask}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={editorTask}
+        component={EditorTask}
       />
     </Stack.Navigator>
   );
@@ -80,54 +89,44 @@ const AuthStack = () => {
         name={register}
         component={Register}
       />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={home}
-        component={Home}
-      />
-      <Stack.Screen name={profile} component={Profile} />
-      <Stack.Screen name={addTask} component={AddTask} />
-      <Stack.Screen name={tasksToTrack} component={TasksToTrack} />
-      <Stack.Screen name={taskToTrackDetails} component={TaskToTrackDetails} />
-      <Stack.Screen name={trackerTask} component={TrackerTask} />
-      <Stack.Screen name={editorTask} component={EditorTask} />
     </Stack.Navigator>
   );
 };
 
 const App = () => {
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const [cacheLoaded, setCacheLoaded] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
+  // const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    setTimeout(() => {
-      AsyncStorage.getItem(accessTokenKey)
-        .then((token: string | null) => {
-          if (token) {
-            setAccessToken(token);
-          }
-          setCacheLoaded(true);
-        })
-        .catch(() => {
-          setCacheLoaded(true);
-        });
-    }, 3000);
-  }, []);
+    dispatch(loadUser());
+    // setTimeout(() => {
+    //   AsyncStorage.getItem(accessTokenKey)
+    //     .then((token: string | null) => {
+    //       if (token) {
+    //         setAccessToken(token);
+    //       }
+    //       setCacheLoaded(true);
+    //     })
+    //     .catch(() => {
+    //       setCacheLoaded(true);
+    //     });
+    // }, 3000);
+  }, [dispatch]);
 
-  if (!cacheLoaded) {
-    return <Splash />;
-  }
+  // if (!cacheLoaded) {
+  //   return <Splash />;
+  // }
 
-  var a = user;
-
-  console.log('in app with user: ', a);
+  const userObj: IUser = JSON.parse(JSON.stringify(user));
+  const accessToken = userObj?.accessToken;
 
   return (
     <>
       <RestfulProvider
-        base="https://a29c-160-19-36-36.ngrok-free.app"
+        base="https://8424-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
