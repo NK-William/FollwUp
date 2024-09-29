@@ -1,24 +1,46 @@
 import {ColorValue} from 'react-native';
-import {ITask} from '../../interfaces';
+import {IProfile, IReduxUser, ITask} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
 import {useEffect} from 'react';
+import {selectUser, setUser} from '../../redux/features/user/userSlice';
+import {useSelector, useDispatch} from 'react-redux';
 
 export const useHome = () => {
-  const {loading, refetch: apiFetchProfile} = useGet({
-    path: '',
-    lazy: true,
-  });
+  //#region Redux
+  const {id, emailAddress} = useSelector(selectUser);
+  const dispatch = useDispatch();
+  //#endregion Redux
 
+  // apis
+  const {loading: isFetchingProfile, refetch: apiFetchProfile} =
+    useGet<IProfile>({
+      path: '',
+      lazy: true,
+    });
+
+  // useEffects
   useEffect(() => {
-    fetchProfile('test@gmail.com');
-  }, []);
+    if (emailAddress && !id) fetchProfile(emailAddress);
+    else if (!emailAddress)
+      console.log(
+        'Home util: Failed loading email address from redux global state',
+      ); // TODO: add this in a stack trace.
+  }, [emailAddress, id]);
 
+  // Methods
   const fetchProfile = (emailAddress: string) => {
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
-        console.log('Response: ', JSON.stringify(response));
         if (response) {
+          var reduxUser: IReduxUser = {
+            id: response.id,
+            firstName: response.firstName,
+            lastName: response.lastName,
+            emailAddress: response.emailAddress,
+            phoneNumber: response.phoneNumber,
+          };
+          dispatch(setUser(reduxUser));
           console.log('Successfully fetched profile: ', response);
           return;
         }
@@ -45,5 +67,6 @@ export const useHome = () => {
       progressToHundred,
     }));
   };
-  return {progressBarTasks};
+
+  return {progressBarTasks, isFetchingProfile};
 };

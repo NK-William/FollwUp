@@ -1,28 +1,36 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {userKey} from '../../../constants/cacheKeys';
-import {IUser} from '../../../interfaces';
+import {IReduxUser} from '../../../interfaces';
+
+const emptyUser: IReduxUser = {
+  id: '',
+  firstName: '',
+  lastName: '',
+  emailAddress: '',
+  phoneNumber: '',
+  accessToken: '',
+};
 
 // Async thunk to load user from AsyncStorage
 export const loadUser = createAsyncThunk('user/loadUser', async () => {
   try {
-    console.log('Loading user from storage');
     const userData = await AsyncStorage.getItem(userKey);
     if (userData) {
       return JSON.parse(userData);
     }
-    return {email: '', accessToken: ''}; // default if nothing in storage
+    return emptyUser; // default if nothing in storage
   } catch (error) {
     console.error('Failed to load user from storage:', error);
-    return {email: '', accessToken: ''};
+    return emptyUser;
   }
 });
 
 const options = {
   name: 'user',
-  initialState: {email: '', accessToken: ''} as IUser,
+  initialState: emptyUser as IReduxUser,
   reducers: {
-    setUser: (state: IUser, action: PayloadAction<IUser>) => {
+    setUser: (state: IReduxUser, action: PayloadAction<IReduxUser>) => {
       const newState = {...state, ...action.payload};
 
       // Save updated state to AsyncStorage
@@ -32,10 +40,9 @@ const options = {
 
       return newState;
     },
-    signUserOut: (state: IUser) => {
+    signUserOut: (state: IReduxUser) => {
       // Clear user data in state
-      console.log('Signing user out');
-      const newState = {email: '', accessToken: ''};
+      const newState = emptyUser;
 
       // Remove user data from AsyncStorage
       AsyncStorage.removeItem(userKey).catch(error => {
@@ -49,7 +56,7 @@ const options = {
     // Handle loading user from AsyncStorage
     builder.addCase(
       loadUser.fulfilled,
-      (state: IUser, action: PayloadAction<IUser>) => {
+      (state: IReduxUser, action: PayloadAction<IReduxUser>) => {
         return {...state, ...action.payload};
       },
     );
@@ -62,4 +69,4 @@ export const {setUser, signUserOut} = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const selectUser = (state: {user: IUser}) => state.user;
+export const selectUser = (state: {user: IReduxUser}) => state.user;

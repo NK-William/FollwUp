@@ -30,7 +30,7 @@ import {RestfulProvider} from 'restful-react';
 import Toast from 'react-native-toast-message';
 import {loadUser, selectUser} from './src/redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
-import {IUser} from './src/interfaces';
+import {IReduxUser} from './src/interfaces';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +94,7 @@ const AuthStack = () => {
 };
 
 const App = () => {
+  // redux
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -120,13 +121,13 @@ const App = () => {
   //   return <Splash />;
   // }
 
-  const userObj: IUser = JSON.parse(JSON.stringify(user));
+  const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
   const accessToken = userObj?.accessToken;
 
   return (
     <>
       <RestfulProvider
-        base="https://8424-160-19-36-36.ngrok-free.app"
+        base="https://83aa-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',

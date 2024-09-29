@@ -1,4 +1,4 @@
-import {View, Text, Image, FlatList, Pressable} from 'react-native';
+import {View, Text, Image, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
@@ -11,19 +11,21 @@ import {
 } from '../../components';
 import {fakeTasks} from '../../fakeJSON';
 import {TaskTabOptionEnum} from '../../utils/enums';
+import {OpicFiller} from '../../containers';
+import LoaderKit from 'react-native-loader-kit';
 
 const Home = () => {
   const styles = getStyling();
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
   );
-  const {progressBarTasks} = useHome();
+  const {progressBarTasks, isFetchingProfile} = useHome();
 
   return (
     <View style={styles.container}>
       <View style={styles.statsContainer}>
         <View style={styles.profilePlaceholderContainer}>
-          <ProfileButton />          
+          <ProfileButton />
         </View>
         <View style={styles.progressContainer}>
           <Text style={styles.progressText}>All Tasks Progress</Text>
@@ -92,6 +94,15 @@ const Home = () => {
           </View>
         </View>
       </View>
+      {isFetchingProfile && (
+        <OpicFiller>
+          <LoaderKit
+            name={'BallClipRotatePulse'}
+            color={'white'}
+            style={{width: 50, height: 50}}
+          />
+        </OpicFiller>
+      )}
     </View>
   );
 };

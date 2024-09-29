@@ -4,10 +4,9 @@ import {Alert} from 'react-native';
 import {isEmailValid} from '../../utils';
 import {useMutate} from 'restful-react';
 import {ILogin} from '../../interfaces';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../../redux/features/user/userSlice';
-import {IUser} from '../../interfaces';
+import {IReduxUser} from '../../interfaces';
 
 export const useLogin = (navigation: any) => {
   // Redux
@@ -53,12 +52,11 @@ export const useLogin = (navigation: any) => {
       .then(async response => {
         if (response) {
           if (response.jwtToken) {
-            console.log(
-              'Successfully signed in with token: ',
-              response.jwtToken,
-            );
-            var user: IUser = {email, accessToken: response.jwtToken};
-            dispatch(setUser(user));
+            var ReduxUser: IReduxUser = {
+              emailAddress: email,
+              accessToken: response.jwtToken,
+            };
+            dispatch(setUser(ReduxUser));
             return;
           }
           loginErrorAlert();
@@ -67,11 +65,18 @@ export const useLogin = (navigation: any) => {
         }
       })
       .catch(error => {
-        Alert.alert('Error', error.data ?? error.message);
+        if (error?.status === 404) {
+          // TODO: push to stack trace
+          loginErrorAlert('Something went wrong, please try again later');
+        } else {
+          // TODO: push to stack trace
+          loginErrorAlert(error.data ?? error.message);
+        }
       });
   };
 
-  const loginErrorAlert = () => Alert.alert('Error', 'Failed to log in');
+  const loginErrorAlert = (message?: string) =>
+    Alert.alert('Error', message ?? 'Failed to log in');
 
   const navigateToRegisterPage = () => navigation.navigate('Register');
 

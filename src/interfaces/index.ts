@@ -31,5 +31,6 @@ export interface ITaskPhase {
 }
 
 export type {ILogin} from './login';
-export type {IUser} from './user';
+export type {IReduxUser} from './reduxUser';
 export type {IRegister} from './register';
+export type {IProfile} from './profile';
