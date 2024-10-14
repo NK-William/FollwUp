@@ -19,7 +19,7 @@ const Home = () => {
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
   );
-  const {progressBarTasks, isFetchingProfile} = useHome();
+  const {progressBarTasks, loading} = useHome();
 
   return (
     <View style={styles.container}>
@@ -94,7 +94,7 @@ const Home = () => {
           </View>
         </View>
       </View>
-      {isFetchingProfile && (
+      {loading && (
         <OpicFiller>
           <LoaderKit
             name={'BallClipRotatePulse'}

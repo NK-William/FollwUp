@@ -12,23 +12,34 @@ export const useHome = () => {
   const dispatch = useDispatch();
   //#endregion Redux
 
-  // apis
+  //#region Apis
   const {loading: isFetchingProfile, refetch: apiFetchProfile} =
     useGet<IProfile>({
       path: '',
       lazy: true,
     });
 
-  // useEffects
+  const {loading: isFetchingTasks, refetch: apiFetchTasks} = useGet<ITask>({
+    path: '',
+    lazy: true,
+  });
+
+  //#endregion Apis
+
+  //#region useEffects
   useEffect(() => {
-    if (emailAddress && !id) fetchProfile(emailAddress);
+    // emailAddress has to be defined because with get to API by email address
+    // And fetch when we don't have id because is needed as foreign key to other entities.
+    // if (emailAddress && !id) fetchProfile(emailAddress);
+    if (true) fetchProfile(emailAddress);
     else if (!emailAddress)
       console.log(
         'Home util: Failed loading email address from redux global state',
       ); // TODO: add this in a stack trace.
   }, [emailAddress, id]);
+  //#endregion useEffects
 
-  // Methods
+  //#region  Methods
   const fetchProfile = (emailAddress: string) => {
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
@@ -41,12 +52,33 @@ export const useHome = () => {
             phoneNumber: response.phoneNumber,
           };
           dispatch(setUser(reduxUser));
+
           console.log('Successfully fetched profile: ', response);
-          return;
+
+          if (!response.id) {
+            fetchErrorToast('Failed to fetch tasks');
+            return;
+          }
+
+          // Retrieve tasks
+          fetchTasks(response.id);
+        } else {
+          fetchErrorToast('Failed to fetch profile');
         }
-        fetchErrorToast('Failed to fetch profile');
       })
-      .catch((error: any) => fetchErrorToast(error.message));
+      .catch(error => fetchErrorToast(error.message));
+  };
+
+  const fetchTasks = (profileId: string) => {
+    apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
+      .then(response => {
+        if (response) {
+          console.log('Got tasks: ', response);
+        } else {
+          fetchErrorToast('Failed to fetch tasks');
+        }
+      })
+      .catch(error => fetchErrorToast(error.message));
   };
 
   const fetchErrorToast = (message: string) => {
@@ -58,15 +90,14 @@ export const useHome = () => {
     });
   };
 
-  const progressBarTasks = (
-    tasks: ITask[],
-  ): {name: string; color: ColorValue; progressToHundred: number}[] => {
+  const progressBarTasks = (tasks: ITask[]) => {
     return tasks.map(({name, color, progressToHundred}) => ({
       name,
       color,
       progressToHundred,
     }));
   };
+  //#endregion Methods
 
-  return {progressBarTasks, isFetchingProfile};
+  return {progressBarTasks, loading: isFetchingProfile || isFetchingTasks};
 };

@@ -1,7 +1,7 @@
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import getStyling from './style';
-import {ITask, ITaskPhase} from '../../interfaces';
+import {ITask} from '../../interfaces';
 import {
   AddTaskDetails,
   AddTaskPhaseDetails,

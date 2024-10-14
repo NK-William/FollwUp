@@ -1,6 +1,6 @@
 import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
-import {ITaskPhase} from '../../interfaces';
+import {IPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
@@ -13,7 +13,7 @@ import {
 } from '../../components';
 import getStyling from './style';
 
-const demoPhaseData: ITaskPhase[] = [
+const demoPhaseData: IPhase[] = [
   {
     id: '1',
     name: 'Diagnostic',
@@ -93,7 +93,7 @@ const EditorTask = () => {
   const {showModal, modalVisible} = useEditorTask();
   const styles = getStyling();
 
-  const Row = ({item}: {item: ITaskPhase}) => {
+  const Row = ({item}: {item: IPhase}) => {
     const {name, description, number, icon, status} = item;
 
     const {

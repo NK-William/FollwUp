@@ -9,11 +9,11 @@ import {
   Icon,
 } from '../../components';
 import {taskPhaseStatus} from '../../utils/enums';
-import {ITaskPhase} from '../../interfaces';
-import {accent, gray, grayLight, primary} from '../../constants/colors';
+import {IPhase} from '../../interfaces';
+import {gray, grayLight, primary} from '../../constants/colors';
 import {useRow} from './util';
 
-const demoPhaseData: ITaskPhase[] = [
+const demoPhaseData: IPhase[] = [
   {
     id: '1',
     name: 'Diagnostic',
@@ -64,7 +64,7 @@ const demoPhaseData: ITaskPhase[] = [
 ];
 
 const TrackerTask = () => {
-  const Row = ({item}: {item: ITaskPhase}) => {
+  const Row = ({item}: {item: IPhase}) => {
     const {name, description, number, icon, status} = item;
 
     const {
