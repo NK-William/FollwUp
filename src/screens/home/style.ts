@@ -1,11 +1,25 @@
 import {StyleSheet} from 'react-native';
-import {accent, lightText, primary} from '../../constants/colors';
+import {accent, darkText, lightText, primary} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
     container: {
       backgroundColor: 'white',
       flex: 1,
+    },
+    contentPlaceholderContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    contentLoader: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
+    loadingText: {
+      marginTop: 8,
+      color: darkText,
     },
     statsContainer: {
       paddingHorizontal: 12,
@@ -18,7 +32,7 @@ const getStyling = () => {
       height: 50,
       marginTop: 8,
       alignItems: 'flex-end',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     progressContainer: {
       marginTop: 23,

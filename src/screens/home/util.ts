@@ -2,15 +2,16 @@ import {ColorValue} from 'react-native';
 import {IProfile, IReduxUser, ITask} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {selectUser, setUser} from '../../redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
 
 export const useHome = () => {
-  //#region Redux
+  //#region Hooks
+  const [tasks, setTasks] = useState<ITask[]>();
   const {id, emailAddress} = useSelector(selectUser);
   const dispatch = useDispatch();
-  //#endregion Redux
+  //#endregion Hooks
 
   //#region Apis
   const {loading: isFetchingProfile, refetch: apiFetchProfile} =
@@ -19,7 +20,7 @@ export const useHome = () => {
       lazy: true,
     });
 
-  const {loading: isFetchingTasks, refetch: apiFetchTasks} = useGet<ITask>({
+  const {loading: isFetchingTasks, refetch: apiFetchTasks} = useGet<ITask[]>({
     path: '',
     lazy: true,
   });
@@ -73,6 +74,7 @@ export const useHome = () => {
     apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
       .then(response => {
         if (response) {
+          setTasks(response);
           console.log('Got tasks: ', response);
         } else {
           fetchErrorToast('Failed to fetch tasks');
@@ -99,5 +101,9 @@ export const useHome = () => {
   };
   //#endregion Methods
 
-  return {progressBarTasks, loading: isFetchingProfile || isFetchingTasks};
+  return {
+    tasks,
+    loading: isFetchingProfile || isFetchingTasks,
+    progressBarTasks,
+  };
 };
