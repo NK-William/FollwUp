@@ -75,7 +75,7 @@ export const useHome = () => {
       .then(response => {
         if (response) {
           setTasks(response);
-          console.log('Got tasks: ', response);
+          // console.log('Got tasks: ', JSON.stringify(response));
         } else {
           fetchErrorToast('Failed to fetch tasks');
         }

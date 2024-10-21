@@ -7,12 +7,13 @@ import {TaskTabOptionEnum} from '../../utils/enums';
 const TaskTabOption: FC<ITaskTabOptionProps> = props => {
   const styles = getStyling(props);
   return (
-    <Pressable
-      onPress={() => props.onPress(props.option)}
-      style={styles.container}>
+    // <Pressable {/* Tracker option */}
+    //   onPress={() => props.onPress(props.option)}
+    <View style={styles.container}>
       <Text style={styles.text}>{props.text}</Text>
       <View style={styles.line} />
-    </Pressable>
+    </View>
+    // </Pressable>
   );
 };
 

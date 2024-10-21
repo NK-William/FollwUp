@@ -46,7 +46,7 @@ const Home = () => {
           </View>
           <View style={styles.progressTasksContainer}>
             <FlatList
-              data={fakeTasks}
+              data={tasks}
               renderItem={task => (
                 <ProgressTaskName
                   {...task.item}
@@ -60,21 +60,23 @@ const Home = () => {
         <View style={styles.tasksContainer}>
           <View style={styles.tabContainer}>
             <TaskTabOption
-              text="Track"
+              text="TASKS"
               isSelected={selectedTabOption === TaskTabOptionEnum.Track}
               onPress={setSelectedTabOption}
               option={TaskTabOptionEnum.Track}
+              containerStyle={{width: '50%'}}
             />
-            <TaskTabOption
+            {/* Tracker option */}
+            {/* <TaskTabOption
               text="Edit"
               isSelected={selectedTabOption === TaskTabOptionEnum.Edit}
               onPress={setSelectedTabOption}
               option={TaskTabOptionEnum.Edit}
-            />
+            /> */}
           </View>
           <View style={styles.taskListContainer}>
             <FlatList
-              data={fakeTasks}
+              data={tasks}
               renderItem={task => (
                 <TaskListItem
                   isTracker={selectedTabOption === TaskTabOptionEnum.Track}

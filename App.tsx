@@ -127,7 +127,7 @@ const App = () => {
   return (
     <>
       <RestfulProvider
-        base="https://9e28-160-19-36-36.ngrok-free.app"
+        base="https://42ed-160-19-36-36.ngrok-free.app/"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',

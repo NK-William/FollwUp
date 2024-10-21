@@ -21,7 +21,8 @@ const getStyling = (props: ITaskTabOptionProps) => {
     },
     line: {
       height: isSelected ? 2.5 : 1,
-      width: '100%',
+      // width: '100%', {/* Tracker option */}
+      width: '50%',
       backgroundColor: isSelected ? accent : '#B4B4B4',
     },
   });

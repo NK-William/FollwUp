@@ -18,4 +18,3 @@ export {default as TaskPhaseDetails} from './taskPhaseDetails';
 export {default as ChatBubble} from './chatBubble';
 export {default as ProfileButton} from './profileButton';
 export {default as BackButton} from './backButton';
-export {default as homeEmptyPlaceholder} from './homeEmptyPlaceholder';
