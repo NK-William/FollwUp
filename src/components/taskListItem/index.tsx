@@ -22,14 +22,14 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
           <View style={styles.statusView}>
             <Text style={styles.statusText}>{statusText}</Text>
           </View>
-          {inviteLinkVisible && (
+          {/* {inviteLinkVisible && (
             <PressableText
               color={accent}
               text="Invite"
               onPress={() => {}}
               textStyle={{fontWeight: 'normal'}}
             />
-          )}
+          )} */}
         </View>
       </View>
       <ProgressBar
@@ -38,9 +38,9 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
           marginTop: 4,
         }}
       />
-      <View style={styles.badge}>
+      {/* <View style={styles.badge}>
         <Text style={styles.badgeText}>2</Text>
-      </View>
+      </View> */}
     </View>
   );
 };

@@ -9,3 +9,5 @@ export const whiteChatBackground = '#FFFFFF';
 export const senderChatBackground = '#C1CBE8';
 export const primaryButtonText = '#FFFFFF';
 export const close = '#E32A40';
+export const light = '#FFFFFF';
+export const dark = '#000000';

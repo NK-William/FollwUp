@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {accent, darkText, lightText, primary} from '../../constants/colors';
+import {
+  accent,
+  darkText,
+  light,
+  lightText,
+  primary,
+} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -85,6 +91,13 @@ const getStyling = () => {
       borderRadius: 30,
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3,
     },
     floatingButtonIcon: {
       height: 40,
@@ -97,13 +110,6 @@ const getStyling = () => {
       left: 5,
       alignItems: 'center',
       justifyContent: 'center',
-      shadowColor: '#000000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3,
     },
     innerFloatingButtonText: {
       color: lightText,
@@ -111,10 +117,13 @@ const getStyling = () => {
       fontSize: 15,
     },
     addIcon: {
-      height: 20,
-      width: 20,
-      marginRight: -5,
+      color: light,
     },
+    // addIcon: {
+    //   height: 20,
+    //   width: 20,
+    //   marginRight: -5,
+    // },
   });
 };
 

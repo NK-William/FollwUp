@@ -1,4 +1,4 @@
-import {View, Text, Image, FlatList} from 'react-native';
+import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
 import React, {FC, useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
@@ -8,6 +8,7 @@ import {
   TaskTabOption,
   TaskListItem,
   ProfileButton,
+  Icon,
 } from '../../components';
 import {fakeTasks} from '../../fakeJSON';
 import {TaskTabOptionEnum} from '../../utils/enums';
@@ -40,7 +41,7 @@ const Home = () => {
           <View style={styles.progressContainer}>
             <Text style={styles.progressText}>All Tasks Progress</Text>
             <StatsProgressBar
-              progressTasks={progressBarTasks(fakeTasks)}
+              progressTasks={progressBarTasks(tasks ?? [])}
               containerStyle={styles.progressBar}
             />
           </View>
@@ -87,8 +88,14 @@ const Home = () => {
               keyExtractor={task => task.id}
             />
             <View style={styles.floatingButtonContainer}>
-              <View style={styles.floatingButton}>
-                <View style={styles.innerFloatingButtonContainer}>
+              <TouchableOpacity style={styles.floatingButton}>
+                <Icon
+                  iconType="FontAwesome5"
+                  iconName="plus"
+                  size={18}
+                  style={styles.addIcon}
+                />
+                {/* <View style={styles.innerFloatingButtonContainer}>
                   {selectedTabOption === TaskTabOptionEnum.Track ? (
                     <Image
                       source={require('../../assets/images/add.png')}
@@ -101,8 +108,8 @@ const Home = () => {
                 <Image
                   source={require('../../assets/images/taskTrack.png')}
                   style={styles.floatingButtonIcon}
-                />
-              </View>
+                /> */}
+              </TouchableOpacity>
             </View>
           </View>
         </View>

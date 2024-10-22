@@ -33,10 +33,12 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
     }
   };
 
+  // TODO: should return names, add props from the back-end
   const getFirstLastName = () => {
     if (props.clientFirstName && props.clientLastName)
       return `${props.clientFirstName} ${props.clientLastName}`;
-    else return 'Client is not registered';
+    // else return 'Client is not registered';
+    else return '';
   };
 
   const showInviteLink = () => {

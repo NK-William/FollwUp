@@ -1,0 +1,72 @@
+[
+  {
+    "id": "8a77539d-d785-4eff-05c3-08dceba0b110",
+    "name": "Engine Rebuild",
+    "progressToHundred": 0,
+    "organization": "KIA Lazarus",
+    "status": 0,
+    "description": "Testing task",
+    "eta": "2024-11-13T15:49:22.93",
+    "color": "#AAFFCC",
+    "phases": [
+      {
+        "id": "9614f1fa-6a3e-4a50-f5b3-08dceba0b143",
+        "name": "Test",
+        "number": 1,
+        "description": "Just testing",
+        "icon": "Gear",
+        "status": 0,
+        "taskId": "8a77539d-d785-4eff-05c3-08dceba0b110"
+      }
+    ],
+    "roles": [
+      {
+        "id": "b306ce3c-d416-4dd0-6007-08dceba0b14e",
+        "roleType": 2,
+        "taskId": "8a77539d-d785-4eff-05c3-08dceba0b110",
+        "profileId": "3689581c-01a6-4949-ed5f-08dcd5b3823b"
+      }
+    ],
+    "invitation": {
+      "id": "4151d013-767f-4df2-985f-08dceba0b154",
+      "phoneNumber": "0711111111",
+      "roleType": 1,
+      "taskId": "8a77539d-d785-4eff-05c3-08dceba0b110"
+    }
+  },
+  {
+    "id": "312f7b25-948b-4e9b-05c4-08dceba0b110",
+    "name": "Radiator fix",
+    "progressToHundred": 0,
+    "organization": "BMW",
+    "status": 0,
+    "description": "Testing task 2",
+    "eta": "2024-11-15T15:49:22.93",
+    "color": "#AAFFDD",
+    "phases": [
+      {
+        "id": "864ed55d-0b07-4228-f5b4-08dceba0b143",
+        "name": "Testing Radiator",
+        "number": 1,
+        "description": "Just testing",
+        "icon": "Test",
+        "status": 0,
+        "taskId": "312f7b25-948b-4e9b-05c4-08dceba0b110"
+      }
+    ],
+    "roles": [
+      {
+        "id": "47eb588f-158e-4ae9-6008-08dceba0b14e",
+        "roleType": 2,
+        "taskId": "312f7b25-948b-4e9b-05c4-08dceba0b110",
+        "profileId": "3689581c-01a6-4949-ed5f-08dcd5b3823b"
+      }
+    ],
+    "invitation": {
+      "id": "60d4108c-c899-445c-9860-08dceba0b154",
+      "phoneNumber": "0711111122",
+      "roleType": 1,
+      "taskId": "312f7b25-948b-4e9b-05c4-08dceba0b110"
+    }
+  }
+]

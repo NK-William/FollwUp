@@ -14,7 +14,7 @@ const ProgressTaskName: FC<IProgressTaskNameProps> = props => {
         <Text style={styles.nameCapsLetters}>{letters}</Text>
       </View>
       <Text style={styles.taskName}>{props.name}</Text>
-      <View style={styles.inviteContainer}>
+      {/* <View style={styles.inviteContainer}>
         {inviteIconVisible && (
           <Pressable onPress={() => console.log('Invite')}>
             <Image
@@ -23,7 +23,7 @@ const ProgressTaskName: FC<IProgressTaskNameProps> = props => {
             />
           </Pressable>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };
