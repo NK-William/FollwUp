@@ -43,6 +43,25 @@ const getStyling = () => {
     progressContainer: {
       marginTop: 23,
     },
+    emptyInstructionContain: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+    },
+    emptyInstructionHeaderText: {
+      color: light,
+      fontSize: 18,
+      marginBottom: 18,
+      fontWeight: 'bold',
+    },
+    emptyInstructionText: {
+      color: light,
+      fontSize: 16,
+    },
+    plusCharacter: {
+      fontSize: 22,
+      fontWeight: 'bold',
+    },
     progressText: {
       alignSelf: 'center',
       fontSize: 20,

@@ -74,7 +74,7 @@ export const useHome = () => {
     apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
       .then(response => {
         if (response) {
-          setTasks(response);
+          // setTasks(response);
           // console.log('Got tasks: ', JSON.stringify(response));
         } else {
           fetchErrorToast('Failed to fetch tasks');
@@ -103,6 +103,7 @@ export const useHome = () => {
 
   return {
     tasks,
+    TasksDefined: tasks?.length,
     loading: isFetchingProfile || isFetchingTasks,
     progressBarTasks,
   };
