@@ -103,7 +103,7 @@ export const useHome = () => {
 
   return {
     tasks,
-    TasksDefined: tasks?.length,
+    tasksDefined: tasks?.length,
     loading: isFetchingProfile || isFetchingTasks,
     progressBarTasks,
   };

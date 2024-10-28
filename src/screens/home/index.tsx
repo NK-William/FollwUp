@@ -15,21 +15,39 @@ import {TaskTabOptionEnum} from '../../utils/enums';
 import {OpicFiller} from '../../containers';
 import LoaderKit from 'react-native-loader-kit';
 import {primary} from '../../constants/colors';
+import addTask from '../addTask';
 
-const Home = () => {
+const Home = (props: any) => {
+  const {navigation} = props;
+
   const styles = getStyling();
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
   );
-  const {progressBarTasks, tasks, TasksDefined, loading} = useHome();
+  const {progressBarTasks, tasks, tasksDefined, loading} = useHome();
 
-  const ContentPlaceholder = () => {
+  const StatsContentPlaceholder = () => {
     return (
-      <View style={styles.contentPlaceholderContainer}>
-        <Text>You have no tasks added</Text>
+      <View style={styles.statsContentPlaceholderContainer}>
+        <Text style={styles.emptyInstructionHeaderText}>
+          Stats will display here when you have tasks
+        </Text>
+        <Text style={styles.emptyInstructionText}>
+          Please press <Text style={styles.plusCharacter}> + </Text>
+          button to add a new task
+        </Text>
       </View>
     );
   };
+
+  const TasksContentPlaceholder = () => (
+    <View style={styles.tasksContentPlaceholder}>
+      <Image
+        source={require('../../assets/images/emptyBox.png')}
+        style={styles.profilePlaceholder}
+      />
+    </View>
+  );
 
   const Content = () => {
     return (
@@ -38,37 +56,31 @@ const Home = () => {
           <View style={styles.profilePlaceholderContainer}>
             <ProfileButton />
           </View>
-          {TasksDefined ? (
-            <View style={styles.progressContainer}>
-              <Text style={styles.progressText}>All Tasks Progress</Text>
-              <StatsProgressBar
-                progressTasks={progressBarTasks(tasks ?? [])}
-                containerStyle={styles.progressBar}
-              />
+          {tasksDefined ? (
+            <View>
+              <View style={styles.progressContainer}>
+                <Text style={styles.progressText}>All Tasks Progress</Text>
+                <StatsProgressBar
+                  progressTasks={progressBarTasks(tasks ?? [])}
+                  containerStyle={styles.progressBar}
+                />
+              </View>
+              <View style={styles.progressTasksContainer}>
+                <FlatList
+                  data={tasks}
+                  renderItem={task => (
+                    <ProgressTaskName
+                      {...task.item}
+                      containerStyle={styles.progressTaskNameContainer}
+                    />
+                  )}
+                  keyExtractor={task => task.id}
+                />
+              </View>
             </View>
           ) : (
-            <View style={styles.emptyInstructionContain}>
-              <Text style={styles.emptyInstructionHeaderText}>
-                Stats will display here when you have tasks
-              </Text>
-              <Text style={styles.emptyInstructionText}>
-                Please press <Text style={styles.plusCharacter}> + </Text>
-                button to add a new task
-              </Text>
-            </View>
+            <StatsContentPlaceholder />
           )}
-          <View style={styles.progressTasksContainer}>
-            <FlatList
-              data={tasks}
-              renderItem={task => (
-                <ProgressTaskName
-                  {...task.item}
-                  containerStyle={styles.progressTaskNameContainer}
-                />
-              )}
-              keyExtractor={task => task.id}
-            />
-          </View>
         </View>
         <View style={styles.tasksContainer}>
           <View style={styles.tabContainer}>
@@ -98,9 +110,12 @@ const Home = () => {
                 />
               )}
               keyExtractor={task => task.id}
+              ListEmptyComponent={TasksContentPlaceholder}
             />
             <View style={styles.floatingButtonContainer}>
-              <TouchableOpacity style={styles.floatingButton}>
+              <TouchableOpacity
+                style={styles.floatingButton}
+                onPress={() => navigation.navigate(addTask)}>
                 <Icon
                   iconType="FontAwesome5"
                   iconName="plus"

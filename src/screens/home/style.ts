@@ -13,10 +13,14 @@ const getStyling = () => {
       backgroundColor: 'white',
       flex: 1,
     },
-    contentPlaceholderContainer: {
+    statsContentPlaceholderContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    tasksContentPlaceholder: {
+      alignItems: 'center',
+      marginTop: 30,
     },
     contentLoader: {
       justifyContent: 'center',
