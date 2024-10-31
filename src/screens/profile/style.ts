@@ -7,11 +7,6 @@ const getStyling = () => {
       flex: 1,
       backgroundColor: 'white',
     },
-    backArrowContainer: {
-      position: 'absolute',
-      top: 12,
-      left: 12,
-    },
     logoutIconContainer: {
       backgroundColor: primary,
       position: 'absolute',

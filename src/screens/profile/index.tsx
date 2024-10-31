@@ -10,12 +10,14 @@ import {
 import {lightText} from '../../constants/colors';
 import getStyling from './style';
 import {useProfile} from './util';
+import getGlobalStyling from '../../utils/styles';
 // import {OpicFiller} from '../../containers';
 // import {cameraPickerType} from './enum';
 
 const Profile = (props: any) => {
   const {navigation} = props;
   const styles = getStyling();
+  const globalStyles = getGlobalStyling();
   const {
     firstName,
     lastName,
@@ -80,7 +82,7 @@ const Profile = (props: any) => {
           </ScrollView>
         </View>
       </View>
-      <BackButton containerStyle={styles.backArrowContainer} />
+      <BackButton containerStyle={globalStyles.absoluteBackButton} />
       <TouchableOpacity onPress={signOut} style={styles.logoutIconContainer}>
         <Feather name="log-out" size={18} color={'white'} />
       </TouchableOpacity>

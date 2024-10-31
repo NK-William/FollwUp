@@ -12,8 +12,9 @@ import {
   taskPhaseStatus,
   taskStatus,
 } from '../../utils/enums';
-import {Icon} from '../../components';
+import {BackButton, Icon} from '../../components';
 import {accent, close} from '../../constants/colors';
+import getGlobalStyling from '../../utils/styles';
 
 const iconNames = [
   'build-outline',
@@ -95,6 +96,7 @@ const AddTask = () => {
   const [iconName, setIconName] = useState<string>('');
 
   const styles = getStyling();
+  const globalStyles = getGlobalStyling();
 
   const validateTaskDetails = () => {
     if (!task.name && !task.clientPhoneNumber) {
@@ -174,6 +176,7 @@ const AddTask = () => {
 
   return (
     <View style={styles.container}>
+      <BackButton containerStyle={globalStyles.backButton} />
       {showTasPhaseContainer ? (
         <AddTaskPhaseDetails
           name={name}
