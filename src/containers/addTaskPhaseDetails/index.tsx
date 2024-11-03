@@ -9,6 +9,7 @@ import {
   IconPicker,
 } from '../../components';
 import {IAddTaskPhaseDetailsProps} from './interface';
+import {useAddTaskPhaseDetails} from './util';
 
 const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
   const styles = getStyling();
@@ -25,6 +26,12 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     updateShowTaskPhaseContainer,
     displayPreviousPhase,
   } = props;
+
+  const {returnToPrevious} = useAddTaskPhaseDetails(
+    phaseNumber,
+    updateShowTaskPhaseContainer,
+    displayPreviousPhase,
+  );
 
   return (
     <View style={{flex: 1}}>
@@ -63,11 +70,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         <PressableText
           text={phaseNumber === 1 ? 'Return to task details' : 'Previous'}
           textStyle={styles.pressableText}
-          onPress={
-            phaseNumber === 1
-              ? () => updateShowTaskPhaseContainer(false)
-              : () => displayPreviousPhase()
-          }
+          onPress={returnToPrevious}
         />
         <PressableText
           text="Add another"
@@ -86,6 +89,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         text="Cancel"
         textStyle={styles.follwUpNegativeButtonText}
         containerStyle={styles.follwUpNegativeButton}
+        onPress={returnToPrevious}
       />
     </View>
   );

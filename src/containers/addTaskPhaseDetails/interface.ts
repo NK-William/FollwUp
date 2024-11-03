@@ -2,7 +2,7 @@ export interface IAddTaskPhaseDetailsProps {
   name?: string;
   description?: string;
   iconName: string;
-  phaseNumber?: number;
+  phaseNumber: number;
   setName?: (value: string) => void;
   setDescription?: (value: string) => void;
   setShowPickerPopup: (value: boolean) => void;

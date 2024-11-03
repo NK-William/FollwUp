@@ -5,6 +5,7 @@ import {
   taskPhaseStatus,
   taskStatus,
 } from '../../utils/enums';
+import {Alert} from 'react-native';
 
 const taskInit: ITask = {
   name: '',
@@ -24,7 +25,10 @@ export const useAddTask = () => {
   // Methods
   const validateTaskDetails = () => {
     if (!task.name) {
-      console.log('Please fill in task name');
+      Alert.alert(
+        'Alert',
+        'Please fill in task name before getting to the next step.',
+      );
     } else {
       setShowTaskPhaseContainer(true);
     }

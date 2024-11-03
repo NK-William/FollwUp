@@ -15,6 +15,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const {
     name,
     // phoneNumber,
+    navigation,
     description,
     updateTaskFormDetails,
     updateShowTaskPhaseContainer,
@@ -59,6 +60,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         text="Cancel"
         textStyle={styles.follwUpButtonText}
         containerStyle={styles.follwUpButton}
+        onPress={() => navigation.goBack()}
       />
     </View>
   );

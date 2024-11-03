@@ -5,7 +5,7 @@ const getStyling = () => {
     container: {
       flex: 1,
       backgroundColor: 'white',
-      paddingBottom: 20,
+      paddingVertical: 20,
     },
     popupContainer: {
       height: 250,

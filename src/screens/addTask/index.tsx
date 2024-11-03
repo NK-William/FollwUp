@@ -18,7 +18,8 @@ import getGlobalStyling from '../../utils/styles';
 import {useAddTask} from './utils';
 import iconNames from '../../constants/iconNames';
 
-const AddTask = () => {
+const AddTask = (props: any) => {
+  const {navigation} = props;
   // Hooks
   const {
     showTaskPhaseContainer,
@@ -43,7 +44,7 @@ const AddTask = () => {
 
   return (
     <View style={styles.container}>
-      <BackButton containerStyle={globalStyles.backButton} />
+      {/* <BackButton containerStyle={globalStyles.backButton} /> */}
       {showTaskPhaseContainer ? (
         <AddTaskPhaseDetails
           name={name}
@@ -61,6 +62,7 @@ const AddTask = () => {
         <AddTaskDetails
           name={task?.name}
           // phoneNumber={task?.clientPhoneNumber}
+          navigation={navigation}
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}
           updateShowTaskPhaseContainer={validateTaskDetails}
