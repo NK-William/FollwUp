@@ -1,7 +1,7 @@
 import {taskPhaseStatus} from '../utils/enums';
 
 export interface IPhase {
-  id: string;
+  id?: string;
   taskId?: string; // fk
   name: string;
   description?: string;

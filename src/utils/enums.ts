@@ -31,11 +31,11 @@ export enum TaskStatusColor {
   Rejected = '#DE4343',
   Accepted = '#2D3DCD',
   Completed = '#2C8C2C',
-  Pending = gray,
+  Pending = 'gray',
 }
 
 export enum TaskFormFieldEnum {
   name,
-  phoneNumber,
+  // phoneNumber,
   description,
 }

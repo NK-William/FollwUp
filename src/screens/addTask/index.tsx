@@ -21,7 +21,7 @@ import iconNames from '../../constants/iconNames';
 const AddTask = () => {
   // Hooks
   const {
-    showTasPhaseContainer,
+    showTaskPhaseContainer,
     name,
     description,
     iconName,
@@ -44,7 +44,7 @@ const AddTask = () => {
   return (
     <View style={styles.container}>
       <BackButton containerStyle={globalStyles.backButton} />
-      {showTasPhaseContainer ? (
+      {showTaskPhaseContainer ? (
         <AddTaskPhaseDetails
           name={name}
           description={description}
@@ -60,7 +60,7 @@ const AddTask = () => {
       ) : (
         <AddTaskDetails
           name={task?.name}
-          phoneNumber={task?.clientPhoneNumber}
+          // phoneNumber={task?.clientPhoneNumber}
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}
           updateShowTaskPhaseContainer={validateTaskDetails}

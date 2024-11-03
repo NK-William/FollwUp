@@ -1,17 +1,20 @@
 import {useState} from 'react';
 import {ITask} from '../../interfaces';
-import {TaskFormFieldEnum, taskStatus} from '../../utils/enums';
+import {
+  TaskFormFieldEnum,
+  taskPhaseStatus,
+  taskStatus,
+} from '../../utils/enums';
 
 const taskInit: ITask = {
   name: '',
-  clientPhoneNumber: '',
   phases: [],
   status: taskStatus.Pending,
 };
 
 export const useAddTask = () => {
   // Hooks
-  const [showTasPhaseContainer, setShowTaskPhaseContainer] = useState(false);
+  const [showTaskPhaseContainer, setShowTaskPhaseContainer] = useState(false);
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -20,12 +23,8 @@ export const useAddTask = () => {
 
   // Methods
   const validateTaskDetails = () => {
-    if (!task.name && !task.clientPhoneNumber) {
-      console.log('Please fill in the task details');
-    } else if (!task.name) {
-      console.log('Please fill in the task name');
-    } else if (!task.clientPhoneNumber) {
-      console.log('Please fill in the client phone number');
+    if (!task.name) {
+      console.log('Please fill in task name');
     } else {
       setShowTaskPhaseContainer(true);
     }
@@ -33,13 +32,14 @@ export const useAddTask = () => {
   console.log('task::', task);
 
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
+    console.log('filed: ', field);
     switch (field) {
       case TaskFormFieldEnum.name:
         setTask({...task, name: value});
         break;
-      case TaskFormFieldEnum.phoneNumber:
-        setTask({...task, clientPhoneNumber: value});
-        break;
+      // case TaskFormFieldEnum.phoneNumber:
+      //   setTask({...task, clientPhoneNumber: value});
+      //   break;
       case TaskFormFieldEnum.description:
         setTask({...task, description: value});
         break;
@@ -95,7 +95,7 @@ export const useAddTask = () => {
   };
 
   return {
-    showTasPhaseContainer,
+    showTaskPhaseContainer,
     name,
     description,
     iconName,

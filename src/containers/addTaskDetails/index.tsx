@@ -14,7 +14,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
   const {
     name,
-    phoneNumber,
+    // phoneNumber,
     description,
     updateTaskFormDetails,
     updateShowTaskPhaseContainer,
@@ -32,14 +32,14 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
           updateTaskFormDetails(text, TaskFormFieldEnum.name)
         }
       />
-      <TaskInput
+      {/* <TaskInput
         label="Customer contact number"
         entryText={phoneNumber}
         containerStyle={styles.entryLabel}
         onChangeText={text =>
           updateTaskFormDetails(text, TaskFormFieldEnum.phoneNumber)
         }
-      />
+      /> */}
       <TaskInput
         label="Description"
         multiline={true}
