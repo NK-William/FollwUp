@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {ITask} from '../../interfaces';
+import {IPhase, ITask} from '../../interfaces';
 import {
   TaskFormFieldEnum,
   taskPhaseStatus,
@@ -14,26 +14,24 @@ const taskInit: ITask = {
 };
 
 export const useAddTask = () => {
-  // Hooks
+  //#region  Hooks
   const [showTaskPhaseContainer, setShowTaskPhaseContainer] = useState(false);
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [showPickerPopup, setShowPickerPopup] = useState(false);
   const [iconName, setIconName] = useState<string>('');
+  //#endregion Hooks
 
-  // Methods
-  const validateTaskDetails = () => {
+  //#region  Methods
+  const validateTaskForm = () => {
     if (!task.name) {
-      Alert.alert(
-        'Alert',
-        'Please fill in task name before getting to the next step.',
-      );
+      displayAlert('Please enter task name before going to the next step.');
     } else {
       setShowTaskPhaseContainer(true);
     }
   };
-  console.log('task::', task);
+  // consol
 
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
     console.log('filed: ', field);
@@ -67,36 +65,93 @@ export const useAddTask = () => {
     }
   };
 
-  const addPhase = () => {
-    if (!name && !description) {
-    } else if (!name) {
-    } else if (!description) {
-    } else {
-      let taskNumber = task.phases.length + 1;
-      let taskPhase = task.phases;
-
-      taskPhase.push({
-        name,
-        description,
-        status: taskPhaseStatus.Pending,
-        number: taskNumber,
-        icon: iconName,
-      });
+  const openNextPhaseForm = () => {
+    if (
+      validateTaskPhaseForm(
+        'Please fill all fields before going to the next step.',
+        'Please fill enter name before going to the next step.',
+        'Please fill enter description before going to the next step.',
+      )
+    ) {
+      const taskPhases = pushNewPhase();
 
       setTask({
         ...task,
-        phases: taskPhase,
+        phases: taskPhases,
       });
-      setName('');
-      setDescription('');
-      setIconName('');
+
+      clearPhaseForm();
     }
+  };
+
+  const validateTaskPhaseForm = (
+    allFieldsMessage: string,
+    nameFieldMessage: string,
+    descriptionFieldMessage: string,
+  ) => {
+    let isValid = false;
+    if (!name && !description) {
+      displayAlert(allFieldsMessage);
+    } else if (!name) {
+      displayAlert(nameFieldMessage);
+    } else if (!description) {
+      displayAlert(descriptionFieldMessage);
+    } else {
+      isValid = true;
+    }
+
+    return isValid;
+  };
+
+  const pushNewPhase = () => {
+    let phases: IPhase[] = Array.from(task.phases);
+    let taskNumber = phases.length + 1;
+
+    phases.push({
+      name,
+      description,
+      status: taskPhaseStatus.Pending,
+      number: taskNumber,
+      icon: iconName,
+    });
+
+    return phases;
+  };
+
+  const clearPhaseForm = () => {
+    setName('');
+    setDescription('');
+    setIconName('');
   };
 
   const setSelectIcon = (name: string) => {
     setIconName(name);
     setShowPickerPopup(false);
   };
+
+  const displayAlert = (message: string, title = 'Alert') => {
+    Alert.alert(title, message);
+  };
+
+  const saveTask = () => {
+    if (
+      validateTaskPhaseForm(
+        'Please fill all fields before submitting task.',
+        'Please enter name before submitting task.',
+        'Please enter description before submitting task.',
+      )
+    ) {
+      const taskPhases = pushNewPhase();
+
+      const taskToSubmit: ITask = {
+        ...task,
+        phases: taskPhases,
+      };
+      console.log('saving task: ', JSON.stringify(taskToSubmit));
+    }
+  };
+
+  //#endregion Methods
 
   return {
     showTaskPhaseContainer,
@@ -107,12 +162,13 @@ export const useAddTask = () => {
     showPickerPopup,
     setName,
     setDescription,
-    addPhase,
+    openNextPhaseForm,
     setShowPickerPopup,
     showTaskForm,
     displayPreviousPhase,
     updateTaskFormDetails,
-    validateTaskDetails,
+    validateTaskForm,
     setSelectIcon,
+    saveTask,
   };
 };

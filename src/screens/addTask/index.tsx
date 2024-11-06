@@ -30,13 +30,14 @@ const AddTask = (props: any) => {
     showPickerPopup,
     setName,
     setDescription,
-    addPhase,
+    openNextPhaseForm,
     setShowPickerPopup,
     showTaskForm,
     displayPreviousPhase,
     updateTaskFormDetails,
-    validateTaskDetails,
+    validateTaskForm,
     setSelectIcon,
+    saveTask,
   } = useAddTask();
 
   const styles = getStyling();
@@ -53,10 +54,11 @@ const AddTask = (props: any) => {
           phaseNumber={task?.phases.length + 1}
           setName={setName}
           setDescription={setDescription}
-          addPhase={addPhase}
+          openNextPhaseForm={openNextPhaseForm}
           setShowPickerPopup={setShowPickerPopup}
           updateShowTaskPhaseContainer={value => showTaskForm(value)}
           displayPreviousPhase={displayPreviousPhase}
+          OnFinish={saveTask}
         />
       ) : (
         <AddTaskDetails
@@ -65,7 +67,7 @@ const AddTask = (props: any) => {
           navigation={navigation}
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}
-          updateShowTaskPhaseContainer={validateTaskDetails}
+          updateShowTaskPhaseContainer={validateTaskForm}
         />
       )}
       {showPickerPopup && (

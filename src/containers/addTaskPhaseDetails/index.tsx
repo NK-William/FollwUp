@@ -22,9 +22,10 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     setName,
     setDescription,
     setShowPickerPopup,
-    addPhase,
+    openNextPhaseForm,
     updateShowTaskPhaseContainer,
     displayPreviousPhase,
+    OnFinish,
   } = props;
 
   const {returnToPrevious} = useAddTaskPhaseDetails(
@@ -76,12 +77,13 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
           text="Add another"
           textStyle={styles.pressableText}
           onPress={() => {
-            if (addPhase) addPhase();
+            if (openNextPhaseForm) openNextPhaseForm();
           }}
         />
       </View>
       <FollwUpButton
         text="Finish"
+        onPress={OnFinish}
         containerStyle={styles.follwUpPositiveButton}
       />
 
