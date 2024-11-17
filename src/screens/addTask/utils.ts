@@ -1,11 +1,17 @@
 import {useState} from 'react';
 import {IPhase, ITask} from '../../interfaces';
 import {
+  roleType,
   TaskFormFieldEnum,
   taskPhaseStatus,
   taskStatus,
 } from '../../utils/enums';
 import {Alert} from 'react-native';
+import {useMutate} from 'restful-react';
+import {resetToScreen} from '../../utils';
+import {selectUser} from '../../redux/features/user/userSlice';
+import {useSelector} from 'react-redux';
+import {editorTask, home} from '../../constants/pageNames';
 
 const taskInit: ITask = {
   name: '',
@@ -13,7 +19,7 @@ const taskInit: ITask = {
   status: taskStatus.Pending,
 };
 
-export const useAddTask = () => {
+export const useAddTask = (navigation: any) => {
   //#region  Hooks
   const [showTaskPhaseContainer, setShowTaskPhaseContainer] = useState(false);
   const [task, setTask] = useState<ITask>(taskInit);
@@ -21,7 +27,14 @@ export const useAddTask = () => {
   const [description, setDescription] = useState<string>('');
   const [showPickerPopup, setShowPickerPopup] = useState(false);
   const [iconName, setIconName] = useState<string>('');
+  const {id: profileId} = useSelector(selectUser);
   //#endregion Hooks
+
+  //#region API requests
+  const {mutate: apiSaveTask, loading: isSavingTask} = useMutate({
+    verb: 'POST',
+    path: 'api/Tasks',
+  });
 
   //#region  Methods
   const validateTaskForm = () => {
@@ -31,7 +44,6 @@ export const useAddTask = () => {
       setShowTaskPhaseContainer(true);
     }
   };
-  // consol
 
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
     console.log('filed: ', field);
@@ -133,6 +145,10 @@ export const useAddTask = () => {
     Alert.alert(title, message);
   };
 
+  const resetNavigation = (routes: {name: string}[]) => {
+    resetToScreen(navigation, routes);
+  };
+
   const saveTask = () => {
     if (
       validateTaskPhaseForm(
@@ -143,11 +159,57 @@ export const useAddTask = () => {
     ) {
       const taskPhases = pushNewPhase();
 
-      const taskToSubmit: ITask = {
+      const taskForm: ITask = {
         ...task,
         phases: taskPhases,
       };
-      console.log('saving task: ', JSON.stringify(taskToSubmit));
+
+      if (!profileId)
+        console.log(
+          "Re-fetch profile info and get the id because user can't submit without a profile id",
+        );
+
+      taskForm.profileId = profileId;
+      taskForm.organization = 'KIA LAZARUS'; // TODO: This has to be retrieved from profile (add prop to profile)
+      taskForm.color = '#FFAACC'; // TODO: auto generate
+      taskForm.eta = '2024-12-17T16:01:16.416Z'; // TODO: add the field
+
+      // TODO: not used with the current version
+      taskForm.invitation = {
+        phoneNumber: '0711111111', // TODO: Not needed in the current version
+        roleType: roleType.Tracker, // TODO remove this, back-end is handling it
+        task: {
+          // TODO: this has to be removed
+          name: taskForm.name,
+          progressToHundred: 0,
+          organization: taskForm.organization,
+          status: 0,
+          description: taskForm.description,
+          color: taskForm.color,
+          eta: taskForm.eta,
+        },
+      };
+
+      console.log('saving task: ', JSON.stringify(taskForm));
+
+      apiSaveTask(taskForm)
+        .then(async response => {
+          if (response) {
+            console.log('Got response: ', response);
+            // resetNavigation([{name: home}, {name: editorTask}]);
+          } else {
+            console.log('Got undefined response');
+          }
+        })
+        .catch(error => {
+          if (error?.status === 404) {
+            // TODO: push to stack trace
+            console.log('Not found');
+          } else {
+            // TODO: push to stack trace
+            console.log('Error: ', error.data ?? error.message);
+          }
+        });
     }
   };
 
@@ -160,6 +222,7 @@ export const useAddTask = () => {
     iconName,
     task,
     showPickerPopup,
+    isSavingTask,
     setName,
     setDescription,
     openNextPhaseForm,
@@ -170,5 +233,6 @@ export const useAddTask = () => {
     validateTaskForm,
     setSelectIcon,
     saveTask,
+    resetNavigation,
   };
 };

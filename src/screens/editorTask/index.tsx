@@ -21,7 +21,6 @@ const demoPhaseData: IPhase[] = [
     number: 1,
     icon: 'build-outline',
     status: taskPhaseStatus.Completed,
-    taskId: '1',
   },
   {
     id: '2',
@@ -30,7 +29,6 @@ const demoPhaseData: IPhase[] = [
     number: 2,
     icon: 'construct-outline',
     status: taskPhaseStatus.Completed,
-    taskId: '1',
   },
   {
     id: '3',
@@ -39,7 +37,6 @@ const demoPhaseData: IPhase[] = [
     number: 3,
     icon: 'settings-outline',
     status: taskPhaseStatus.Completed,
-    taskId: '1',
   },
   {
     id: '4',
@@ -49,7 +46,6 @@ const demoPhaseData: IPhase[] = [
     number: 4,
     icon: 'hammer-outline',
     status: taskPhaseStatus.InProgress,
-    taskId: '1',
   },
   {
     id: '5',
@@ -58,7 +54,6 @@ const demoPhaseData: IPhase[] = [
     number: 5,
     icon: 'save-outline',
     status: taskPhaseStatus.Pending,
-    taskId: '1',
   },
   {
     id: '6',
@@ -67,7 +62,6 @@ const demoPhaseData: IPhase[] = [
     number: 6,
     icon: 'save-outline',
     status: taskPhaseStatus.Pending,
-    taskId: '1',
   },
   {
     id: '7',
@@ -76,7 +70,6 @@ const demoPhaseData: IPhase[] = [
     number: 7,
     icon: 'save-outline',
     status: taskPhaseStatus.Pending,
-    taskId: '1',
   },
   {
     id: '8',
@@ -85,7 +78,6 @@ const demoPhaseData: IPhase[] = [
     number: 8,
     icon: 'save-outline',
     status: taskPhaseStatus.Pending,
-    taskId: '1',
   },
 ];
 

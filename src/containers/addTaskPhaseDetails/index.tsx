@@ -10,6 +10,9 @@ import {
 } from '../../components';
 import {IAddTaskPhaseDetailsProps} from './interface';
 import {useAddTaskPhaseDetails} from './util';
+import {resetToScreen} from '../../utils';
+import {home} from '../../constants/pageNames';
+import {useNavigation} from '@react-navigation/native';
 
 const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
   const styles = getStyling();
@@ -26,6 +29,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     updateShowTaskPhaseContainer,
     displayPreviousPhase,
     OnFinish,
+    OnCancel,
   } = props;
 
   const {returnToPrevious} = useAddTaskPhaseDetails(
@@ -91,7 +95,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         text="Cancel"
         textStyle={styles.follwUpNegativeButtonText}
         containerStyle={styles.follwUpNegativeButton}
-        onPress={returnToPrevious}
+        onPress={() => OnCancel([{name: home}])}
       />
     </View>
   );

@@ -22,6 +22,12 @@ export enum taskPhaseStatus {
   Completed,
 }
 
+export enum roleType {
+  Viewer,
+  Tracker,
+  Editor,
+}
+
 export enum TaskTabOptionEnum {
   Edit,
   Track,

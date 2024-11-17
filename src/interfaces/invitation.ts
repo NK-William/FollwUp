@@ -1,6 +1,20 @@
+import {roleType} from '../utils/enums';
+
 export interface IInvitation {
-  id: string;
+  id?: string;
   phoneNumber: string;
-  roleType: number;
-  taskId: string;
+  roleType: roleType;
+  // taskId?: string;
+  task: iTask;
+}
+
+// fix this on both back-end and here
+interface iTask {
+  name: string;
+  progressToHundred?: number;
+  organization?: string;
+  status: number;
+  description?: string;
+  eta?: string;
+  color?: string;
 }

@@ -12,7 +12,7 @@ export const useLogin = (navigation: any) => {
   // Redux
   const dispatch = useDispatch();
 
-  // States
+  // Hooks
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [focused, setFocused] = useState<authFocusedEntry>(

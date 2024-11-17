@@ -9,9 +9,9 @@ export const isEmailValid = (email: string) => {
   return regex.test(email);
 };
 
-export const resetToScreen = (navigation: any, screenName: string) => {
+export const resetToScreen = (navigation: any, routes: {name: string}[]) => {
   navigation.reset({
     index: 0,
-    routes: [{name: screenName}],
+    routes,
   });
 };

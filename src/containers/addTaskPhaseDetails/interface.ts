@@ -10,4 +10,5 @@ export interface IAddTaskPhaseDetailsProps {
   updateShowTaskPhaseContainer: (value: boolean) => void;
   displayPreviousPhase: () => void;
   OnFinish: () => void;
+  OnCancel: (routes: {name: string}[]) => void;
 }
