@@ -145,7 +145,7 @@ export const useAddTask = (navigation: any) => {
     Alert.alert(title, message);
   };
 
-  const resetNavigation = (routes: {name: string}[]) => {
+  const resetNavigation = (routes: {name: string; params?: object}[]) => {
     resetToScreen(navigation, routes);
   };
 
@@ -190,13 +190,16 @@ export const useAddTask = (navigation: any) => {
         },
       };
 
-      console.log('saving task: ', JSON.stringify(taskForm));
+      // console.log('saving task: ', JSON.stringify(taskForm));
 
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {
-            console.log('Got response: ', response);
-            // resetNavigation([{name: home}, {name: editorTask}]);
+            console.log('Successfully submitted');
+            resetNavigation([
+              {name: home},
+              {name: editorTask, params: taskForm},
+            ]);
           } else {
             console.log('Got undefined response');
           }

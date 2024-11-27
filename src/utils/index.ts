@@ -9,7 +9,17 @@ export const isEmailValid = (email: string) => {
   return regex.test(email);
 };
 
-export const resetToScreen = (navigation: any, routes: {name: string}[]) => {
+// export const resetToScreen = (navigation: any, routes: {name: string}[]) => {
+//   navigation.reset({
+//     index: 0,
+//     routes,
+//   });
+// };
+
+export const resetToScreen = (
+  navigation: any,
+  routes: {name: string; params?: object}[],
+) => {
   navigation.reset({
     index: 0,
     routes,

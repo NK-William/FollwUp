@@ -81,7 +81,12 @@ const demoPhaseData: IPhase[] = [
   },
 ];
 
-const EditorTask = () => {
+const EditorTask = ({route}: {route: any}) => {
+  // parameters
+  const task = route.params;
+
+  console.log('Got task editor page: ', task);
+
   const {showModal, modalVisible} = useEditorTask();
   const styles = getStyling();
 
