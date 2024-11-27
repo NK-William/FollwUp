@@ -31,7 +31,7 @@ export const useAddTask = (navigation: any) => {
   //#endregion Hooks
 
   //#region API requests
-  const {mutate: apiSaveTask, loading: isSavingTask} = useMutate({
+  const {mutate: apiSaveTask, loading: isSavingTask} = useMutate<ITask>({
     verb: 'POST',
     path: 'api/Tasks',
   });
@@ -46,7 +46,6 @@ export const useAddTask = (navigation: any) => {
   };
 
   const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
-    console.log('filed: ', field);
     switch (field) {
       case TaskFormFieldEnum.name:
         setTask({...task, name: value});
@@ -81,8 +80,8 @@ export const useAddTask = (navigation: any) => {
     if (
       validateTaskPhaseForm(
         'Please fill all fields before going to the next step.',
-        'Please fill enter name before going to the next step.',
-        'Please fill enter description before going to the next step.',
+        'Please fill name before going to the next step.',
+        'Please fill description before going to the next step.',
       )
     ) {
       const taskPhases = pushNewPhase();
@@ -195,10 +194,10 @@ export const useAddTask = (navigation: any) => {
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {
-            console.log('Successfully submitted');
+            console.log('Successfully submitted: ', JSON.stringify(taskForm));
             resetNavigation([
               {name: home},
-              {name: editorTask, params: taskForm},
+              {name: editorTask, params: response},
             ]);
           } else {
             console.log('Got undefined response');

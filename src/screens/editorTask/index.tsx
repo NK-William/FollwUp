@@ -1,6 +1,6 @@
 import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
-import {IPhase} from '../../interfaces';
+import {IPhase, ITask} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
@@ -13,79 +13,11 @@ import {
 } from '../../components';
 import getStyling from './style';
 
-const demoPhaseData: IPhase[] = [
-  {
-    id: '1',
-    name: 'Diagnostic',
-    description: 'We will be diagnosing your car today',
-    number: 1,
-    icon: 'build-outline',
-    status: taskPhaseStatus.Completed,
-  },
-  {
-    id: '2',
-    name: 'Parts ordering',
-    description: 'Task list items',
-    number: 2,
-    icon: 'construct-outline',
-    status: taskPhaseStatus.Completed,
-  },
-  {
-    id: '3',
-    name: 'Repairing',
-    description: '',
-    number: 3,
-    icon: 'settings-outline',
-    status: taskPhaseStatus.Completed,
-  },
-  {
-    id: '4',
-    name: 'Testing',
-    description:
-      'We will be running tests to make sure everything is running smooth fvff fgfgfg fgfg fgfgfg fgf gg gff ',
-    number: 4,
-    icon: 'hammer-outline',
-    status: taskPhaseStatus.InProgress,
-  },
-  {
-    id: '5',
-    name: 'Completed',
-    description: 'Your car is ready for collection.',
-    number: 5,
-    icon: 'save-outline',
-    status: taskPhaseStatus.Pending,
-  },
-  {
-    id: '6',
-    name: 'Completed 2',
-    description: 'Your car is ready for collection.',
-    number: 6,
-    icon: 'save-outline',
-    status: taskPhaseStatus.Pending,
-  },
-  {
-    id: '7',
-    name: 'Completed 3',
-    description: 'Your car is ready for collection.',
-    number: 7,
-    icon: 'save-outline',
-    status: taskPhaseStatus.Pending,
-  },
-  {
-    id: '8',
-    name: 'Completed 8',
-    description: 'Your car is ready for collection.',
-    number: 8,
-    icon: 'save-outline',
-    status: taskPhaseStatus.Pending,
-  },
-];
-
 const EditorTask = ({route}: {route: any}) => {
   // parameters
-  const task = route.params;
+  const task = route.params as ITask;
 
-  console.log('Got task editor page: ', task);
+  console.log('Got task editor page: ', JSON.stringify(task));
 
   const {showModal, modalVisible} = useEditorTask();
   const styles = getStyling();
@@ -101,7 +33,7 @@ const EditorTask = ({route}: {route: any}) => {
       taskPhaseDetailsTextStyleOverride,
       taskTrackLineStyleOverride,
       taskIconStyleOverride,
-    } = useRow(description, number, demoPhaseData.length, status);
+    } = useRow(description, number, task.phases.length, status);
 
     return (
       <View>
@@ -192,7 +124,7 @@ const EditorTask = ({route}: {route: any}) => {
     <View style={styles.container}>
       <TaskStatsHeader />
       <FlatList
-        data={demoPhaseData}
+        data={task.phases}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />
