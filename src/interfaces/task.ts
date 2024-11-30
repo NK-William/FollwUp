@@ -8,7 +8,7 @@ export interface ITask {
   organization?: string;
   status: taskStatus;
   description?: string;
-  eta?: string;
+  eta: string;
   color?: string;
   phases: IPhase[];
   roles?: IRole[];

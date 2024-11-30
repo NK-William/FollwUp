@@ -8,7 +8,9 @@ const ProfileButton: FC = () => {
   const navigation = useNavigation();
   const styles = getStyling();
   return (
-    <Pressable onPress={() => navigation.navigate(profile as never)}>
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate(profile as never)}>
       <Image
         source={require('../../assets/images/profilePlaceholder.png')}
         style={styles.profilePlaceholder}

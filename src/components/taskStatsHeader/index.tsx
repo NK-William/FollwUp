@@ -2,19 +2,23 @@ import {View, Text, Image} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {ITaskStatsHeader} from './interface';
-import {ProgressBar, FollwUpButton} from '..';
-import {accent, primary} from '../../constants/colors';
+import {ProgressBar, FollwUpButton, ProfileButton} from '..';
+import {useTaskStatsHeader} from './utils';
 
 const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
-  const {notLinked} = props;
+  const {notLinked, title, currentPhase, PhasesSum, CompletionDate} = props;
+
+  console.log('Phase number: ', currentPhase, currentPhase === undefined);
+  const {getFormattedDate, getPercentageValue} = useTaskStatsHeader(
+    CompletionDate,
+    currentPhase,
+    PhasesSum,
+  );
   const styles = getStyling();
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../../assets/images/profilePlaceholder.png')}
-        style={styles.profilePlaceholder}
-      />
-      <Text style={styles.title}>Engine rebuild</Text>
+      <ProfileButton />
+      <Text style={styles.title}>{title}</Text>
       {notLinked ? (
         <View>
           <Text style={styles.phasesTrackText}>Link has been declined</Text>
@@ -43,9 +47,14 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
         </View>
       ) : (
         <View>
-          <Text style={styles.phasesTrackText}>3 of 5 phases completed</Text>
+          <Text style={styles.phasesTrackText}>
+            {currentPhase !== undefined
+              ? `${currentPhase} of ${PhasesSum} phases completed`
+              : 'Something went wrong calculating stats'}
+          </Text>
           <Text style={styles.estimationText}>
-            Estimated completion time is 12 July 2023
+            {`Estimated completion time is ${getFormattedDate()}`}
+            {/* {`Estimated completion time is 12 July 2023`} */}
           </Text>
           <View
             style={{
@@ -53,7 +62,7 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
               flex: 1,
             }}>
             <ProgressBar
-              progressToHundred={70}
+              progressToHundred={getPercentageValue()}
               containerStyle={styles.progressBar}
             />
             <FollwUpButton

@@ -38,12 +38,6 @@ const getStyling = () => {
       borderBottomLeftRadius: 50,
       borderBottomRightRadius: 50,
     },
-    profilePlaceholderContainer: {
-      height: 50,
-      marginTop: 8,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
     progressContainer: {
       marginTop: 23,
     },

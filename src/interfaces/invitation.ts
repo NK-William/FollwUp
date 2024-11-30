@@ -5,7 +5,7 @@ export interface IInvitation {
   phoneNumber: string;
   roleType: roleType;
   // taskId?: string;
-  task: iTask;
+  task?: iTask; // Fix loop reference with ITask
 }
 
 // fix this on both back-end and here

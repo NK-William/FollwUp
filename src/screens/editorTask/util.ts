@@ -2,15 +2,35 @@ import {ColorValue} from 'react-native';
 import {taskPhaseStatus} from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
+import {ITask} from '../../interfaces';
 
-export const useEditorTask = () => {
+export const useEditorTask = (task: ITask) => {
   const [showModal, setShowModal] = useState(false);
 
   const modalVisible = (value: boolean) => {
     setShowModal(value);
   };
 
-  return {showModal, modalVisible};
+  const getNumberOfCompletedPhases = () => {
+    let currentIndexPhase = task.phases.findIndex(
+      phase => phase.status === taskPhaseStatus.InProgress,
+    );
+
+    if (currentIndexPhase !== -1)
+      return task.phases[--currentIndexPhase].number;
+
+    // If all items are pending
+    if (task.phases.every(phase => phase.status === taskPhaseStatus.Pending))
+      return 0;
+
+    // If all items are completed
+    if (task.phases.every(phase => phase.status === taskPhaseStatus.Completed))
+      return task.phases.length;
+
+    return undefined;
+  };
+
+  return {showModal, modalVisible, getNumberOfCompletedPhases};
 };
 
 export const useRow = (

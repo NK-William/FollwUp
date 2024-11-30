@@ -15,7 +15,7 @@ import {TaskTabOptionEnum} from '../../utils/enums';
 import {OpicFiller} from '../../containers';
 import LoaderKit from 'react-native-loader-kit';
 import {primary} from '../../constants/colors';
-import addTask from '../addTask';
+import {addTask, editorTask} from '../../constants/pageNames';
 
 const Home = (props: any) => {
   const {navigation} = props;
@@ -53,9 +53,7 @@ const Home = (props: any) => {
     return (
       <>
         <View style={styles.statsContainer}>
-          <View style={styles.profilePlaceholderContainer}>
-            <ProfileButton />
-          </View>
+          <ProfileButton />
           {tasksDefined ? (
             <View>
               <View style={styles.progressContainer}>
@@ -115,7 +113,7 @@ const Home = (props: any) => {
             <View style={styles.floatingButtonContainer}>
               <TouchableOpacity
                 style={styles.floatingButton}
-                onPress={() => navigation.navigate(addTask)}>
+                onPress={() => navigation.navigate(editorTask)}>
                 <Icon
                   iconType="FontAwesome5"
                   iconName="plus"

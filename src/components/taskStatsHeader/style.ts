@@ -29,7 +29,7 @@ const getStyling = () => {
       marginTop: 14,
     },
     estimationText: {
-      alignSelf: 'center',
+      textAlign: 'center',
       color: lightText,
     },
     progressBar: {width: 220, alignSelf: 'center', marginTop: 6},

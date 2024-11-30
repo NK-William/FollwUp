@@ -121,7 +121,7 @@ const TrackerTask = () => {
   const styles = getStyling();
   return (
     <View style={styles.container}>
-      <TaskStatsHeader />
+      {/* <TaskStatsHeader /> */}
       <FlatList
         data={demoPhaseData}
         keyExtractor={item => item.id}
