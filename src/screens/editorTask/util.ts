@@ -2,14 +2,17 @@ import {ColorValue} from 'react-native';
 import {taskPhaseStatus} from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
-import {ITask} from '../../interfaces';
+import {ITask, IModalPhaseDetails} from '../../interfaces';
+
+// Global variables
+var modalPhaseDetails: IModalPhaseDetails = {
+  name: '',
+  description: '',
+};
 
 export const useEditorTask = (task: ITask) => {
   const [showModal, setShowModal] = useState(false);
-
-  const modalVisible = (value: boolean) => {
-    setShowModal(value);
-  };
+  const [showPhaseDetailsModal, setShowPhaseDetailsModal] = useState(false);
 
   const getNumberOfCompletedPhases = () => {
     let currentIndexPhase = task.phases.findIndex(
@@ -30,7 +33,20 @@ export const useEditorTask = (task: ITask) => {
     return undefined;
   };
 
-  return {showModal, modalVisible, getNumberOfCompletedPhases};
+  const expandPhaseDetails = (details: IModalPhaseDetails) => {
+    modalPhaseDetails = details;
+    setShowPhaseDetailsModal(true);
+  };
+
+  return {
+    modalPhaseDetails,
+    showModal,
+    showPhaseDetailsModal,
+    expandPhaseDetails,
+    setShowModal,
+    setShowPhaseDetailsModal,
+    getNumberOfCompletedPhases,
+  };
 };
 
 export const useRow = (

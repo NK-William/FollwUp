@@ -66,7 +66,7 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
               containerStyle={styles.progressBar}
             />
             <FollwUpButton
-              text="View reference"
+              text="Link"
               containerStyle={styles.positiveButton}
               textStyle={styles.positiveButtonText}
             />

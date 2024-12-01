@@ -1,6 +1,6 @@
 import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
-import {IPhase, ITask} from '../../interfaces';
+import {IPhase, ITask, IModalPhaseDetails} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
@@ -97,8 +97,15 @@ const EditorTask = ({route}: {route: any}) => {
 
   console.log('Got task editor page: ', JSON.stringify(task));
 
-  const {showModal, modalVisible, getNumberOfCompletedPhases} =
-    useEditorTask(task);
+  const {
+    modalPhaseDetails,
+    showModal,
+    showPhaseDetailsModal,
+    expandPhaseDetails,
+    setShowModal,
+    setShowPhaseDetailsModal,
+    getNumberOfCompletedPhases,
+  } = useEditorTask(task);
   const styles = getStyling();
 
   const Row = ({item}: {item: IPhase}) => {
@@ -168,16 +175,25 @@ const EditorTask = ({route}: {route: any}) => {
             numberStyle={taskNumberBadgeNumberStyleOverride}
             number={number}
           />
-          <TaskPhaseDetails
-            title={name}
-            containerStyle={{
-              ...styles.taskPhaseDetails,
-              height: taskPhaseDetailsHeight,
-              ...taskPhaseDetailsStyleOverride,
-            }}
-            description={description}
-            textStyle={taskPhaseDetailsTextStyleOverride}
-          />
+          <Pressable
+            style={styles.taskPhaseDetails}
+            onPress={() =>
+              expandPhaseDetails({
+                name: name,
+                description: description ?? '',
+              })
+            }>
+            <TaskPhaseDetails
+              hasLimitedLines
+              title={name}
+              containerStyle={{
+                height: taskPhaseDetailsHeight,
+                ...taskPhaseDetailsStyleOverride,
+              }}
+              description={description}
+              textStyle={taskPhaseDetailsTextStyleOverride}
+            />
+          </Pressable>
         </View>
         <View style={styles.trackContainer}>
           <TaskTrackLine
@@ -218,9 +234,24 @@ const EditorTask = ({route}: {route: any}) => {
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />
+      <Modal animationType="fade" transparent visible={showPhaseDetailsModal}>
+        <Pressable
+          onPress={() => setShowPhaseDetailsModal(false)}
+          style={{
+            ...styles.modalTransparentContainer,
+            ...styles.phaseDetailsModal,
+          }}>
+          <TaskPhaseDetails
+            title={modalPhaseDetails.name}
+            containerStyle={{}}
+            description={modalPhaseDetails.description}
+          />
+        </Pressable>
+      </Modal>
+      {/* Chat version 
       <View style={styles.chatIconContainer}>
         {!showModal && (
-          <Pressable onPress={() => modalVisible(true)}>
+          <Pressable onPress={() => setShowModal(true)}>
             <Icon
               iconName="chat"
               iconType="Entypo"
@@ -246,7 +277,7 @@ const EditorTask = ({route}: {route: any}) => {
             />
           </ScrollView>
           <View style={styles.chatIconContainer}>
-            <Pressable onPress={() => modalVisible(false)}>
+            <Pressable onPress={() => setShowModal(false)}>
               <Icon
                 iconName="tasks"
                 iconType="FontAwesome"
@@ -256,7 +287,7 @@ const EditorTask = ({route}: {route: any}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };

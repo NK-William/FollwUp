@@ -6,3 +6,4 @@ export type {ITask} from './task';
 export type {IPhase} from './phase';
 export type {IRole} from './role';
 export type {IInvitation} from './invitation';
+export type {IModalPhaseDetails} from './modalPhaseDetails';

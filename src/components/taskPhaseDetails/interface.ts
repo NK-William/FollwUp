@@ -5,4 +5,5 @@ export interface ITaskPhaseDetailsProps {
   description?: string;
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  hasLimitedLines?: boolean;
 }

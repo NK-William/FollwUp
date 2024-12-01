@@ -32,7 +32,11 @@ const getStyling = () => {
       transform: [{translateX: -33}],
     },
     taskNumberBadge: {transform: [{translateX: -25}]},
-    taskPhaseDetails: {position: 'absolute', right: 0, maxWidth: 145},
+    taskPhaseDetails: {
+      position: 'absolute',
+      right: 0,
+      maxWidth: 145,
+    },
     taskTrackLine: {},
     trackContainer: {
       height: 48,
@@ -44,6 +48,10 @@ const getStyling = () => {
       transform: [{translateX: 8}],
     },
     modalTransparentContainer: {backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1},
+    phaseDetailsModal: {
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+    },
   });
 };
 
