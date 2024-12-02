@@ -4,15 +4,27 @@ import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
 import {ITask, IModalPhaseDetails} from '../../interfaces';
 
+// Inner interfaces
+interface IModalVisibilities {
+  showPhaseDetailsModal: boolean;
+  showPhaseEditModal: boolean;
+}
+
 // Global variables
 var modalPhaseDetails: IModalPhaseDetails = {
   name: '',
   description: '',
 };
 
+var initModalVisibilities: IModalVisibilities = {
+  showPhaseDetailsModal: false,
+  showPhaseEditModal: false,
+};
+
 export const useEditorTask = (task: ITask) => {
-  const [showModal, setShowModal] = useState(false);
-  const [showPhaseDetailsModal, setShowPhaseDetailsModal] = useState(false);
+  const [modalVisibilities, setModalVisibilities] =
+    useState<IModalVisibilities>(initModalVisibilities);
+  // const [showPhaseDetailsModal, setShowPhaseDetailsModal] = useState(false);
 
   const getNumberOfCompletedPhases = () => {
     let currentIndexPhase = task.phases.findIndex(
@@ -35,16 +47,14 @@ export const useEditorTask = (task: ITask) => {
 
   const expandPhaseDetails = (details: IModalPhaseDetails) => {
     modalPhaseDetails = details;
-    setShowPhaseDetailsModal(true);
+    setModalVisibilities({...modalVisibilities, showPhaseDetailsModal: true});
   };
 
   return {
     modalPhaseDetails,
-    showModal,
-    showPhaseDetailsModal,
+    modalVisibilities,
     expandPhaseDetails,
-    setShowModal,
-    setShowPhaseDetailsModal,
+    setModalVisibilities,
     getNumberOfCompletedPhases,
   };
 };

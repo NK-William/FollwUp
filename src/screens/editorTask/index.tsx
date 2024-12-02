@@ -99,11 +99,9 @@ const EditorTask = ({route}: {route: any}) => {
 
   const {
     modalPhaseDetails,
-    showModal,
-    showPhaseDetailsModal,
+    modalVisibilities,
     expandPhaseDetails,
-    setShowModal,
-    setShowPhaseDetailsModal,
+    setModalVisibilities,
     getNumberOfCompletedPhases,
   } = useEditorTask(task);
   const styles = getStyling();
@@ -138,7 +136,13 @@ const EditorTask = ({route}: {route: any}) => {
 
         <View style={styles.rowContainer}>
           <View style={styles.actionIconContainer}>
-            <Pressable onPress={() => console.log('Edit')}>
+            <Pressable
+              onPress={() =>
+                setModalVisibilities({
+                  ...modalVisibilities,
+                  showPhaseEditModal: true,
+                })
+              }>
               <Icon
                 iconType="FontAwesome5"
                 iconName="pen"
@@ -226,6 +230,35 @@ const EditorTask = ({route}: {route: any}) => {
     />
   );
 
+  const ModalContent = () => {
+    if (modalVisibilities.showPhaseDetailsModal)
+      return <PhaseDetailsModalContent />;
+    if (modalVisibilities.showPhaseEditModal) return <PhaseEditModalContent />;
+  };
+
+  const PhaseDetailsModalContent = () => (
+    <Pressable
+      onPress={() =>
+        setModalVisibilities({
+          ...modalVisibilities,
+          showPhaseDetailsModal: false,
+        })
+      }
+      style={styles.phaseDetailsModalContainer}>
+      <TaskPhaseDetails
+        title={modalPhaseDetails.name}
+        containerStyle={{}}
+        description={modalPhaseDetails.description}
+      />
+    </Pressable>
+  );
+
+  const PhaseEditModalContent = () => (
+    <View style={styles.phaseEditModalContainer}>
+      <View style={styles.phaseEditModalInnerContainer}></View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <StatsHeader />
@@ -234,19 +267,16 @@ const EditorTask = ({route}: {route: any}) => {
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />
-      <Modal animationType="fade" transparent visible={showPhaseDetailsModal}>
-        <Pressable
-          onPress={() => setShowPhaseDetailsModal(false)}
-          style={{
-            ...styles.modalTransparentContainer,
-            ...styles.phaseDetailsModal,
-          }}>
-          <TaskPhaseDetails
-            title={modalPhaseDetails.name}
-            containerStyle={{}}
-            description={modalPhaseDetails.description}
-          />
-        </Pressable>
+      <Modal
+        animationType="fade"
+        transparent
+        visible={
+          modalVisibilities.showPhaseDetailsModal ||
+          modalVisibilities.showPhaseEditModal
+        }>
+        <View style={styles.modalContainer}>
+          <ModalContent />
+        </View>
       </Modal>
       {/* Chat version 
       <View style={styles.chatIconContainer}>

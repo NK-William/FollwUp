@@ -47,10 +47,26 @@ const getStyling = () => {
       marginBottom: -11,
       transform: [{translateX: 8}],
     },
-    modalTransparentContainer: {backgroundColor: 'rgba(0, 0, 0, 0.7)', flex: 1},
-    phaseDetailsModal: {
+    modalContainer: {
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      flex: 1,
+    },
+    phaseDetailsModalContainer: {
       justifyContent: 'center',
       alignItems: 'flex-end',
+      flex: 1,
+    },
+    phaseEditModalContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      height: 50,
+    },
+    phaseEditModalInnerContainer: {
+      backgroundColor: 'white',
+      height: '70%',
+      width: '95%',
+      borderRadius: 10,
     },
   });
 };
