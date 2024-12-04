@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {accent, lightText, primary} from '../../constants/colors';
+import {accent, light, primary} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -60,13 +60,18 @@ const getStyling = () => {
       justifyContent: 'center',
       alignItems: 'center',
       flex: 1,
-      height: 50,
     },
     phaseEditModalInnerContainer: {
-      backgroundColor: 'white',
+      backgroundColor: light,
       height: '70%',
+      justifyContent: 'space-between',
       width: '95%',
+      paddingHorizontal: 8,
+      paddingVertical: 20,
       borderRadius: 10,
+    },
+    underlinedText: {
+      marginBottom: 20,
     },
   });
 };

@@ -5,13 +5,17 @@ import {taskPhaseStatus} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
   ChatBubble,
+  FollwUpButton,
   Icon,
+  TaskInput,
   TaskNumberBadge,
   TaskPhaseDetails,
   TaskStatsHeader,
   TaskTrackLine,
+  UnderlinedText,
 } from '../../components';
 import getStyling from './style';
+import {accent} from '../../constants/colors';
 
 // Demo data
 const task: ITask = {
@@ -255,7 +259,42 @@ const EditorTask = ({route}: {route: any}) => {
 
   const PhaseEditModalContent = () => (
     <View style={styles.phaseEditModalContainer}>
-      <View style={styles.phaseEditModalInnerContainer}></View>
+      <View style={styles.phaseEditModalInnerContainer}>
+        <UnderlinedText
+          text="Edit Phase"
+          containerStyle={styles.underlinedText}
+        />
+        <View>
+          <TaskInput
+            label="Name"
+            entryText={'test'}
+            containerStyle={{marginVertical: 10}}
+            onChangeText={text => console.log('text: ', text)}
+          />
+          <TaskInput
+            label="Description"
+            multiline={true}
+            numberOfLines={9}
+            entryText={'testing'}
+            containerStyle={{marginVertical: 10}}
+            onChangeText={text => console.log('text: ', text)}
+          />
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <FollwUpButton
+              text="Cancel"
+              containerStyle={{
+                flex: 1,
+                borderWidth: 3,
+                borderColor: accent,
+                backgroundColor: 'white',
+              }}
+              textStyle={{color: accent}}
+            />
+            <View style={{width: 8}} />
+            <FollwUpButton text="Update" containerStyle={{flex: 1}} />
+          </View>
+        </View>
+      </View>
     </View>
   );
 
