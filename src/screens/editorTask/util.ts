@@ -2,7 +2,8 @@ import {ColorValue} from 'react-native';
 import {taskPhaseStatus} from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
-import {ITask, IModalPhaseDetails} from '../../interfaces';
+import {ITask, IModalPhase} from '../../interfaces';
+import {modal} from './enums';
 
 // Inner interfaces
 interface IModalVisibilities {
@@ -10,21 +11,25 @@ interface IModalVisibilities {
   showPhaseEditModal: boolean;
 }
 
-// Global variables
-var modalPhaseDetails: IModalPhaseDetails = {
-  name: '',
-  description: '',
-};
-
 var initModalVisibilities: IModalVisibilities = {
   showPhaseDetailsModal: false,
   showPhaseEditModal: false,
 };
 
+var emptyModalPhase: IModalPhase = {
+  name: '',
+  description: '',
+  icon: '',
+};
+
 export const useEditorTask = (task: ITask) => {
+  //#region Hooks
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
   // const [showPhaseDetailsModal, setShowPhaseDetailsModal] = useState(false);
+
+  const [modalPhase, setModalPhase] = useState<IModalPhase>(emptyModalPhase);
+  //#endregion Hooks
 
   const getNumberOfCompletedPhases = () => {
     let currentIndexPhase = task.phases.findIndex(
@@ -45,17 +50,58 @@ export const useEditorTask = (task: ITask) => {
     return undefined;
   };
 
-  const expandPhaseDetails = (details: IModalPhaseDetails) => {
-    modalPhaseDetails = details;
-    setModalVisibilities({...modalVisibilities, showPhaseDetailsModal: true});
+  const expandPhaseDetails = (details: IModalPhase) => {
+    setModalPhase(p => ({...p, ...details}));
+    modalToDisplay(modal.phaseDetails);
+  };
+
+  const onEditClick = (name: string, description?: string, icon?: string) => {
+    setModalPhase({name, description: description ?? '', icon: icon ?? ''});
+    modalToDisplay(modal.phaseEdit);
+  };
+
+  const closeEditModal = () => {
+    modalToDisplay(modal.non);
+    setModalPhase(emptyModalPhase);
+  };
+
+  const modalToDisplay = (modalToDisplay: modal) => {
+    switch (modalToDisplay) {
+      case modal.phaseDetails:
+        setModalVisibilities({
+          showPhaseEditModal: false,
+          showPhaseDetailsModal: true,
+        });
+        break;
+      case modal.phaseEdit:
+        setModalVisibilities({
+          showPhaseDetailsModal: false,
+          showPhaseEditModal: true,
+        });
+        break;
+      case modal.non:
+        setModalVisibilities({
+          showPhaseDetailsModal: false,
+          showPhaseEditModal: false,
+        });
+        break;
+      default:
+        setModalVisibilities({
+          showPhaseDetailsModal: false,
+          showPhaseEditModal: false,
+        });
+    }
   };
 
   return {
-    modalPhaseDetails,
+    modalPhase,
     modalVisibilities,
+    setModalPhase,
     expandPhaseDetails,
-    setModalVisibilities,
+    modalToDisplay,
     getNumberOfCompletedPhases,
+    onEditClick,
+    closeEditModal,
   };
 };
 

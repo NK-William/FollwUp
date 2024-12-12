@@ -70,6 +70,25 @@ const getStyling = () => {
       paddingVertical: 20,
       borderRadius: 10,
     },
+    phaseEditModalEntry: {
+      marginVertical: 10,
+    },
+    phaseEditModalButtonContainer: {
+      flexDirection: 'row',
+      marginTop: 10,
+    },
+    phaseEditModalPositiveButton: {
+      flex: 1,
+      borderWidth: 3,
+      borderColor: accent,
+      backgroundColor: light,
+    },
+    phaseEditModalNegativeButton: {
+      flex: 1,
+    },
+    phaseEditModalPositiveButtonText: {
+      color: accent,
+    },
     underlinedText: {
       marginBottom: 20,
     },

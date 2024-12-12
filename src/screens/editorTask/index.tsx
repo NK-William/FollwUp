@@ -1,6 +1,6 @@
 import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
 import React from 'react';
-import {IPhase, ITask, IModalPhaseDetails} from '../../interfaces';
+import {IPhase, ITask, IModalPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import getStyling from './style';
 import {accent} from '../../constants/colors';
+import {modal} from './enums';
 
 // Demo data
 const task: ITask = {
@@ -99,16 +100,21 @@ const EditorTask = ({route}: {route: any}) => {
 
   // const task = route.params as ITask;
 
-  console.log('Got task editor page: ', JSON.stringify(task));
+  // console.log('Got task editor page: ', JSON.stringify(task));
 
   const {
-    modalPhaseDetails,
+    modalPhase,
     modalVisibilities,
+    setModalPhase,
     expandPhaseDetails,
-    setModalVisibilities,
+    modalToDisplay,
     getNumberOfCompletedPhases,
+    onEditClick,
+    closeEditModal,
   } = useEditorTask(task);
   const styles = getStyling();
+
+  console.log('Rendered');
 
   const Row = ({item}: {item: IPhase}) => {
     const {name, description, number, icon, status} = item;
@@ -140,13 +146,7 @@ const EditorTask = ({route}: {route: any}) => {
 
         <View style={styles.rowContainer}>
           <View style={styles.actionIconContainer}>
-            <Pressable
-              onPress={() =>
-                setModalVisibilities({
-                  ...modalVisibilities,
-                  showPhaseEditModal: true,
-                })
-              }>
+            <Pressable onPress={() => onEditClick(name, description, icon)}>
               <Icon
                 iconType="FontAwesome5"
                 iconName="pen"
@@ -242,17 +242,12 @@ const EditorTask = ({route}: {route: any}) => {
 
   const PhaseDetailsModalContent = () => (
     <Pressable
-      onPress={() =>
-        setModalVisibilities({
-          ...modalVisibilities,
-          showPhaseDetailsModal: false,
-        })
-      }
+      onPress={() => modalToDisplay(modal.non)}
       style={styles.phaseDetailsModalContainer}>
       <TaskPhaseDetails
-        title={modalPhaseDetails.name}
-        containerStyle={{}}
-        description={modalPhaseDetails.description}
+        title={modalPhase.name}
+        // containerStyle={{}}
+        description={modalPhase.description}
       />
     </Pressable>
   );
@@ -265,33 +260,36 @@ const EditorTask = ({route}: {route: any}) => {
           containerStyle={styles.underlinedText}
         />
         <View>
+          {/* TODO added icon view */}
+          {/* TODO fix issue with name and description field input */}
           <TaskInput
             label="Name"
-            entryText={'test'}
-            containerStyle={{marginVertical: 10}}
-            onChangeText={text => console.log('text: ', text)}
+            entryText={modalPhase.name}
+            containerStyle={styles.phaseEditModalEntry}
+            onChangeText={text => setModalPhase({...modalPhase, name: text})}
           />
           <TaskInput
             label="Description"
             multiline={true}
             numberOfLines={9}
-            entryText={'testing'}
-            containerStyle={{marginVertical: 10}}
-            onChangeText={text => console.log('text: ', text)}
+            entryText={modalPhase.description}
+            containerStyle={styles.phaseEditModalEntry}
+            onChangeText={text =>
+              setModalPhase(p => ({...p, description: text}))
+            }
           />
-          <View style={{flexDirection: 'row', marginTop: 10}}>
+          <View style={styles.phaseEditModalButtonContainer}>
             <FollwUpButton
               text="Cancel"
-              containerStyle={{
-                flex: 1,
-                borderWidth: 3,
-                borderColor: accent,
-                backgroundColor: 'white',
-              }}
-              textStyle={{color: accent}}
+              onPress={() => closeEditModal()}
+              containerStyle={styles.phaseEditModalPositiveButton}
+              textStyle={styles.phaseEditModalPositiveButtonText}
             />
             <View style={{width: 8}} />
-            <FollwUpButton text="Update" containerStyle={{flex: 1}} />
+            <FollwUpButton
+              text="Update"
+              containerStyle={styles.phaseEditModalNegativeButton}
+            />
           </View>
         </View>
       </View>
