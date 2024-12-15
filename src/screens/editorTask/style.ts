@@ -37,7 +37,6 @@ const getStyling = () => {
       right: 0,
       maxWidth: 145,
     },
-    taskTrackLine: {},
     trackContainer: {
       height: 48,
       minWidth: 20,
@@ -56,42 +55,42 @@ const getStyling = () => {
       alignItems: 'flex-end',
       flex: 1,
     },
-    phaseEditModalContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex: 1,
-    },
-    phaseEditModalInnerContainer: {
-      backgroundColor: light,
-      height: '70%',
-      justifyContent: 'space-between',
-      width: '95%',
-      paddingHorizontal: 8,
-      paddingVertical: 20,
-      borderRadius: 10,
-    },
-    phaseEditModalEntry: {
-      marginVertical: 10,
-    },
-    phaseEditModalButtonContainer: {
-      flexDirection: 'row',
-      marginTop: 10,
-    },
-    phaseEditModalPositiveButton: {
-      flex: 1,
-      borderWidth: 3,
-      borderColor: accent,
-      backgroundColor: light,
-    },
-    phaseEditModalNegativeButton: {
-      flex: 1,
-    },
-    phaseEditModalPositiveButtonText: {
-      color: accent,
-    },
-    underlinedText: {
-      marginBottom: 20,
-    },
+    // phaseEditModalContainer: {
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   flex: 1,
+    // },
+    // phaseEditModalInnerContainer: {
+    //   backgroundColor: light,
+    //   height: '70%',
+    //   justifyContent: 'space-between',
+    //   width: '95%',
+    //   paddingHorizontal: 8,
+    //   paddingVertical: 20,
+    //   borderRadius: 10,
+    // },
+    // phaseEditModalEntry: {
+    //   marginVertical: 10,
+    // },
+    // phaseEditModalButtonContainer: {
+    //   flexDirection: 'row',
+    //   marginTop: 10,
+    // },
+    // phaseEditModalPositiveButton: {
+    //   flex: 1,
+    //   borderWidth: 3,
+    //   borderColor: accent,
+    //   backgroundColor: light,
+    // },
+    // phaseEditModalNegativeButton: {
+    //   flex: 1,
+    // },
+    // phaseEditModalPositiveButtonText: {
+    //   color: accent,
+    // },
+    // underlinedText: {
+    //   marginBottom: 20,
+    // },
   });
 };
 

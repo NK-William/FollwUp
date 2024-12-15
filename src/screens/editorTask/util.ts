@@ -16,19 +16,15 @@ var initModalVisibilities: IModalVisibilities = {
   showPhaseEditModal: false,
 };
 
-var emptyModalPhase: IModalPhase = {
+// Global variables
+var modalPhase: IModalPhase = {
   name: '',
-  description: '',
-  icon: '',
 };
 
 export const useEditorTask = (task: ITask) => {
   //#region Hooks
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
-  // const [showPhaseDetailsModal, setShowPhaseDetailsModal] = useState(false);
-
-  const [modalPhase, setModalPhase] = useState<IModalPhase>(emptyModalPhase);
   //#endregion Hooks
 
   const getNumberOfCompletedPhases = () => {
@@ -51,18 +47,18 @@ export const useEditorTask = (task: ITask) => {
   };
 
   const expandPhaseDetails = (details: IModalPhase) => {
-    setModalPhase(p => ({...p, ...details}));
+    modalPhase = details;
     modalToDisplay(modal.phaseDetails);
   };
 
   const onEditClick = (name: string, description?: string, icon?: string) => {
-    setModalPhase({name, description: description ?? '', icon: icon ?? ''});
+    modalPhase = {name, description, icon};
     modalToDisplay(modal.phaseEdit);
   };
 
   const closeEditModal = () => {
     modalToDisplay(modal.non);
-    setModalPhase(emptyModalPhase);
+    modalPhase = {name: '', description: undefined, icon: undefined};
   };
 
   const modalToDisplay = (modalToDisplay: modal) => {
@@ -96,12 +92,11 @@ export const useEditorTask = (task: ITask) => {
   return {
     modalPhase,
     modalVisibilities,
-    setModalPhase,
+    onEditClick,
+    closeEditModal,
     expandPhaseDetails,
     modalToDisplay,
     getNumberOfCompletedPhases,
-    onEditClick,
-    closeEditModal,
   };
 };
 

@@ -1,5 +1,5 @@
 export interface IModalPhase {
   name: string;
-  description: string;
+  description?: string;
   icon?: string;
 }

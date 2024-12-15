@@ -1,4 +1,12 @@
-import {View, Text, FlatList, Pressable, Modal, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  Modal,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import React from 'react';
 import {IPhase, ITask, IModalPhase} from '../../interfaces';
 import {taskPhaseStatus} from '../../utils/enums';
@@ -12,7 +20,7 @@ import {
   TaskPhaseDetails,
   TaskStatsHeader,
   TaskTrackLine,
-  UnderlinedText,
+  PhaseEditForm,
 } from '../../components';
 import getStyling from './style';
 import {accent} from '../../constants/colors';
@@ -105,12 +113,11 @@ const EditorTask = ({route}: {route: any}) => {
   const {
     modalPhase,
     modalVisibilities,
-    setModalPhase,
+    onEditClick,
+    closeEditModal,
     expandPhaseDetails,
     modalToDisplay,
     getNumberOfCompletedPhases,
-    onEditClick,
-    closeEditModal,
   } = useEditorTask(task);
   const styles = getStyling();
 
@@ -206,7 +213,6 @@ const EditorTask = ({route}: {route: any}) => {
         <View style={styles.trackContainer}>
           <TaskTrackLine
             containerStyle={{
-              ...styles.taskTrackLine,
               ...taskTrackLineStyleOverride,
             }}
           />
@@ -237,9 +243,11 @@ const EditorTask = ({route}: {route: any}) => {
   const ModalContent = () => {
     if (modalVisibilities.showPhaseDetailsModal)
       return <PhaseDetailsModalContent />;
-    if (modalVisibilities.showPhaseEditModal) return <PhaseEditModalContent />;
+    if (modalVisibilities.showPhaseEditModal)
+      return <PhaseEditForm {...modalPhase} cancel={closeEditModal} />;
   };
 
+  // TODO::: Create a separate component
   const PhaseDetailsModalContent = () => (
     <Pressable
       onPress={() => modalToDisplay(modal.non)}
@@ -250,50 +258,6 @@ const EditorTask = ({route}: {route: any}) => {
         description={modalPhase.description}
       />
     </Pressable>
-  );
-
-  const PhaseEditModalContent = () => (
-    <View style={styles.phaseEditModalContainer}>
-      <View style={styles.phaseEditModalInnerContainer}>
-        <UnderlinedText
-          text="Edit Phase"
-          containerStyle={styles.underlinedText}
-        />
-        <View>
-          {/* TODO added icon view */}
-          {/* TODO fix issue with name and description field input */}
-          <TaskInput
-            label="Name"
-            entryText={modalPhase.name}
-            containerStyle={styles.phaseEditModalEntry}
-            onChangeText={text => setModalPhase({...modalPhase, name: text})}
-          />
-          <TaskInput
-            label="Description"
-            multiline={true}
-            numberOfLines={9}
-            entryText={modalPhase.description}
-            containerStyle={styles.phaseEditModalEntry}
-            onChangeText={text =>
-              setModalPhase(p => ({...p, description: text}))
-            }
-          />
-          <View style={styles.phaseEditModalButtonContainer}>
-            <FollwUpButton
-              text="Cancel"
-              onPress={() => closeEditModal()}
-              containerStyle={styles.phaseEditModalPositiveButton}
-              textStyle={styles.phaseEditModalPositiveButtonText}
-            />
-            <View style={{width: 8}} />
-            <FollwUpButton
-              text="Update"
-              containerStyle={styles.phaseEditModalNegativeButton}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
   );
 
   return (

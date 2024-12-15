@@ -8,7 +8,6 @@ import {useTaskStatsHeader} from './utils';
 const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
   const {notLinked, title, currentPhase, PhasesSum, CompletionDate} = props;
 
-  console.log('Phase number: ', currentPhase, currentPhase === undefined);
   const {getFormattedDate, getPercentageValue} = useTaskStatsHeader(
     CompletionDate,
     currentPhase,
