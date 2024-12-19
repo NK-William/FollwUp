@@ -5,10 +5,38 @@ import {IIconPicker} from './interface';
 
 const getStyling = (props: IIconPicker) => {
   return StyleSheet.create({
-    container: flatten([{}, props.containerStyle]),
+    container: flatten([{alignItems: 'center'}, props.containerStyle]),
     text: {color: darkText, fontWeight: 'bold'},
     icon: {color: accent},
     placeholderText: {marginTop: 6},
+    popupContainer: {
+      height: 250,
+      width: 300,
+      borderRadius: 50,
+    },
+    popupInnerContainer: {
+      borderRadius: 20,
+      width: 300,
+      justifyContent: 'center',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      padding: 5,
+    },
+    closeIconContainer: {
+      backgroundColor: 'white',
+      width: 40,
+      height: 30,
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 5,
+    },
+    iconPickerScrollView: {
+      borderRadius: 20,
+      borderTopRightRadius: 0,
+      backgroundColor: 'white',
+    },
   });
 };
 

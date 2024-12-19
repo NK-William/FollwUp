@@ -127,7 +127,7 @@ const App = () => {
   return (
     <>
       <RestfulProvider
-        base="https://523c-160-19-36-36.ngrok-free.app"
+        base="https://1ff1-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -136,7 +136,8 @@ const App = () => {
         <NavigationContainer>
           <SafeAreaView style={{flex: 1}}>
             <StatusBar backgroundColor={primary} />
-            {accessToken ? <MainStack /> : <AuthStack />}
+            <MainStack />
+            {/* {accessToken ? <MainStack /> : <AuthStack />} */}
           </SafeAreaView>
         </NavigationContainer>
       </RestfulProvider>

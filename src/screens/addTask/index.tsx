@@ -26,62 +26,21 @@ const AddTask = (props: any) => {
     showTaskPhaseContainer,
     name,
     description,
-    iconName,
     task,
-    showPickerPopup,
     isSavingTask,
     setName,
     setDescription,
     openNextPhaseForm,
-    setShowPickerPopup,
     showTaskForm,
     displayPreviousPhase,
     updateTaskFormDetails,
     validateTaskForm,
-    setSelectIcon,
     saveTask,
     resetNavigation,
   } = useAddTask(navigation);
 
   const styles = getStyling();
   const globalStyles = getGlobalStyling();
-
-  const IconSelector = () => {
-    return (
-      <OpicFiller>
-        <View style={styles.popupContainer}>
-          <View style={{alignItems: 'flex-end'}}>
-            <View style={styles.closeIconContainer}>
-              <TouchableOpacity onPress={() => setShowPickerPopup(false)}>
-                <Icon
-                  iconType="Ionicons"
-                  iconName="close"
-                  size={25}
-                  style={{color: close}}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <ScrollView style={styles.iconPickerScrollView}>
-            <View style={styles.popupInnerContainer}>
-              {iconNames.map((name, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => setSelectIcon(name)}
-                  style={{margin: 2, padding: 5}}>
-                  <Icon
-                    iconType="Ionicons"
-                    iconName={name}
-                    style={{color: accent}}
-                  />
-                </TouchableOpacity>
-              ))}
-            </View>
-          </ScrollView>
-        </View>
-      </OpicFiller>
-    );
-  };
 
   const ScreenBlockerLoader = () => {
     return (
@@ -101,13 +60,14 @@ const AddTask = (props: any) => {
       {showTaskPhaseContainer ? (
         <AddTaskPhaseDetails
           name={name}
+          IconSelected={selectedIcon => {
+            console.log('Selected icon: ', selectedIcon);
+          }}
           description={description}
-          iconName={iconName}
           phaseNumber={task?.phases.length + 1}
           setName={setName}
           setDescription={setDescription}
           openNextPhaseForm={openNextPhaseForm}
-          setShowPickerPopup={setShowPickerPopup}
           updateShowTaskPhaseContainer={value => showTaskForm(value)}
           displayPreviousPhase={displayPreviousPhase}
           OnFinish={saveTask}
@@ -123,7 +83,6 @@ const AddTask = (props: any) => {
           updateShowTaskPhaseContainer={validateTaskForm}
         />
       )}
-      {showPickerPopup && <IconSelector />}
       {isSavingTask && <ScreenBlockerLoader />}
     </View>
   );

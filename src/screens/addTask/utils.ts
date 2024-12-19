@@ -25,8 +25,6 @@ export const useAddTask = (navigation: any) => {
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [showPickerPopup, setShowPickerPopup] = useState(false);
-  const [iconName, setIconName] = useState<string>('');
   const {id: profileId} = useSelector(selectUser);
   //#endregion Hooks
 
@@ -123,7 +121,7 @@ export const useAddTask = (navigation: any) => {
       description,
       status: taskPhaseStatus.Pending,
       number: taskNumber,
-      icon: iconName,
+      icon: iconName, // TODO::: should come from IconPicker component
     });
 
     return phases;
@@ -132,12 +130,6 @@ export const useAddTask = (navigation: any) => {
   const clearPhaseForm = () => {
     setName('');
     setDescription('');
-    setIconName('');
-  };
-
-  const setSelectIcon = (name: string) => {
-    setIconName(name);
-    setShowPickerPopup(false);
   };
 
   const displayAlert = (message: string, title = 'Alert') => {
@@ -221,19 +213,15 @@ export const useAddTask = (navigation: any) => {
     showTaskPhaseContainer,
     name,
     description,
-    iconName,
     task,
-    showPickerPopup,
     isSavingTask,
     setName,
     setDescription,
     openNextPhaseForm,
-    setShowPickerPopup,
     showTaskForm,
     displayPreviousPhase,
     updateTaskFormDetails,
     validateTaskForm,
-    setSelectIcon,
     saveTask,
     resetNavigation,
   };
