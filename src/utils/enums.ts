@@ -45,3 +45,14 @@ export enum TaskFormFieldEnum {
   // phoneNumber,
   description,
 }
+
+export enum ModalEnum {
+  ViewDetails,
+  Edit,
+  None,
+}
+
+export enum PhaseSubmissionActionEnum {
+  Add,
+  Edit,
+}

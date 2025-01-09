@@ -1,9 +1,12 @@
 import {ColorValue} from 'react-native';
-import {taskPhaseStatus} from '../../utils/enums';
+import {
+  ModalEnum,
+  PhaseSubmissionActionEnum,
+  taskPhaseStatus,
+} from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
 import {ITask, IModalPhase} from '../../interfaces';
-import {modal} from './enums';
 
 // Inner interfaces
 interface IModalVisibilities {
@@ -17,9 +20,8 @@ var initModalVisibilities: IModalVisibilities = {
 };
 
 // Global variables
-var modalPhase: IModalPhase = {
-  name: '',
-};
+var modalPhase: IModalPhase;
+var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 
 export const useEditorTask = (task: ITask) => {
   //#region Hooks
@@ -48,34 +50,44 @@ export const useEditorTask = (task: ITask) => {
 
   const expandPhaseDetails = (details: IModalPhase) => {
     modalPhase = details;
-    modalToDisplay(modal.phaseDetails);
+    modalToDisplay(ModalEnum.ViewDetails);
   };
 
   const onEditClick = (name: string, description?: string, icon?: string) => {
     modalPhase = {name, description, icon};
-    modalToDisplay(modal.phaseEdit);
+    phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
+    modalToDisplay(ModalEnum.Edit);
+  };
+
+  const onAddClick = () => {
+    phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Add;
+    modalToDisplay(ModalEnum.Edit);
+  };
+
+  const onDelete = (phaseId: string) => {
+    console.log('Deleting phase: ', phaseId);
   };
 
   const closeEditModal = () => {
-    modalToDisplay(modal.non);
-    modalPhase = {name: '', description: undefined, icon: undefined};
+    modalToDisplay(ModalEnum.None);
+    modalPhase = {name: undefined, description: undefined, icon: undefined};
   };
 
-  const modalToDisplay = (modalToDisplay: modal) => {
+  const modalToDisplay = (modalToDisplay: ModalEnum) => {
     switch (modalToDisplay) {
-      case modal.phaseDetails:
+      case ModalEnum.ViewDetails:
         setModalVisibilities({
           showPhaseEditModal: false,
           showPhaseDetailsModal: true,
         });
         break;
-      case modal.phaseEdit:
+      case ModalEnum.Edit:
         setModalVisibilities({
           showPhaseDetailsModal: false,
           showPhaseEditModal: true,
         });
         break;
-      case modal.non:
+      case ModalEnum.None:
         setModalVisibilities({
           showPhaseDetailsModal: false,
           showPhaseEditModal: false,
@@ -92,11 +104,14 @@ export const useEditorTask = (task: ITask) => {
   return {
     modalPhase,
     modalVisibilities,
+    phaseModalPositiveButtonToPerform,
     onEditClick,
+    onDelete,
     closeEditModal,
     expandPhaseDetails,
     modalToDisplay,
     getNumberOfCompletedPhases,
+    onAddClick,
   };
 };
 

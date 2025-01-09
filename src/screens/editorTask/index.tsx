@@ -8,8 +8,12 @@ import {
   TextInput,
 } from 'react-native';
 import React from 'react';
-import {IPhase, ITask, IModalPhase} from '../../interfaces';
-import {taskPhaseStatus} from '../../utils/enums';
+import {IPhase, ITask} from '../../interfaces';
+import {
+  ModalEnum,
+  PhaseSubmissionActionEnum,
+  taskPhaseStatus,
+} from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
   ChatBubble,
@@ -23,8 +27,6 @@ import {
   PhaseEditForm,
 } from '../../components';
 import getStyling from './style';
-import {accent} from '../../constants/colors';
-import {modal} from './enums';
 
 // Demo data
 const task: ITask = {
@@ -113,18 +115,21 @@ const EditorTask = ({route}: {route: any}) => {
   const {
     modalPhase,
     modalVisibilities,
+    phaseModalPositiveButtonToPerform,
     onEditClick,
+    onDelete,
     closeEditModal,
     expandPhaseDetails,
     modalToDisplay,
     getNumberOfCompletedPhases,
+    onAddClick,
   } = useEditorTask(task);
   const styles = getStyling();
 
   console.log('Rendered');
 
   const Row = ({item}: {item: IPhase}) => {
-    const {name, description, number, icon, status} = item;
+    const {id, name, description, number, icon, status} = item;
 
     const {
       taskNumberBadgeStyleOverride,
@@ -141,7 +146,7 @@ const EditorTask = ({route}: {route: any}) => {
         {number === 1 ? (
           <Pressable
             style={{marginLeft: 20, alignSelf: 'center'}}
-            onPress={() => console.log('Add new phase')}>
+            onPress={() => onAddClick()}>
             <Icon
               iconType="Ionicons"
               iconName="add-circle-outline"
@@ -161,9 +166,7 @@ const EditorTask = ({route}: {route: any}) => {
                 style={styles.actionIcon}
               />
             </Pressable>
-            <Pressable
-              style={{marginLeft: 12}}
-              onPress={() => console.log('Delete')}>
+            <Pressable style={{marginLeft: 12}} onPress={() => onDelete(id)}>
               <Icon
                 iconType="FontAwesome5"
                 iconName="trash"
@@ -218,7 +221,7 @@ const EditorTask = ({route}: {route: any}) => {
           />
           <Pressable
             style={{marginLeft: 6, alignSelf: 'center'}}
-            onPress={() => console.log('Add new phase')}>
+            onPress={() => console.log('Add new phase2: ', number)}>
             <Icon
               iconType="Ionicons"
               iconName="add-circle-outline"
@@ -244,16 +247,22 @@ const EditorTask = ({route}: {route: any}) => {
     if (modalVisibilities.showPhaseDetailsModal)
       return <PhaseDetailsModalContent />;
     if (modalVisibilities.showPhaseEditModal)
-      return <PhaseEditForm {...modalPhase} cancel={closeEditModal} />;
+      return (
+        <PhaseEditForm
+          positiveButtonToPerform={phaseModalPositiveButtonToPerform}
+          {...modalPhase}
+          cancel={closeEditModal}
+        />
+      );
   };
 
   // TODO::: Create a separate component
   const PhaseDetailsModalContent = () => (
     <Pressable
-      onPress={() => modalToDisplay(modal.non)}
+      onPress={() => modalToDisplay(ModalEnum.None)}
       style={styles.phaseDetailsModalContainer}>
       <TaskPhaseDetails
-        title={modalPhase.name}
+        title={modalPhase.name ?? ''}
         // containerStyle={{}}
         description={modalPhase.description}
       />

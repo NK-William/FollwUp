@@ -2,7 +2,6 @@ import {View, Text} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {IPhaseEditForm} from './interface';
-import {IModalPhase} from '../../interfaces';
 import UnderlinedText from '../underlinedText';
 import TaskInput from '../taskInput';
 import FollwUpButton from '../follwUpButton';
