@@ -9,14 +9,15 @@ import {usePhaseEditForm} from './util';
 import IconPicker from '../iconPicker';
 
 const PhaseEditForm: FC<IPhaseEditForm> = props => {
-  const {phase, setPhase, onCancel} = usePhaseEditForm(props);
+  const {phase, titleText, saveButtonText, setPhase, onSave, onCancel} =
+    usePhaseEditForm(props);
   const styles = getStyling();
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <UnderlinedText
-          text="Edit Phase"
+          text={titleText}
           containerStyle={styles.underlinedText}
         />
         <View>
@@ -50,8 +51,9 @@ const PhaseEditForm: FC<IPhaseEditForm> = props => {
             />
             <View style={{width: 8}} />
             <FollwUpButton
-              text="Update"
+              text={saveButtonText}
               containerStyle={styles.negativeButton}
+              onPress={onSave}
             />
           </View>
         </View>

@@ -73,6 +73,22 @@ export const useEditorTask = (task: ITask) => {
     modalPhase = {name: undefined, description: undefined, icon: undefined};
   };
 
+  const editPhase = (editedPhase: IModalPhase) => {
+    console.log('Editing with payload: ', JSON.stringify(editedPhase));
+    closeEditModal(); // TODO::: added for testing
+  };
+
+  const savePhase = (newPhase: IModalPhase) => {
+    console.log('Saving with payload: ', newPhase);
+    closeEditModal(); // TODO::: added for testing
+  };
+
+  const phaseModalSaveAction = (p: IModalPhase) => {
+    if (phaseModalPositiveButtonToPerform === PhaseSubmissionActionEnum.Edit)
+      editPhase(p);
+    else return savePhase(p);
+  };
+
   const modalToDisplay = (modalToDisplay: ModalEnum) => {
     switch (modalToDisplay) {
       case ModalEnum.ViewDetails:
@@ -112,6 +128,7 @@ export const useEditorTask = (task: ITask) => {
     modalToDisplay,
     getNumberOfCompletedPhases,
     onAddClick,
+    phaseModalSaveAction,
   };
 };
 

@@ -123,6 +123,7 @@ const EditorTask = ({route}: {route: any}) => {
     modalToDisplay,
     getNumberOfCompletedPhases,
     onAddClick,
+    phaseModalSaveAction,
   } = useEditorTask(task);
   const styles = getStyling();
 
@@ -219,6 +220,7 @@ const EditorTask = ({route}: {route: any}) => {
               ...taskTrackLineStyleOverride,
             }}
           />
+          {/* Finish below onPress */}
           <Pressable
             style={{marginLeft: 6, alignSelf: 'center'}}
             onPress={() => console.log('Add new phase2: ', number)}>
@@ -252,6 +254,7 @@ const EditorTask = ({route}: {route: any}) => {
           positiveButtonToPerform={phaseModalPositiveButtonToPerform}
           {...modalPhase}
           cancel={closeEditModal}
+          save={phaseModalSaveAction}
         />
       );
   };
