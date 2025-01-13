@@ -23,8 +23,7 @@ const PhaseEditForm: FC<IPhaseEditForm> = props => {
         <View>
           <IconPicker
             iconSelected={selectedIcon => {
-              // pass the selected icon name
-              console.log('Got icon selected: ', selectedIcon);
+              setPhase({...phase, icon: selectedIcon});
             }}
             iconName={phase.icon}
             containerStyle={{alignSelf: 'center', marginVertical: 16}}
