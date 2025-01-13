@@ -53,13 +53,19 @@ export const useEditorTask = (task: ITask) => {
     modalToDisplay(ModalEnum.ViewDetails);
   };
 
-  const onEditClick = (name: string, description?: string, icon?: string) => {
-    modalPhase = {name, description, icon};
+  const onEditClick = (
+    name: string,
+    number: number,
+    description?: string,
+    icon?: string,
+  ) => {
+    modalPhase = {name, description, icon, number};
     phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
     modalToDisplay(ModalEnum.Edit);
   };
 
-  const onAddClick = () => {
+  const onAddClick = (number: number) => {
+    modalPhase = {number};
     phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Add;
     modalToDisplay(ModalEnum.Edit);
   };
@@ -70,16 +76,23 @@ export const useEditorTask = (task: ITask) => {
 
   const closeEditModal = () => {
     modalToDisplay(ModalEnum.None);
-    modalPhase = {name: undefined, description: undefined, icon: undefined};
+    modalPhase = {
+      name: undefined,
+      description: undefined,
+      icon: undefined,
+      number: 0,
+    };
   };
 
   const editPhase = (editedPhase: IModalPhase) => {
     console.log('Editing with payload: ', JSON.stringify(editedPhase));
+    // TODO::: edit api here
     closeEditModal(); // TODO::: added for testing
   };
 
   const savePhase = (newPhase: IModalPhase) => {
     console.log('Saving with payload: ', newPhase);
+    // TODO::: save api here
     closeEditModal(); // TODO::: added for testing
   };
 

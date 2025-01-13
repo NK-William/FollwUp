@@ -41,7 +41,7 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
     saveButtonText = 'Add';
   }
 
-  const onSave = (newPhaseNumber?: number) => {
+  const onSave = () => {
     if (isEditMode) {
       if (!oldPhase) return;
       if (allFormFieldsTheSame()) {

@@ -147,7 +147,7 @@ const EditorTask = ({route}: {route: any}) => {
         {number === 1 ? (
           <Pressable
             style={{marginLeft: 20, alignSelf: 'center'}}
-            onPress={() => onAddClick()}>
+            onPress={() => onAddClick(number)}>
             <Icon
               iconType="Ionicons"
               iconName="add-circle-outline"
@@ -159,7 +159,8 @@ const EditorTask = ({route}: {route: any}) => {
 
         <View style={styles.rowContainer}>
           <View style={styles.actionIconContainer}>
-            <Pressable onPress={() => onEditClick(name, description, icon)}>
+            <Pressable
+              onPress={() => onEditClick(name, number, description, icon)}>
               <Icon
                 iconType="FontAwesome5"
                 iconName="pen"
@@ -167,7 +168,9 @@ const EditorTask = ({route}: {route: any}) => {
                 style={styles.actionIcon}
               />
             </Pressable>
-            <Pressable style={{marginLeft: 12}} onPress={() => onDelete(id)}>
+            <Pressable
+              style={{marginLeft: 12}}
+              onPress={() => (id ? onDelete(id) : null)}>
               <Icon
                 iconType="FontAwesome5"
                 iconName="trash"
@@ -223,7 +226,7 @@ const EditorTask = ({route}: {route: any}) => {
           {/* Finish below onPress */}
           <Pressable
             style={{marginLeft: 6, alignSelf: 'center'}}
-            onPress={() => console.log('Add new phase2: ', number)}>
+            onPress={() => onAddClick(number + 1)}>
             <Icon
               iconType="Ionicons"
               iconName="add-circle-outline"
