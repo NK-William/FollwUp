@@ -73,7 +73,7 @@ const Profile = (props: any) => {
               value={phoneNumber}
               onChangeText={text => setState(s => ({...s, phoneNumber: text}))}
               title="Phone Number"
-              savedText="0712932445"
+              savedText="0711111111"
               iconType="Feather"
               iconName="phone"
               containerStyle={styles.ProfileInputContainer}

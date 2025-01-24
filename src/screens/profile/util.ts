@@ -15,7 +15,7 @@ const initialState: IProfileState = {
   firstName: 'Tebogo',
   lastName: 'Nkuna',
   emailAddress: 'Tebog@gmail.com',
-  phoneNumber: '0712932445',
+  phoneNumber: '0711111111',
   showPopup: false,
 };
 

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {IIconPicker} from './interface';
 import getStyling from './style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,6 +27,14 @@ const IconPicker: FC<IIconPicker> = props => {
 
     setShowPickerPopup(false);
   };
+
+  useEffect(() => {
+    if (!icon && iconSelected) {
+      setIconName('');
+    } else {
+      setIconName(icon);
+    }
+  }, [icon]);
 
   const styles = getStyling(props);
 

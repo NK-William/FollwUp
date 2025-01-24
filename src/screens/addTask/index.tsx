@@ -28,8 +28,10 @@ const AddTask = (props: any) => {
     description,
     task,
     isSavingTask,
+    icon,
     setName,
     setDescription,
+    setIcon,
     openNextPhaseForm,
     showTaskForm,
     displayPreviousPhase,
@@ -60,9 +62,8 @@ const AddTask = (props: any) => {
       {showTaskPhaseContainer ? (
         <AddTaskPhaseDetails
           name={name}
-          IconSelected={selectedIcon => {
-            console.log('Selected icon: ', selectedIcon);
-          }}
+          IconSelected={setIcon}
+          icon={icon}
           description={description}
           phaseNumber={task?.phases.length + 1}
           setName={setName}

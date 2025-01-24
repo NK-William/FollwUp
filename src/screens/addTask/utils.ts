@@ -25,6 +25,7 @@ export const useAddTask = (navigation: any) => {
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [icon, setIcon] = useState<string>('');
   const {id: profileId} = useSelector(selectUser);
   //#endregion Hooks
 
@@ -62,6 +63,7 @@ export const useAddTask = (navigation: any) => {
   const showTaskForm = (value: boolean) => {
     setName('');
     setDescription('');
+    setIcon('');
     setShowTaskPhaseContainer(value);
   };
 
@@ -71,6 +73,7 @@ export const useAddTask = (navigation: any) => {
     if (poppedPhase) {
       setName(poppedPhase.name);
       setDescription(poppedPhase.description ?? '');
+      setIcon(poppedPhase.icon ?? '');
     }
   };
 
@@ -79,7 +82,7 @@ export const useAddTask = (navigation: any) => {
       validateTaskPhaseForm(
         'Please fill all fields before going to the next step.',
         'Please fill name before going to the next step.',
-        'Please fill description before going to the next step.',
+        'Please fill description before going to the next step.', // TODO::: Confirm if I need to remove this and make description optional
       )
     ) {
       const taskPhases = pushNewPhase();
@@ -121,7 +124,7 @@ export const useAddTask = (navigation: any) => {
       description,
       status: taskPhaseStatus.Pending,
       number: taskNumber,
-      icon: iconName, // TODO::: should come from IconPicker component
+      icon,
     });
 
     return phases;
@@ -130,6 +133,7 @@ export const useAddTask = (navigation: any) => {
   const clearPhaseForm = () => {
     setName('');
     setDescription('');
+    setIcon('');
   };
 
   const displayAlert = (message: string, title = 'Alert') => {
@@ -170,7 +174,7 @@ export const useAddTask = (navigation: any) => {
         phoneNumber: '0711111111', // TODO: Not needed in the current version
         roleType: roleType.Tracker, // TODO remove this, back-end is handling it
         task: {
-          // TODO: this has to be removed
+          // TODO: Code1(When everything is complete) this has to be removed
           name: taskForm.name,
           progressToHundred: 0,
           organization: taskForm.organization,
@@ -215,8 +219,10 @@ export const useAddTask = (navigation: any) => {
     description,
     task,
     isSavingTask,
+    icon,
     setName,
     setDescription,
+    setIcon,
     openNextPhaseForm,
     showTaskForm,
     displayPreviousPhase,

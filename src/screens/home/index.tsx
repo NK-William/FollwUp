@@ -15,7 +15,7 @@ import {TaskTabOptionEnum} from '../../utils/enums';
 import {OpicFiller} from '../../containers';
 import LoaderKit from 'react-native-loader-kit';
 import {primary} from '../../constants/colors';
-import {addTask, editorTask} from '../../constants/pageNames';
+import {addTask} from '../../constants/pageNames';
 
 const Home = (props: any) => {
   const {navigation} = props;
@@ -113,7 +113,7 @@ const Home = (props: any) => {
             <View style={styles.floatingButtonContainer}>
               <TouchableOpacity
                 style={styles.floatingButton}
-                onPress={() => navigation.navigate(editorTask)}>
+                onPress={() => navigation.navigate(addTask)}>
                 <Icon
                   iconType="FontAwesome5"
                   iconName="plus"

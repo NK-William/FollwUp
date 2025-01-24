@@ -21,6 +21,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     name,
     description,
     phaseNumber,
+    icon,
     setName,
     IconSelected,
     setDescription,
@@ -49,6 +50,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         <IconPicker
           iconSelected={IconSelected}
           containerStyle={styles.iconPicker}
+          iconName={icon}
         />
       </Pressable>
       <TaskInput
