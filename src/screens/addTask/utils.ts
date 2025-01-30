@@ -12,6 +12,7 @@ import {resetToScreen} from '../../utils';
 import {selectUser} from '../../redux/features/user/userSlice';
 import {useSelector} from 'react-redux';
 import {editorTask, home} from '../../constants/pageNames';
+import Toast from 'react-native-toast-message';
 
 const taskInit: ITask = {
   name: '',
@@ -80,9 +81,9 @@ export const useAddTask = (navigation: any) => {
   const openNextPhaseForm = () => {
     if (
       validateTaskPhaseForm(
-        'Please fill all fields before going to the next step.',
+        // 'Please fill all fields before going to the next step.',
         'Please fill name before going to the next step.',
-        'Please fill description before going to the next step.', // TODO::: Confirm if I need to remove this and make description optional
+        // 'Please fill description before going to the next step.',
       )
     ) {
       const taskPhases = pushNewPhase();
@@ -97,17 +98,23 @@ export const useAddTask = (navigation: any) => {
   };
 
   const validateTaskPhaseForm = (
-    allFieldsMessage: string,
+    // allFieldsMessage: string,
     nameFieldMessage: string,
-    descriptionFieldMessage: string,
+    // descriptionFieldMessage: string,
   ) => {
     let isValid = false;
-    if (!name && !description) {
-      displayAlert(allFieldsMessage);
-    } else if (!name) {
+    // if (!name && !description) {
+    //   displayAlert(allFieldsMessage);
+    // } else if (!name) {
+    //   displayAlert(nameFieldMessage);
+    // } else if (!description) {
+    //   displayAlert(descriptionFieldMessage);
+    // } else {
+    //   isValid = true;
+    // }
+
+    if (!name) {
       displayAlert(nameFieldMessage);
-    } else if (!description) {
-      displayAlert(descriptionFieldMessage);
     } else {
       isValid = true;
     }
@@ -147,9 +154,9 @@ export const useAddTask = (navigation: any) => {
   const saveTask = () => {
     if (
       validateTaskPhaseForm(
-        'Please fill all fields before submitting task.',
+        // 'Please fill all fields before submitting task.',
         'Please enter name before submitting task.',
-        'Please enter description before submitting task.',
+        // 'Please enter description before submitting task.',
       )
     ) {
       const taskPhases = pushNewPhase();
@@ -160,21 +167,18 @@ export const useAddTask = (navigation: any) => {
       };
 
       if (!profileId)
-        console.log(
-          "Re-fetch profile info and get the id because user can't submit without a profile id",
-        );
+        displayAlert('Re-authenticate and try again', 'Failed to save'); // "Re-fetch profile info and get the id because user can't submit without a profile id",
 
       taskForm.profileId = profileId;
-      taskForm.organization = 'KIA LAZARUS'; // TODO: This has to be retrieved from profile (add prop to profile)
-      taskForm.color = '#FFAACC'; // TODO: auto generate
-      taskForm.eta = '2024-12-17T16:01:16.416Z'; // TODO: add the field
+      taskForm.organization = 'KIA LAZARUS'; // TODO::: This has to be retrieved from profile (add prop to profile)
+      taskForm.color = getRandomHexColor();
+      taskForm.eta = '2024-12-17T16:01:16.416Z'; // TODO::: add the field
 
       // TODO: not used with the current version
       taskForm.invitation = {
         phoneNumber: '0711111111', // TODO: Not needed in the current version
-        roleType: roleType.Tracker, // TODO remove this, back-end is handling it
         task: {
-          // TODO: Code1(When everything is complete) this has to be removed
+          // TODO: Code1 = (When everything is complete) this has to be removed
           name: taskForm.name,
           progressToHundred: 0,
           organization: taskForm.organization,
@@ -190,26 +194,61 @@ export const useAddTask = (navigation: any) => {
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {
-            console.log('Successfully submitted: ', JSON.stringify(taskForm));
+            Toast.show({
+              type: 'success',
+              text1: 'Success',
+              text2: 'Task is created successfully',
+            });
             resetNavigation([
               {name: home},
               {name: editorTask, params: response},
             ]);
           } else {
-            console.log('Got undefined response');
+            errorToast('Error', 'Failed to save task'); // TODO: push to stack trace
           }
         })
         .catch(error => {
           if (error?.status === 404) {
-            // TODO: push to stack trace
-            console.log('Not found');
+            errorToast('Error', 'Failed to save task'); // TODO: push to stack trace
           } else {
-            // TODO: push to stack trace
-            console.log('Error: ', error.data ?? error.message);
+            errorToast('Error', error.data ?? error.message); // TODO: push to stack trace
           }
         });
     }
   };
+
+  const errorToast = (title: string, message: string) => {
+    Toast.show({
+      type: 'error',
+      text1: title,
+      text2: message,
+    });
+  };
+
+  const getRandomHexColor = () => {
+    let color: string;
+    let brightness: number;
+    do {
+      // Generate a random color
+      color = `#${Math.floor(Math.random() * 0xffffff)
+        .toString(16)
+        .padStart(6, '0')}`;
+
+      // Convert hex to RGB
+      const r = parseInt(color.substring(1, 3), 16);
+      const g = parseInt(color.substring(3, 5), 16);
+      const b = parseInt(color.substring(5, 7), 16);
+
+      // Calculate brightness (perceived luminance)
+      brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+    } while (brightness > 0.85 || brightness < 0.15); // Avoid very light (near white) and very dark (near black) colors
+
+    console.log('Generated color: ', color);
+    return color;
+  };
+
+  // Example usage
+  console.log(getRandomHexColor());
 
   //#endregion Methods
 

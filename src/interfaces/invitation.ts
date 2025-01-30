@@ -3,7 +3,7 @@ import {roleType} from '../utils/enums';
 export interface IInvitation {
   id?: string;
   phoneNumber: string;
-  roleType: roleType;
+  roleType?: roleType;
   // taskId?: string;
   task?: iTask; // Fix loop reference with ITask
 }
