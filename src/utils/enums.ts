@@ -44,6 +44,8 @@ export enum TaskFormFieldEnum {
   name,
   // phoneNumber,
   description,
+  organization,
+  eta,
 }
 
 export enum ModalEnum {

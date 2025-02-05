@@ -18,6 +18,8 @@ const taskInit: ITask = {
   name: '',
   phases: [],
   status: taskStatus.Pending,
+  organization: '',
+  eta: '',
 };
 
 export const useAddTask = (navigation: any) => {
@@ -55,6 +57,12 @@ export const useAddTask = (navigation: any) => {
       //   break;
       case TaskFormFieldEnum.description:
         setTask({...task, description: value});
+        break;
+      case TaskFormFieldEnum.organization:
+        setTask({...task, organization: value});
+        break;
+      case TaskFormFieldEnum.eta:
+        setTask({...task, eta: value});
         break;
       default:
         setTask(task);
@@ -152,6 +160,7 @@ export const useAddTask = (navigation: any) => {
   };
 
   const saveTask = () => {
+    console.log('saving task: ', JSON.stringify(task));
     if (
       validateTaskPhaseForm(
         // 'Please fill all fields before submitting task.',

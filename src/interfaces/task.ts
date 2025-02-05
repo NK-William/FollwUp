@@ -5,10 +5,10 @@ export interface ITask {
   id?: string;
   name: string;
   progressToHundred?: number;
-  organization?: string;
+  organization: string;
   status: taskStatus;
   description?: string;
-  eta?: string;
+  eta: string;
   color?: string;
   phases: IPhase[];
   roles?: IRole[];

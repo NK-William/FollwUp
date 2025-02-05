@@ -3306,7 +3306,7 @@ data-view-byte-offset@^1.0.0:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-dayjs@^1.8.15:
+dayjs@^1.11.13, dayjs@^1.8.15:
   version "1.11.13"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
   integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
@@ -7392,6 +7392,14 @@ react-native-toast-message@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.2.0.tgz#c53a4746b15616858a7d61c4386b92cbe9fbf911"
   integrity sha512-AFti8VzUk6JvyGAlLm9/BknTNDXrrhqnUk7ak/pM7uCTxDPveAu2ekszU0on6vnUPFnG04H/QfYE2IlETqeaWw==
+
+react-native-ui-datepicker@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-ui-datepicker/-/react-native-ui-datepicker-2.0.11.tgz#f042a85381fea626e74c74275698a8f85062aa50"
+  integrity sha512-QOF+xe03N9gikjhwjdvTJDz9KfEH4hFZcfIW//LFG5J/tBy5T4uH1G3usqQlGh54fXPPP1YMp+BC9dxQTNfzpA==
+  dependencies:
+    dayjs "^1.11.13"
+    lodash "^4.17.21"
 
 react-native-vector-icons@^10.0.0:
   version "10.1.0"

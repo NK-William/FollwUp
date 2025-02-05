@@ -1,25 +1,49 @@
-import {View, Text} from 'react-native';
-import React, {FC, useState} from 'react';
+import {View, Text, Pressable} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
 import {
   UnderlinedText,
   TaskInput,
   FollwUpButton,
   PressableText,
+  Icon,
 } from '../../components';
 import getStyling from './style';
 import {IAddTaskDetailsProps} from './interface';
 import {TaskFormFieldEnum} from '../../utils/enums';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import {accent, light, primary} from '../../constants/colors';
+import OpicFiller from '../opicFiller';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
+  const [date, setDate] = useState(dayjs().tz('Africa/Johannesburg'));
+  const [calendarVisible, setCalendarVisible] = useState(true);
+
   const {
     name,
     // phoneNumber,
+    organization,
+    eta,
     navigation,
     description,
     updateTaskFormDetails,
     updateShowTaskPhaseContainer,
   } = props;
+
+  console.log(date);
+
+  useEffect(() => {
+    updateTaskFormDetails(date.toISOString(), TaskFormFieldEnum.eta);
+
+    console.log('ETA: ', eta); // TODO::: fix issue with time showing wrong date
+  }, [date]);
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -33,6 +57,54 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
           updateTaskFormDetails(text, TaskFormFieldEnum.name)
         }
       />
+      {/* TODO: Organization field can be removed in the future */}
+      <TaskInput
+        label="Organization"
+        entryText={organization}
+        containerStyle={styles.entryLabel}
+        onChangeText={text =>
+          updateTaskFormDetails(text, TaskFormFieldEnum.organization)
+        }
+      />
+      <Pressable
+        style={{
+          ...styles.entryLabel,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+        onPress={() => setCalendarVisible(!calendarVisible)}>
+        <View>
+          <Text style={styles.dateEntryLabel}>Select Date Of Completion</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontSize: 16}}>{date.format('DD/MM/YYYY')}</Text>
+          </View>
+        </View>
+        <Icon
+          iconType="FontAwesome5"
+          iconName="calendar-alt"
+          size={30}
+          style={{marginRight: 0}}
+        />
+      </Pressable>
+
+      {calendarVisible && (
+        <OpicFiller>
+          <View style={{margin: 12, backgroundColor: light, borderRadius: 20}}>
+            <DateTimePicker
+              mode="single"
+              selectedItemColor={accent}
+              headerButtonColor={primary}
+              date={date}
+              onChange={params => setDate(dayjs(params.date))}
+            />
+          </View>
+          <FollwUpButton
+            text="Close"
+            onPress={() => setCalendarVisible(!calendarVisible)}
+          />
+        </OpicFiller>
+      )}
       {/* <TaskInput
         label="Customer contact number"
         entryText={phoneNumber}

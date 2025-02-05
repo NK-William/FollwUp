@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {accent} from '../../constants/colors';
+import {accent, darkText} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
@@ -8,6 +8,12 @@ const getStyling = () => {
     entryLabel: {
       marginHorizontal: 22,
       marginVertical: 10,
+    },
+    dateEntryLabel: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: darkText,
+      marginBottom: 6,
     },
     rightPressableText: {
       textAlign: 'right',
