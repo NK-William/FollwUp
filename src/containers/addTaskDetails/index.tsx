@@ -12,18 +12,13 @@ import {IAddTaskDetailsProps} from './interface';
 import {TaskFormFieldEnum} from '../../utils/enums';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import {accent, light, primary} from '../../constants/colors';
 import OpicFiller from '../opicFiller';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   const styles = getStyling();
-  const [date, setDate] = useState(dayjs().tz('Africa/Johannesburg'));
-  const [calendarVisible, setCalendarVisible] = useState(true);
+  const [date, setDate] = useState(dayjs());
+  const [calendarVisible, setCalendarVisible] = useState(false);
 
   const {
     name,
@@ -36,12 +31,8 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
     updateShowTaskPhaseContainer,
   } = props;
 
-  console.log(date);
-
   useEffect(() => {
-    updateTaskFormDetails(date.toISOString(), TaskFormFieldEnum.eta);
-
-    console.log('ETA: ', eta); // TODO::: fix issue with time showing wrong date
+    updateTaskFormDetails(date.format('DD/MM/YYYY'), TaskFormFieldEnum.eta);
   }, [date]);
 
   return (
@@ -77,7 +68,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         <View>
           <Text style={styles.dateEntryLabel}>Select Date Of Completion</Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 16}}>{date.format('DD/MM/YYYY')}</Text>
+            <Text style={{fontSize: 16}}>{eta}</Text>
           </View>
         </View>
         <Icon

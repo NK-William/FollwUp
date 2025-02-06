@@ -163,6 +163,7 @@ export const useAddTask = (navigation: any) => {
     console.log('saving task: ', JSON.stringify(task));
     if (
       validateTaskPhaseForm(
+        // TODO::: validate both organization and eta as well
         // 'Please fill all fields before submitting task.',
         'Please enter name before submitting task.',
         // 'Please enter description before submitting task.',
@@ -179,9 +180,8 @@ export const useAddTask = (navigation: any) => {
         displayAlert('Re-authenticate and try again', 'Failed to save'); // "Re-fetch profile info and get the id because user can't submit without a profile id",
 
       taskForm.profileId = profileId;
-      taskForm.organization = 'KIA LAZARUS'; // TODO::: This has to be retrieved from profile (add prop to profile)
+      // taskForm.organization = 'KIA LAZARUS'; // TODO: This has to be retrieved from profile (add prop to profile)
       taskForm.color = getRandomHexColor();
-      taskForm.eta = '2024-12-17T16:01:16.416Z'; // TODO::: add the field
 
       // TODO: not used with the current version
       taskForm.invitation = {
@@ -198,7 +198,7 @@ export const useAddTask = (navigation: any) => {
         },
       };
 
-      // console.log('saving task: ', JSON.stringify(taskForm));
+      console.log('saving task: ', JSON.stringify(taskForm));
 
       apiSaveTask(taskForm)
         .then(async response => {
