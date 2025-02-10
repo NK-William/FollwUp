@@ -108,6 +108,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         label="Description"
         multiline={true}
         numberOfLines={9}
+        showOptional
         entryText={description}
         containerStyle={styles.entryLabel}
         onChangeText={text =>

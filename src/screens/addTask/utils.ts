@@ -40,8 +40,14 @@ export const useAddTask = (navigation: any) => {
 
   //#region  Methods
   const validateTaskForm = () => {
-    if (!task.name) {
+    if (!task.name && !task.organization) {
+      displayAlert(
+        'Please fill all required fields before going to the next step.',
+      );
+    } else if (!task.name) {
       displayAlert('Please enter task name before going to the next step.');
+    } else if (!task.organization) {
+      displayAlert('Please enter organization before going to the next step.');
     } else {
       setShowTaskPhaseContainer(true);
     }
@@ -89,9 +95,9 @@ export const useAddTask = (navigation: any) => {
   const openNextPhaseForm = () => {
     if (
       validateTaskPhaseForm(
-        // 'Please fill all fields before going to the next step.',
-        'Please fill name before going to the next step.',
-        // 'Please fill description before going to the next step.',
+        // 'Please fill all fields before adding another phase.',
+        'Please fill name before adding another phase.',
+        // 'Please fill description before adding another phase.',
       )
     ) {
       const taskPhases = pushNewPhase();
@@ -163,7 +169,6 @@ export const useAddTask = (navigation: any) => {
     console.log('saving task: ', JSON.stringify(task));
     if (
       validateTaskPhaseForm(
-        // TODO::: validate both organization and eta as well
         // 'Please fill all fields before submitting task.',
         'Please enter name before submitting task.',
         // 'Please enter description before submitting task.',
@@ -252,12 +257,8 @@ export const useAddTask = (navigation: any) => {
       brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
     } while (brightness > 0.85 || brightness < 0.15); // Avoid very light (near white) and very dark (near black) colors
 
-    console.log('Generated color: ', color);
     return color;
   };
-
-  // Example usage
-  console.log(getRandomHexColor());
 
   //#endregion Methods
 

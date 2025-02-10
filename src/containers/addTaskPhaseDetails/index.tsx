@@ -65,6 +65,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         label="Description"
         multiline={true}
         numberOfLines={9}
+        showOptional
         entryText={description}
         containerStyle={styles.entryLabel}
         onChangeText={text => {

@@ -10,7 +10,6 @@ const getStyling = (props: ITaskInputProps) => {
       fontSize: 18,
       fontWeight: 'bold',
       color: darkText,
-      marginBottom: 6,
     },
     inputContainer: {
       height: props.multiline ? 190 : 50,

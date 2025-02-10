@@ -6,5 +6,6 @@ export interface ITaskInputProps {
   multiline?: boolean;
   numberOfLines?: number;
   entryText?: string;
+  showOptional?: boolean;
   onChangeText?: (text: string) => void;
 }
