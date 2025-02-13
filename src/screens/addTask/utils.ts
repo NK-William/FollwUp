@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {IPhase, ITask} from '../../interfaces';
 import {
-  roleType,
   TaskFormFieldEnum,
   taskPhaseStatus,
   taskStatus,
@@ -19,7 +18,7 @@ const taskInit: ITask = {
   phases: [],
   status: taskStatus.Pending,
   organization: '',
-  eta: '',
+  eta: new Date(),
 };
 
 export const useAddTask = (navigation: any) => {
@@ -53,22 +52,25 @@ export const useAddTask = (navigation: any) => {
     }
   };
 
-  const updateTaskFormDetails = (value: string, field: TaskFormFieldEnum) => {
+  const updateTaskFormDetails = (
+    value: string | Date,
+    field: TaskFormFieldEnum,
+  ) => {
     switch (field) {
       case TaskFormFieldEnum.name:
-        setTask({...task, name: value});
+        setTask({...task, name: value as string});
         break;
       // case TaskFormFieldEnum.phoneNumber:
       //   setTask({...task, clientPhoneNumber: value});
       //   break;
       case TaskFormFieldEnum.description:
-        setTask({...task, description: value});
+        setTask({...task, description: value as string});
         break;
       case TaskFormFieldEnum.organization:
-        setTask({...task, organization: value});
+        setTask({...task, organization: value as string});
         break;
       case TaskFormFieldEnum.eta:
-        setTask({...task, eta: value});
+        setTask({...task, eta: value as Date});
         break;
       default:
         setTask(task);
@@ -259,7 +261,6 @@ export const useAddTask = (navigation: any) => {
 
     return color;
   };
-
   //#endregion Methods
 
   return {

@@ -5,8 +5,11 @@ export interface IAddTaskDetailsProps {
   // phoneNumber?: string;
   description?: string;
   organization?: string;
-  eta?: string;
-  updateTaskFormDetails: (value: string, field: TaskFormFieldEnum) => void;
+  eta?: Date;
+  updateTaskFormDetails: (
+    value: string | Date,
+    field: TaskFormFieldEnum,
+  ) => void;
   updateShowTaskPhaseContainer: () => void;
   navigation: any;
 }

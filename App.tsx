@@ -10,7 +10,6 @@ import {
   TaskToTrackDetails,
   TrackerTask,
   EditorTask,
-  Splash,
 } from './src/screens';
 import {
   home,
@@ -127,7 +126,7 @@ const App = () => {
   return (
     <>
       <RestfulProvider
-        base="https://1ff1-160-19-36-36.ngrok-free.app"
+        base="https://5cd9-160-19-36-36.ngrok-free.app"
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -136,8 +135,8 @@ const App = () => {
         <NavigationContainer>
           <SafeAreaView style={{flex: 1}}>
             <StatusBar backgroundColor={primary} />
-            <MainStack />
-            {/* {accessToken ? <MainStack /> : <AuthStack />} */}
+            {/* <MainStack /> */}
+            {accessToken ? <MainStack /> : <AuthStack />}
           </SafeAreaView>
         </NavigationContainer>
       </RestfulProvider>

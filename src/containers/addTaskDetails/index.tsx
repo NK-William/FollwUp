@@ -32,7 +32,8 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
   } = props;
 
   useEffect(() => {
-    updateTaskFormDetails(date.format('DD/MM/YYYY'), TaskFormFieldEnum.eta);
+    // updateTaskFormDetails(date.format('DD/MM/YYYY'), TaskFormFieldEnum.eta);
+    updateTaskFormDetails(date.toDate(), TaskFormFieldEnum.eta);
   }, [date]);
 
   return (
@@ -68,7 +69,9 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         <View>
           <Text style={styles.dateEntryLabel}>Select Date Of Completion</Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 16}}>{eta}</Text>
+            <Text style={{fontSize: 16}}>
+              {eta ? eta.toLocaleDateString('en-GB') : ''}
+            </Text>
           </View>
         </View>
         <Icon

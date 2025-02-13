@@ -15,6 +15,6 @@ interface iTask {
   organization?: string;
   status: number;
   description?: string;
-  eta?: string;
+  eta?: Date;
   color?: string;
 }
