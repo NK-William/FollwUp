@@ -96,11 +96,7 @@ export const useAddTask = (navigation: any) => {
 
   const openNextPhaseForm = () => {
     if (
-      validateTaskPhaseForm(
-        // 'Please fill all fields before adding another phase.',
-        'Please fill name before adding another phase.',
-        // 'Please fill description before adding another phase.',
-      )
+      validateTaskPhaseForm('Please fill name before adding another phase.')
     ) {
       const taskPhases = pushNewPhase();
 
@@ -113,22 +109,8 @@ export const useAddTask = (navigation: any) => {
     }
   };
 
-  const validateTaskPhaseForm = (
-    // allFieldsMessage: string,
-    nameFieldMessage: string,
-    // descriptionFieldMessage: string,
-  ) => {
+  const validateTaskPhaseForm = (nameFieldMessage: string) => {
     let isValid = false;
-    // if (!name && !description) {
-    //   displayAlert(allFieldsMessage);
-    // } else if (!name) {
-    //   displayAlert(nameFieldMessage);
-    // } else if (!description) {
-    //   displayAlert(descriptionFieldMessage);
-    // } else {
-    //   isValid = true;
-    // }
-
     if (!name) {
       displayAlert(nameFieldMessage);
     } else {
@@ -169,13 +151,7 @@ export const useAddTask = (navigation: any) => {
 
   const saveTask = () => {
     console.log('saving task: ', JSON.stringify(task));
-    if (
-      validateTaskPhaseForm(
-        // 'Please fill all fields before submitting task.',
-        'Please enter name before submitting task.',
-        // 'Please enter description before submitting task.',
-      )
-    ) {
+    if (validateTaskPhaseForm('Please enter name before submitting task.')) {
       const taskPhases = pushNewPhase();
 
       const taskForm: ITask = {

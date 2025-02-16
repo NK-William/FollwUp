@@ -20,7 +20,7 @@ const getStyling = (props: ITaskInputProps) => {
     input: {
       paddingHorizontal: 10,
       fontSize: 16,
-      color: lightText,
+      color: darkText,
       flex: 1,
       textAlignVertical: props.multiline ? 'top' : 'center',
     },

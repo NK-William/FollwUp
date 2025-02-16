@@ -30,13 +30,12 @@ import getStyling from './style';
 
 const EditorTask = ({route}: {route: any}) => {
   // parameters
+  const task = route.params as ITask;
 
-  // const task = route.params as ITask;
-
-  // console.log('Got task editor page: ', JSON.stringify(task));
+  console.log('Got set task: ', JSON.stringify(task));
 
   const {
-    demoTask,
+    taskData,
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
@@ -49,7 +48,7 @@ const EditorTask = ({route}: {route: any}) => {
     getNumberOfCompletedPhases,
     onAddClick,
     phaseModalSaveAction,
-  } = useEditorTask();
+  } = useEditorTask(task);
   const styles = getStyling();
 
   console.log('Rendered');
@@ -65,7 +64,7 @@ const EditorTask = ({route}: {route: any}) => {
       taskPhaseDetailsTextStyleOverride,
       taskTrackLineStyleOverride,
       taskIconStyleOverride,
-    } = useRow(description, number, demoTask.phases.length, status);
+    } = useRow(description, number, taskData.phases.length, status);
 
     return (
       <View>
@@ -167,9 +166,9 @@ const EditorTask = ({route}: {route: any}) => {
 
   const StatsHeader = () => (
     <TaskStatsHeader
-      title={demoTask.name}
-      PhasesSum={demoTask.phases.length}
-      CompletionDate={new Date(demoTask.eta)}
+      title={taskData.name}
+      PhasesSum={taskData.phases.length}
+      CompletionDate={new Date(taskData.eta)}
       currentPhase={getNumberOfCompletedPhases()}
     />
   );
@@ -205,7 +204,7 @@ const EditorTask = ({route}: {route: any}) => {
     <View style={styles.container}>
       <StatsHeader />
       <FlatList
-        data={demoTask.phases}
+        data={taskData.phases}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
       />

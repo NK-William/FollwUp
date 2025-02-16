@@ -16,7 +16,7 @@ const demoTask: ITask = {
   organization: 'KIA LAZARUS',
   status: 0,
   description: 'On a VW GTI, 2016 year model.',
-  eta: '2024-12-17T16:01:16.416Z',
+  eta: new Date(),
   color: '#FFAACC',
   phases: [
     {
@@ -100,31 +100,27 @@ var initModalVisibilities: IModalVisibilities = {
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 
-export const useEditorTask = () => {
+export const useEditorTask = (task: ITask) => {
   //#region Hooks
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
   //#endregion Hooks
 
   const getNumberOfCompletedPhases = () => {
-    let currentIndexPhase = demoTask.phases.findIndex(
+    let currentIndexPhase = task.phases.findIndex(
       phase => phase.status === taskPhaseStatus.InProgress,
     );
 
     if (currentIndexPhase !== -1)
-      return demoTask.phases[--currentIndexPhase].number;
+      return task.phases[--currentIndexPhase].number;
 
     // If all items are pending
-    if (
-      demoTask.phases.every(phase => phase.status === taskPhaseStatus.Pending)
-    )
+    if (task.phases.every(phase => phase.status === taskPhaseStatus.Pending))
       return 0;
 
     // If all items are completed
-    if (
-      demoTask.phases.every(phase => phase.status === taskPhaseStatus.Completed)
-    )
-      return demoTask.phases.length;
+    if (task.phases.every(phase => phase.status === taskPhaseStatus.Completed))
+      return task.phases.length;
 
     return undefined;
   };
@@ -179,7 +175,7 @@ export const useEditorTask = () => {
 
   const updatePhaseStatus = (id: string) => {
     console.log('Phase status update with id: ', id);
-    let phaseToUpdateStatus = demoTask.phases.find(p => p.id === id);
+    let phaseToUpdateStatus = task.phases.find(p => p.id === id);
     if (phaseToUpdateStatus) {
       // TODO::: execute api to update phase status to in-progress
     }
@@ -220,7 +216,7 @@ export const useEditorTask = () => {
   };
 
   return {
-    demoTask,
+    taskData: task,
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
