@@ -5,8 +5,9 @@ import Toast from 'react-native-toast-message';
 import {useEffect, useState} from 'react';
 import {selectUser, setUser} from '../../redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
+import {editorTask} from '../../constants/pageNames';
 
-export const useHome = () => {
+export const useHome = (navigation: any) => {
   //#region Hooks
   const [tasks, setTasks] = useState<ITask[]>();
   const {id, emailAddress} = useSelector(selectUser);
@@ -31,12 +32,15 @@ export const useHome = () => {
   useEffect(() => {
     // emailAddress has to be defined because with get to API by email address
     // And fetch when we don't have id because is needed as foreign key to other entities.
-    // if (emailAddress && !id) fetchProfile(emailAddress);
-    if (true) fetchProfile(emailAddress);
+
+    console.log('Fetch profile: ', emailAddress, id);
+    if (emailAddress && !id) fetchProfile(emailAddress);
     else if (!emailAddress)
       console.log(
         'Home util: Failed loading email address from redux global state',
-      ); // TODO: add this in a stack trace.
+      );
+    // TODO: add this in a stack trace.
+    else if (id) fetchTasks(id); // If we already have id and email address, jump to fetching tasks
   }, [emailAddress, id]);
   //#endregion useEffects
 
@@ -74,13 +78,18 @@ export const useHome = () => {
     apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
       .then(response => {
         if (response) {
-          // setTasks(response);
-          // console.log('Got tasks: ', JSON.stringify(response));
+          setTasks(response);
         } else {
           fetchErrorToast('Failed to fetch tasks');
         }
       })
       .catch(error => fetchErrorToast(error.message));
+  };
+
+  const taskItemSelected = (task: ITask) => {
+    console.log('Task selected: ', JSON.stringify(task));
+    console.log('**********');
+    navigation.navigate(editorTask, task);
   };
 
   const fetchErrorToast = (message: string) => {
@@ -106,5 +115,6 @@ export const useHome = () => {
     tasksDefined: tasks?.length,
     loading: isFetchingProfile || isFetchingTasks,
     progressBarTasks,
+    taskItemSelected,
   };
 };

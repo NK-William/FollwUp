@@ -181,8 +181,6 @@ export const useAddTask = (navigation: any) => {
         },
       };
 
-      console.log('saving task: ', JSON.stringify(taskForm));
-
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {

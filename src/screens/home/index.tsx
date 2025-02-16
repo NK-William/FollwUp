@@ -10,7 +10,6 @@ import {
   ProfileButton,
   Icon,
 } from '../../components';
-import {fakeTasks} from '../../fakeJSON';
 import {TaskTabOptionEnum} from '../../utils/enums';
 import {OpicFiller} from '../../containers';
 import LoaderKit from 'react-native-loader-kit';
@@ -24,7 +23,8 @@ const Home = (props: any) => {
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
   );
-  const {progressBarTasks, tasks, tasksDefined, loading} = useHome();
+  const {tasks, tasksDefined, loading, progressBarTasks, taskItemSelected} =
+    useHome(navigation);
 
   const StatsContentPlaceholder = () => {
     return (
@@ -44,7 +44,7 @@ const Home = (props: any) => {
     <View style={styles.tasksContentPlaceholder}>
       <Image
         source={require('../../assets/images/emptyBox.png')}
-        style={styles.profilePlaceholder}
+        // style={styles.profilePlaceholder}
       />
     </View>
   );
@@ -102,8 +102,9 @@ const Home = (props: any) => {
               data={tasks}
               renderItem={task => (
                 <TaskListItem
+                  OnSelected={taskItemSelected}
                   isTracker={selectedTabOption === TaskTabOptionEnum.Track}
-                  {...task.item}
+                  task={task.item}
                   containerStyle={styles.taskListItemContainer}
                 />
               )}

@@ -3,8 +3,9 @@ import {ITaskListItemProps} from './interface';
 import {taskStatus, TaskStatusColor} from '../../utils/enums';
 
 export const useTaskListItem = (props: ITaskListItemProps) => {
+  const {task} = props;
   const getStatusViewColor = () => {
-    switch (props.status) {
+    switch (task.status) {
       case taskStatus.Rejected:
         return TaskStatusColor.Rejected;
       case taskStatus.Accepted:
@@ -19,7 +20,7 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
   };
 
   const getStatusText = () => {
-    switch (props.status) {
+    switch (task.status) {
       case taskStatus.Rejected:
         return 'Rejected';
       case taskStatus.Accepted:
@@ -34,30 +35,32 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
   };
 
   // TODO: should return names, add props from the back-end
-  const getFirstLastName = () => {
-    if (props.clientFirstName && props.clientLastName)
-      return `${props.clientFirstName} ${props.clientLastName}`;
-    // else return 'Client is not registered';
-    else return '';
-  };
+  // const getFirstLastName = () => {
+  //   if (task.clientFirstName && props.clientLastName)
+  //     return `${props.clientFirstName} ${props.clientLastName}`;
+  //   // else return 'Client is not registered';
+  //   else return '';
+  // };
 
-  const showInviteLink = () => {
-    if (!props.isTracker || (props.clientFirstName && props.clientLastName))
-      return false;
-    else return true;
-  };
+  // const showInviteLink = () => {
+  //   if (!props.isTracker || (props.clientFirstName && props.clientLastName))
+  //     return false;
+  //   else return true;
+  // };
 
   let namesOrOrganization = '';
 
   const statusViewColor = getStatusViewColor();
   const statusText = getStatusText();
-  if (props.isTracker) namesOrOrganization = getFirstLastName();
-  else namesOrOrganization = props.organization;
-  const inviteLinkVisible = showInviteLink();
+  // if (props.isTracker) namesOrOrganization = getFirstLastName();
+  // else namesOrOrganization = task.organization;
+  namesOrOrganization = task.organization;
+  // const inviteLinkVisible = showInviteLink();
   return {
+    task,
     statusViewColor,
     statusText,
     namesOrOrganization,
-    inviteLinkVisible,
+    inviteLinkVisible: false,
   };
 };

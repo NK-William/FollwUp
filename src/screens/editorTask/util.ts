@@ -7,6 +7,7 @@ import {
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
 import {ITask, IModalPhase} from '../../interfaces';
+import {useMutate} from 'restful-react';
 
 // Demo data
 const demoTask: ITask = {
@@ -106,6 +107,13 @@ export const useEditorTask = (task: ITask) => {
     useState<IModalVisibilities>(initModalVisibilities);
   //#endregion Hooks
 
+  //#region API requests
+  const {mutate: apiUpdatePhaseStatus, loading: isUpdatingPhaseStatus} =
+    useMutate({
+      verb: 'PUT',
+      path: '',
+    });
+
   const getNumberOfCompletedPhases = () => {
     let currentIndexPhase = task.phases.findIndex(
       phase => phase.status === taskPhaseStatus.InProgress,
@@ -177,6 +185,16 @@ export const useEditorTask = (task: ITask) => {
     console.log('Phase status update with id: ', id);
     let phaseToUpdateStatus = task.phases.find(p => p.id === id);
     if (phaseToUpdateStatus) {
+      apiUpdatePhaseStatus(
+        {path: `api/Phases/${id}?statusOnly=true`},
+        {
+          /**TODO::: payload */
+        },
+      ).then(async response => {
+        if (response) {
+          console.log('Phase status updated: ', response);
+        }
+      });
       // TODO::: execute api to update phase status to in-progress
     }
   };

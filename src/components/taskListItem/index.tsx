@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {ITaskListItemProps} from './interface';
@@ -8,14 +8,20 @@ import {accent} from '../../constants/colors';
 import {ProgressBar} from '..';
 
 const TaskListItem: FC<ITaskListItemProps> = props => {
-  const {statusViewColor, statusText, namesOrOrganization, inviteLinkVisible} =
-    useTaskListItem(props);
+  const {
+    task,
+    statusViewColor,
+    statusText,
+    namesOrOrganization,
+    inviteLinkVisible,
+  } = useTaskListItem(props);
+
   const styles = getStyling(props, statusViewColor, inviteLinkVisible);
   return (
-    <View style={styles.container}>
+    <Pressable onPress={() => props.OnSelected(task)} style={styles.container}>
       <View style={styles.taskInfoContainer}>
         <View>
-          <Text style={styles.taskName}>{props.name}</Text>
+          <Text style={styles.taskName}>{task.name}</Text>
           <Text style={styles.subName}>{namesOrOrganization}</Text>
         </View>
         <View style={styles.rightView}>
@@ -33,7 +39,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
         </View>
       </View>
       <ProgressBar
-        progressToHundred={props.progressToHundred}
+        progressToHundred={task.progressToHundred ?? 0}
         containerStyle={{
           marginTop: 4,
         }}
@@ -41,7 +47,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
       {/* <View style={styles.badge}>
         <Text style={styles.badgeText}>2</Text>
       </View> */}
-    </View>
+    </Pressable>
   );
 };
 
