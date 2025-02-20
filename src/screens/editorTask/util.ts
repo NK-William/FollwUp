@@ -6,7 +6,7 @@ import {
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
-import {ITask, IModalPhase} from '../../interfaces';
+import {ITask, IModalPhase, IPhase} from '../../interfaces';
 import {useMutate} from 'restful-react';
 
 // Demo data
@@ -109,7 +109,7 @@ export const useEditorTask = (task: ITask) => {
 
   //#region API requests
   const {mutate: apiUpdatePhaseStatus, loading: isUpdatingPhaseStatus} =
-    useMutate({
+    useMutate<IPhase>({
       verb: 'PUT',
       path: '',
     });
@@ -119,8 +119,8 @@ export const useEditorTask = (task: ITask) => {
       phase => phase.status === taskPhaseStatus.InProgress,
     );
 
-    if (currentIndexPhase !== -1)
-      return task.phases[--currentIndexPhase].number;
+    console.log('Current index: ', currentIndexPhase);
+    if (currentIndexPhase > 0) return task.phases[--currentIndexPhase].number;
 
     // If all items are pending
     if (task.phases.every(phase => phase.status === taskPhaseStatus.Pending))
@@ -185,17 +185,25 @@ export const useEditorTask = (task: ITask) => {
     console.log('Phase status update with id: ', id);
     let phaseToUpdateStatus = task.phases.find(p => p.id === id);
     if (phaseToUpdateStatus) {
-      apiUpdatePhaseStatus(
-        {path: `api/Phases/${id}?statusOnly=true`},
-        {
-          /**TODO::: payload */
-        },
-      ).then(async response => {
-        if (response) {
-          console.log('Phase status updated: ', response);
-        }
-      });
-      // TODO::: execute api to update phase status to in-progress
+      let phaseToUpdate = task.phases.find(p => p.id === id);
+
+      if (phaseToUpdate && phaseToUpdate.id) {
+        console.log('Phase to update: ', phaseToUpdate);
+        phaseToUpdate.status = taskPhaseStatus.InProgress;
+        apiUpdatePhaseStatus(
+          {path: `api/Phases/${phaseToUpdate.id}?statusOnly=true`},
+          phaseToUpdate,
+        )
+          .then(async response => {
+            if (response) {
+              console.log(' Phase status updated: ', response);
+            }
+          })
+          .catch(error => {
+            console.log('Error updating phase status: ', error);
+          });
+        // TODO::: execute api to update phase status to in-progress
+      }
     }
   };
 
@@ -238,6 +246,7 @@ export const useEditorTask = (task: ITask) => {
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
+    isUpdatingPhaseStatus,
     updatePhaseStatus,
     onEditClick,
     onDelete,

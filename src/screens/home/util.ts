@@ -75,6 +75,7 @@ export const useHome = (navigation: any) => {
   };
 
   const fetchTasks = (profileId: string) => {
+    console.log('profileId: ', profileId);
     apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
       .then(response => {
         if (response) {

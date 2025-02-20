@@ -27,18 +27,21 @@ import {
   PhaseEditForm,
 } from '../../components';
 import getStyling from './style';
+import {OpicFiller} from '../../containers';
+import LoaderKit from 'react-native-loader-kit';
 
 const EditorTask = ({route}: {route: any}) => {
   // parameters
   const task = route.params as ITask;
 
-  console.log('Got set task: ', JSON.stringify(task));
+  // console.log('Got set task: ', JSON.stringify(task));
 
   const {
     taskData,
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
+    isUpdatingPhaseStatus,
     updatePhaseStatus,
     onEditClick,
     onDelete,
@@ -200,6 +203,19 @@ const EditorTask = ({route}: {route: any}) => {
     </Pressable>
   );
 
+  // TODO::: Make this re-usable
+  const ScreenBlockerLoader = () => {
+    return (
+      <OpicFiller>
+        <LoaderKit
+          name={'BallClipRotatePulse'}
+          color={'White'}
+          style={{width: 50, height: 50}}
+        />
+      </OpicFiller>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <StatsHeader />
@@ -259,6 +275,7 @@ const EditorTask = ({route}: {route: any}) => {
           </View>
         </View>
       </Modal> */}
+      {isUpdatingPhaseStatus && <ScreenBlockerLoader />}
     </View>
   );
 };
