@@ -30,6 +30,7 @@ import Toast from 'react-native-toast-message';
 import {loadUser, selectUser} from './src/redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {IReduxUser} from './src/interfaces';
+import {baseURL} from './src/constants/apis';
 
 const Stack = createNativeStackNavigator();
 
@@ -126,7 +127,7 @@ const App = () => {
   return (
     <>
       <RestfulProvider
-        base="https://8fe2-160-19-36-36.ngrok-free.app"
+        base={baseURL}
         requestOptions={() => ({
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',

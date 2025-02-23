@@ -1,4 +1,4 @@
-import {ColorValue} from 'react-native';
+import {Alert, ColorValue} from 'react-native';
 import {
   ModalEnum,
   PhaseSubmissionActionEnum,
@@ -6,8 +6,12 @@ import {
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {useState} from 'react';
-import {ITask, IModalPhase, IPhase} from '../../interfaces';
+import {ITask, IModalPhase, IPhase, IReduxUser} from '../../interfaces';
 import {useMutate} from 'restful-react';
+import {MutateRequestOptions} from 'restful-react/dist/Mutate';
+import getAxiosInstance from '../../utils/axiosConfig';
+import {useSelector} from 'react-redux';
+import {selectUser} from '../../redux/features/user/userSlice';
 
 // Demo data
 const demoTask: ITask = {
@@ -103,16 +107,20 @@ var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 
 export const useEditorTask = (task: ITask) => {
   //#region Hooks
+  const user = useSelector(selectUser);
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
+
+  const [isUpdatingPhaseStatus, setIsUpdatingPhaseStatus] = useState(false);
   //#endregion Hooks
 
   //#region API requests
-  const {mutate: apiUpdatePhaseStatus, loading: isUpdatingPhaseStatus} =
-    useMutate<IPhase>({
-      verb: 'PUT',
-      path: '',
-    });
+  // const {mutate: apiUpdatePhaseStatus, loading: isUpdatingPhaseStatus} =
+  //   useMutate<IPhase>({
+  //     verb: 'PUT',
+  //     path: 'api/Phases/:id',
+  //   });
+  //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
     let currentIndexPhase = task.phases.findIndex(
@@ -181,29 +189,51 @@ export const useEditorTask = (task: ITask) => {
     closeEditModal(); // TODO::: added for testing
   };
 
-  const updatePhaseStatus = (id: string) => {
-    console.log('Phase status update with id: ', id);
+  const updatePhaseStatus = async (id: string) => {
+    // console.log('Phase status update with id: ', id);
     let phaseToUpdateStatus = task.phases.find(p => p.id === id);
     if (phaseToUpdateStatus) {
       let phaseToUpdate = task.phases.find(p => p.id === id);
 
       if (phaseToUpdate && phaseToUpdate.id) {
-        console.log('Phase to update: ', phaseToUpdate);
+        // console.log('After setting phase id: ', phaseId);
+
+        // console.log('Phase to update: ', phaseToUpdate);
         phaseToUpdate.status = taskPhaseStatus.InProgress;
-        apiUpdatePhaseStatus(
-          {path: `api/Phases/${phaseToUpdate.id}?statusOnly=true`},
-          phaseToUpdate,
-        )
-          .then(async response => {
-            if (response) {
-              console.log(' Phase status updated: ', response);
-            }
-          })
-          .catch(error => {
-            console.log('Error updating phase status: ', error);
-          });
-        // TODO::: execute api to update phase status to in-progress
+
+        try {
+          const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
+          const accessToken = userObj?.accessToken;
+
+          const axiosInstance = getAxiosInstance(accessToken as string);
+          setIsUpdatingPhaseStatus(true);
+          await axiosInstance.put(
+            `/api/Phase/${phaseToUpdate.id}?statusOnly=true`,
+            phaseToUpdate,
+          );
+        } catch (error: any) {
+          const errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            'An unknown error occurred';
+
+          Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+        } finally {
+          setIsUpdatingPhaseStatus(false);
+        }
       }
+
+      // apiUpdatePhaseStatus(phaseToUpdate
+      // )
+      //   .then(async response => {
+      //     if (response) {
+      //       console.log(' Phase status updated: ', response);
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.log('Error updating phase status: ', JSON.stringify(error));
+      //   });
+      // TODO::: execute api to update phase status to in-progress
     }
   };
 
