@@ -94,7 +94,6 @@ export const useHome = (navigation: any) => {
   };
 
   const fetchErrorToast = (message: string) => {
-    console.log('Home error: ', message);
     Toast.show({
       type: 'error',
       text1: 'Error',

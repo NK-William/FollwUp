@@ -41,7 +41,7 @@ const EditorTask = ({route}: {route: any}) => {
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
-    isUpdatingPhaseStatus,
+    showLoader,
     updatePhaseStatus,
     onEditClick,
     onDelete,
@@ -275,7 +275,7 @@ const EditorTask = ({route}: {route: any}) => {
           </View>
         </View>
       </Modal> */}
-      {isUpdatingPhaseStatus && <ScreenBlockerLoader />}
+      {showLoader && <ScreenBlockerLoader />}
     </View>
   );
 };

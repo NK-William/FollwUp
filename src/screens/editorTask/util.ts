@@ -5,13 +5,14 @@ import {
   taskPhaseStatus,
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
-import {useState} from 'react';
+import {lazy, useState} from 'react';
 import {ITask, IModalPhase, IPhase, IReduxUser} from '../../interfaces';
-import {useMutate} from 'restful-react';
+import {useGet} from 'restful-react';
 import {MutateRequestOptions} from 'restful-react/dist/Mutate';
 import getAxiosInstance from '../../utils/axiosConfig';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/user/userSlice';
+import Toast from 'react-native-toast-message';
 
 // Demo data
 const demoTask: ITask = {
@@ -105,21 +106,21 @@ var initModalVisibilities: IModalVisibilities = {
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 
-export const useEditorTask = (task: ITask) => {
+export const useEditorTask = (t: ITask) => {
   //#region Hooks
   const user = useSelector(selectUser);
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
+  const [task, setTask] = useState<ITask>(t);
 
   const [isUpdatingPhaseStatus, setIsUpdatingPhaseStatus] = useState(false);
   //#endregion Hooks
 
-  //#region API requests
-  // const {mutate: apiUpdatePhaseStatus, loading: isUpdatingPhaseStatus} =
-  //   useMutate<IPhase>({
-  //     verb: 'PUT',
-  //     path: 'api/Phases/:id',
-  //   });
+  //#region API hooks
+  const {refetch: apiFetchTask, loading: isFetchingTask} = useGet<ITask>({
+    path: '',
+    lazy: true,
+  });
   //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
@@ -190,51 +191,63 @@ export const useEditorTask = (task: ITask) => {
   };
 
   const updatePhaseStatus = async (id: string) => {
-    // console.log('Phase status update with id: ', id);
-    let phaseToUpdateStatus = task.phases.find(p => p.id === id);
-    if (phaseToUpdateStatus) {
-      let phaseToUpdate = task.phases.find(p => p.id === id);
+    // TODO::: Add if statement to check if phase is already in progress
+    const confirmed = await confirmPopUp('Are you sure you want to update?');
+    if (!confirmed) return;
 
-      if (phaseToUpdate && phaseToUpdate.id) {
-        // console.log('After setting phase id: ', phaseId);
+    let p = task.phases.find(p => p.id === id);
 
-        // console.log('Phase to update: ', phaseToUpdate);
-        phaseToUpdate.status = taskPhaseStatus.InProgress;
+    if (p && p.id) {
+      const phaseToUpdate = {...p, status: taskPhaseStatus.InProgress};
 
-        try {
-          const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
-          const accessToken = userObj?.accessToken;
+      console.log('Updating phase: ', JSON.stringify(phaseToUpdate));
 
-          const axiosInstance = getAxiosInstance(accessToken as string);
-          setIsUpdatingPhaseStatus(true);
-          await axiosInstance.put(
-            `/api/Phase/${phaseToUpdate.id}?statusOnly=true`,
-            phaseToUpdate,
-          );
-        } catch (error: any) {
-          const errorMessage =
-            error.response?.data?.message ||
-            error.message ||
-            'An unknown error occurred';
+      try {
+        const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
+        const accessToken = userObj?.accessToken;
 
-          Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
-        } finally {
-          setIsUpdatingPhaseStatus(false);
-        }
+        const axiosInstance = getAxiosInstance(accessToken as string);
+        setIsUpdatingPhaseStatus(true);
+        await axiosInstance.put(
+          `/api/Phases/${phaseToUpdate.id}?statusOnly=true`,
+          phaseToUpdate,
+        );
+
+        await getUpdatedTask();
+      } catch (error: any) {
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          'An unknown error occurred';
+
+        Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+      } finally {
+        setIsUpdatingPhaseStatus(false);
       }
-
-      // apiUpdatePhaseStatus(phaseToUpdate
-      // )
-      //   .then(async response => {
-      //     if (response) {
-      //       console.log(' Phase status updated: ', response);
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.log('Error updating phase status: ', JSON.stringify(error));
-      //   });
-      // TODO::: execute api to update phase status to in-progress
     }
+
+    // apiUpdatePhaseStatus(phaseToUpdate
+    // )
+    //   .then(async response => {
+    //     if (response) {
+    //       console.log(' Phase status updated: ', response);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log('Error updating phase status: ', JSON.stringify(error));
+    //   });
+    // TODO::: execute api to update phase status to in-progress
+  };
+
+  const getUpdatedTask = async () => {
+    apiFetchTask({path: `api/Tasks/${task.id}`})
+      .then(response => {
+        if (response) {
+          console.log('Updated successfully: ');
+          setTask(response);
+        }
+      })
+      .catch(error => fetchErrorToast(error.message));
   };
 
   const phaseModalSaveAction = (p: IModalPhase) => {
@@ -271,12 +284,35 @@ export const useEditorTask = (task: ITask) => {
     }
   };
 
+  const confirmPopUp = (message: string, title: string = 'Confirmation') => {
+    return new Promise(resolve => {
+      Alert.alert(title, message, [
+        {
+          text: 'Yes',
+          onPress: () => resolve(true),
+        },
+        {
+          text: 'No',
+          onPress: () => resolve(false),
+        },
+      ]);
+    });
+  };
+
+  const fetchErrorToast = (message: string) => {
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: message,
+    });
+  };
+
   return {
     taskData: task,
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
-    isUpdatingPhaseStatus,
+    showLoader: isUpdatingPhaseStatus || isFetchingTask,
     updatePhaseStatus,
     onEditClick,
     onDelete,
