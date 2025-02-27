@@ -7,7 +7,7 @@ import {
 import {accent, gray, grayLight, primary} from '../../constants/colors';
 import {lazy, useState} from 'react';
 import {ITask, IModalPhase, IPhase, IReduxUser} from '../../interfaces';
-import {useGet} from 'restful-react';
+import {useGet, useMutate} from 'restful-react';
 import {MutateRequestOptions} from 'restful-react/dist/Mutate';
 import getAxiosInstance from '../../utils/axiosConfig';
 import {useSelector} from 'react-redux';
@@ -121,6 +121,13 @@ export const useEditorTask = (t: ITask) => {
     path: '',
     lazy: true,
   });
+
+  const {mutate: apiCompleteTask, loading: isCompletingTask} = useMutate<ITask>(
+    {
+      path: '',
+      verb: 'PUT',
+    },
+  );
   //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
@@ -192,12 +199,15 @@ export const useEditorTask = (t: ITask) => {
 
   const updatePhaseStatus = async (id: string) => {
     // TODO::: Add if statement to check if phase is already in progress
-    const confirmed = await confirmPopUp('Are you sure you want to update?');
-    if (!confirmed) return;
 
     let p = task.phases.find(p => p.id === id);
 
     if (p && p.id) {
+      if (p.status === taskPhaseStatus.InProgress) return;
+
+      const confirmed = await confirmPopUp('Are you sure you want to update?');
+      if (!confirmed) return;
+
       const phaseToUpdate = {...p, status: taskPhaseStatus.InProgress};
 
       console.log('Updating phase: ', JSON.stringify(phaseToUpdate));
@@ -244,6 +254,25 @@ export const useEditorTask = (t: ITask) => {
       .then(response => {
         if (response) {
           console.log('Updated successfully: ');
+          setTask(response);
+        }
+      })
+      .catch(error => fetchErrorToast(error.message));
+  };
+
+  const onCompleteTask = async () => {
+    console.log('With task id: ', task.id);
+    const confirmed = await confirmPopUp(
+      'Are you sure you want to complete task?',
+    );
+    if (!confirmed) return;
+    // apiCompleteTask({path: `api/Tasks/Complete/${task.id}`})
+    apiCompleteTask({
+      path: `api/Tasks/Complete/d6537359-b004-426f-2a18-08dd4e6af77e`,
+    })
+      .then(response => {
+        if (response) {
+          console.log('Task completed: ', JSON.stringify(response));
           setTask(response);
         }
       })
@@ -307,12 +336,15 @@ export const useEditorTask = (t: ITask) => {
     });
   };
 
+  const showLoader =
+    isUpdatingPhaseStatus || isFetchingTask || isCompletingTask;
+
   return {
     taskData: task,
     modalPhase,
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
-    showLoader: isUpdatingPhaseStatus || isFetchingTask,
+    showLoader,
     updatePhaseStatus,
     onEditClick,
     onDelete,
@@ -322,6 +354,7 @@ export const useEditorTask = (t: ITask) => {
     getNumberOfCompletedPhases,
     onAddClick,
     phaseModalSaveAction,
+    onCompleteTask,
   };
 };
 

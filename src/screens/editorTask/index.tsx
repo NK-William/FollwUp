@@ -51,6 +51,7 @@ const EditorTask = ({route}: {route: any}) => {
     getNumberOfCompletedPhases,
     onAddClick,
     phaseModalSaveAction,
+    onCompleteTask,
   } = useEditorTask(task);
   const styles = getStyling();
 
@@ -223,6 +224,11 @@ const EditorTask = ({route}: {route: any}) => {
         data={taskData.phases}
         keyExtractor={item => item.id}
         renderItem={({item}) => <Row item={item} />}
+      />
+      <FollwUpButton
+        text="Complete"
+        onPress={onCompleteTask}
+        containerStyle={{alignSelf: 'center', marginVertical: 8}}
       />
       <Modal
         animationType="fade"
