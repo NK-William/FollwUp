@@ -105,6 +105,7 @@ var initModalVisibilities: IModalVisibilities = {
 // Global variables
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
+var accessToken: string | undefined;
 
 export const useEditorTask = (t: ITask) => {
   //#region Hooks
@@ -113,7 +114,7 @@ export const useEditorTask = (t: ITask) => {
     useState<IModalVisibilities>(initModalVisibilities);
   const [task, setTask] = useState<ITask>(t);
 
-  const [isUpdatingPhaseStatus, setIsUpdatingPhaseStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   //#endregion Hooks
 
   //#region API hooks
@@ -121,13 +122,6 @@ export const useEditorTask = (t: ITask) => {
     path: '',
     lazy: true,
   });
-
-  const {mutate: apiCompleteTask, loading: isCompletingTask} = useMutate<ITask>(
-    {
-      path: '',
-      verb: 'PUT',
-    },
-  );
   //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
@@ -213,11 +207,15 @@ export const useEditorTask = (t: ITask) => {
       console.log('Updating phase: ', JSON.stringify(phaseToUpdate));
 
       try {
-        const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
-        const accessToken = userObj?.accessToken;
+        if (!accessToken) accessToken = getAccessToken();
+
+        if (!accessToken) {
+          Alert.alert('Error', 'Please re-authenticate to and try again');
+          return;
+        }
 
         const axiosInstance = getAxiosInstance(accessToken as string);
-        setIsUpdatingPhaseStatus(true);
+        setIsLoading(true);
         await axiosInstance.put(
           `/api/Phases/${phaseToUpdate.id}?statusOnly=true`,
           phaseToUpdate,
@@ -232,7 +230,7 @@ export const useEditorTask = (t: ITask) => {
 
         Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
       } finally {
-        setIsUpdatingPhaseStatus(false);
+        setIsLoading(false);
       }
     }
 
@@ -261,22 +259,34 @@ export const useEditorTask = (t: ITask) => {
   };
 
   const onCompleteTask = async () => {
-    console.log('With task id: ', task.id);
     const confirmed = await confirmPopUp(
       'Are you sure you want to complete task?',
     );
     if (!confirmed) return;
-    // apiCompleteTask({path: `api/Tasks/Complete/${task.id}`})
-    apiCompleteTask({
-      path: `api/Tasks/Complete/d6537359-b004-426f-2a18-08dd4e6af77e`,
-    })
-      .then(response => {
-        if (response) {
-          console.log('Task completed: ', JSON.stringify(response));
-          setTask(response);
-        }
-      })
-      .catch(error => fetchErrorToast(error.message));
+
+    try {
+      if (!accessToken) accessToken = getAccessToken();
+
+      if (!accessToken) {
+        Alert.alert('Error', 'Please re-authenticate to and try again');
+        return;
+      }
+
+      const axiosInstance = getAxiosInstance(accessToken as string);
+      setIsLoading(true);
+      await axiosInstance.put(`/api/Tasks/Complete/${task.id}`);
+
+      await getUpdatedTask();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'An unknown error occurred';
+
+      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const phaseModalSaveAction = (p: IModalPhase) => {
@@ -313,6 +323,11 @@ export const useEditorTask = (t: ITask) => {
     }
   };
 
+  const getAccessToken = () => {
+    const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
+    return userObj?.accessToken;
+  };
+
   const confirmPopUp = (message: string, title: string = 'Confirmation') => {
     return new Promise(resolve => {
       Alert.alert(title, message, [
@@ -336,8 +351,7 @@ export const useEditorTask = (t: ITask) => {
     });
   };
 
-  const showLoader =
-    isUpdatingPhaseStatus || isFetchingTask || isCompletingTask;
+  const showLoader = isLoading || isFetchingTask;
 
   return {
     taskData: task,

@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {IModalPhase} from '../../interfaces';
 import {IPhaseEditForm} from './interface';
 import {PhaseSubmissionActionEnum} from '../../utils/enums';
+import Toast from 'react-native-toast-message';
 
 let oldPhase: IModalPhase | undefined;
 
@@ -45,9 +46,10 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
     if (isEditMode) {
       if (!oldPhase) return;
       if (allFormFieldsTheSame()) {
-        console.log(
-          'TODO::: display alert telling a user that there is nothing to save',
-        );
+        Toast.show({
+          type: 'info',
+          text1: 'No changes were made to the phase',
+        });
         onCancel();
         return;
       }
