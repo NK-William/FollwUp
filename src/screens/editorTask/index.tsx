@@ -25,10 +25,9 @@ import {
   TaskStatsHeader,
   TaskTrackLine,
   PhaseEditForm,
+  ScreenBlockerLoader,
 } from '../../components';
 import getStyling from './style';
-import {OpicFiller} from '../../containers';
-import LoaderKit from 'react-native-loader-kit';
 
 const EditorTask = ({route}: {route: any}) => {
   // parameters
@@ -42,6 +41,7 @@ const EditorTask = ({route}: {route: any}) => {
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
     showLoader,
+    showLoaderOnPhaseModal,
     updatePhaseStatus,
     onEditClick,
     onDelete,
@@ -88,7 +88,9 @@ const EditorTask = ({route}: {route: any}) => {
         <View style={styles.rowContainer}>
           <View style={styles.actionIconContainer}>
             <Pressable
-              onPress={() => onEditClick(name, number, description, icon)}>
+              onPress={() =>
+                onEditClick(name, number, status, description, icon, id)
+              }>
               <Icon
                 iconType="FontAwesome5"
                 iconName="pen"
@@ -187,11 +189,12 @@ const EditorTask = ({route}: {route: any}) => {
           {...modalPhase}
           cancel={closeEditModal}
           save={phaseModalSaveAction}
+          isLoading={showLoaderOnPhaseModal}
         />
       );
   };
 
-  // TODO::: Create a separate component
+  // TODO::: Create a separate component is used in multiple places
   const PhaseDetailsModalContent = () => (
     <Pressable
       onPress={() => modalToDisplay(ModalEnum.None)}
@@ -203,19 +206,6 @@ const EditorTask = ({route}: {route: any}) => {
       />
     </Pressable>
   );
-
-  // TODO::: Make this re-usable
-  const ScreenBlockerLoader = () => {
-    return (
-      <OpicFiller>
-        <LoaderKit
-          name={'BallClipRotatePulse'}
-          color={'White'}
-          style={{width: 50, height: 50}}
-        />
-      </OpicFiller>
-    );
-  };
 
   return (
     <View style={styles.container}>

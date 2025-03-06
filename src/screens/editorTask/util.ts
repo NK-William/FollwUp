@@ -115,6 +115,7 @@ export const useEditorTask = (t: ITask) => {
   const [task, setTask] = useState<ITask>(t);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingOnPhaseModal, setIsLoadingOnPhaseModal] = useState(false);
   //#endregion Hooks
 
   //#region API hooks
@@ -151,10 +152,12 @@ export const useEditorTask = (t: ITask) => {
   const onEditClick = (
     name: string,
     number: number,
+    status: taskPhaseStatus,
     description?: string,
     icon?: string,
+    id?: string,
   ) => {
-    modalPhase = {name, description, icon, number};
+    modalPhase = {id, name, description, icon, number, status};
     phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
     modalToDisplay(ModalEnum.Edit);
   };
@@ -172,6 +175,7 @@ export const useEditorTask = (t: ITask) => {
   const closeEditModal = () => {
     modalToDisplay(ModalEnum.None);
     modalPhase = {
+      id: undefined,
       name: undefined,
       description: undefined,
       icon: undefined,
@@ -179,16 +183,63 @@ export const useEditorTask = (t: ITask) => {
     };
   };
 
-  const editPhase = (editedPhase: IModalPhase) => {
-    console.log('Editing with payload: ', JSON.stringify(editedPhase));
-    // TODO::: edit api here
-    closeEditModal(); // TODO::: added for testing
+  const editPhase = async (editedPhase: IModalPhase) => {
+    try {
+      if (!accessToken) accessToken = getAccessToken();
+
+      if (!accessToken) {
+        Alert.alert('Error', 'Please re-authenticate to and try again');
+        return;
+      }
+
+      const axiosInstance = getAxiosInstance(accessToken as string);
+      setIsLoadingOnPhaseModal(true);
+      await axiosInstance.put(
+        `/api/Phases/${editedPhase.id}?statusOnly=false`,
+        {...editedPhase, taskId: task.id},
+      );
+
+      await getUpdatedTask();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'An unknown error occurred';
+
+      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+    } finally {
+      closeEditModal();
+      setIsLoadingOnPhaseModal(false);
+    }
   };
 
-  const savePhase = (newPhase: IModalPhase) => {
+  const savePhase = async (newPhase: IModalPhase) => {
     console.log('Saving with payload: ', newPhase);
-    // TODO::: save api here
-    closeEditModal(); // TODO::: added for testing
+
+    try {
+      if (!accessToken) accessToken = getAccessToken();
+
+      if (!accessToken) {
+        Alert.alert('Error', 'Please re-authenticate to and try again');
+        return;
+      }
+
+      const axiosInstance = getAxiosInstance(accessToken as string);
+      setIsLoadingOnPhaseModal(true);
+      await axiosInstance.post(`/api/Phases`, {...newPhase, taskId: task.id});
+
+      await getUpdatedTask();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'An unknown error occurred';
+
+      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+    } finally {
+      closeEditModal();
+      setIsLoadingOnPhaseModal(false);
+    }
   };
 
   const updatePhaseStatus = async (id: string) => {
@@ -290,9 +341,10 @@ export const useEditorTask = (t: ITask) => {
   };
 
   const phaseModalSaveAction = (p: IModalPhase) => {
+    modalPhase = {...p};
     if (phaseModalPositiveButtonToPerform === PhaseSubmissionActionEnum.Edit)
       editPhase(p);
-    else return savePhase(p);
+    else savePhase(p);
   };
 
   const modalToDisplay = (modalToDisplay: ModalEnum) => {
@@ -352,6 +404,7 @@ export const useEditorTask = (t: ITask) => {
   };
 
   const showLoader = isLoading || isFetchingTask;
+  const showLoaderOnPhaseModal = isLoadingOnPhaseModal;
 
   return {
     taskData: task,
@@ -359,6 +412,7 @@ export const useEditorTask = (t: ITask) => {
     modalVisibilities,
     phaseModalPositiveButtonToPerform,
     showLoader,
+    showLoaderOnPhaseModal,
     updatePhaseStatus,
     onEditClick,
     onDelete,

@@ -3,16 +3,20 @@ import {IModalPhase} from '../../interfaces';
 import {IPhaseEditForm} from './interface';
 import {PhaseSubmissionActionEnum} from '../../utils/enums';
 import Toast from 'react-native-toast-message';
+import {Alert} from 'react-native';
 
 let oldPhase: IModalPhase | undefined;
 
 export const usePhaseEditForm = (obj: IPhaseEditForm) => {
   const {
+    id,
     number,
     name,
     description,
     icon,
+    status,
     positiveButtonToPerform,
+    isLoading,
     save,
     cancel,
   } = obj;
@@ -22,6 +26,7 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
     description,
     icon,
     number: number,
+    status,
   });
 
   // Fix icon values not changing when selected
@@ -42,9 +47,9 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
     saveButtonText = 'Add';
   }
 
-  const onSave = () => {
+  const onSave = async () => {
     if (isEditMode) {
-      if (!oldPhase) return;
+      if (!oldPhase || !id) return;
       if (allFormFieldsTheSame()) {
         Toast.show({
           type: 'info',
@@ -54,12 +59,19 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
         return;
       }
 
-      if (isFormValid()) save({...phase});
-
-      console.log('TODO::: display user message about name being required');
+      if (!isFormValid()) {
+        console.log('TODO::: display user message about name being required');
+        return;
+      }
+      save({...phase, id});
+      // TODO::: call onComplete here if pop-up is not closing.
     } else {
-      if (isFormValid()) save({...phase});
-      console.log('TODO::: display user message about name being required');
+      if (!isFormValid()) {
+        Alert.alert('Validation Error', 'Please fill in name field');
+        return;
+      }
+      save({...phase});
+      // TODO::: call onComplete here if pop-up is not closing.
     }
   };
 
@@ -92,5 +104,13 @@ export const usePhaseEditForm = (obj: IPhaseEditForm) => {
     return true;
   };
 
-  return {phase, titleText, saveButtonText, setPhase, onSave, onCancel};
+  return {
+    phase,
+    titleText,
+    saveButtonText,
+    isLoading,
+    setPhase,
+    onSave,
+    onCancel,
+  };
 };

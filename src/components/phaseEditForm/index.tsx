@@ -1,16 +1,26 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {IPhaseEditForm} from './interface';
-import UnderlinedText from '../underlinedText';
-import TaskInput from '../taskInput';
-import FollwUpButton from '../follwUpButton';
 import {usePhaseEditForm} from './util';
-import IconPicker from '../iconPicker';
+import {
+  ScreenBlockerLoader,
+  FollwUpButton,
+  TaskInput,
+  UnderlinedText,
+  IconPicker,
+} from '..';
 
 const PhaseEditForm: FC<IPhaseEditForm> = props => {
-  const {phase, titleText, saveButtonText, setPhase, onSave, onCancel} =
-    usePhaseEditForm(props);
+  const {
+    phase,
+    titleText,
+    saveButtonText,
+    isLoading,
+    setPhase,
+    onSave,
+    onCancel,
+  } = usePhaseEditForm(props);
   const styles = getStyling();
 
   return (
@@ -58,6 +68,7 @@ const PhaseEditForm: FC<IPhaseEditForm> = props => {
           </View>
         </View>
       </View>
+      {isLoading && <ScreenBlockerLoader />}
     </View>
   );
 };
