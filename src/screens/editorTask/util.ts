@@ -168,8 +168,46 @@ export const useEditorTask = (t: ITask) => {
     modalToDisplay(ModalEnum.Edit);
   };
 
-  const onDelete = (phaseId: string) => {
-    console.log('Deleting phase: ', phaseId);
+  const onDelete = async (phaseId: string) => {
+    if (isDeletingInProgressPhase(phaseId)) {
+      Alert.alert(
+        'Error',
+        'You cannot delete phase that is in progress, set other phase to in progress first',
+      );
+      return;
+    }
+
+    const confirmed = await confirmPopUp('Are you sure you want to delete?');
+    if (!confirmed) return;
+
+    try {
+      if (!accessToken) accessToken = getAccessToken();
+
+      if (!accessToken) {
+        Alert.alert('Error', 'Please re-authenticate to and try again');
+        return;
+      }
+
+      const axiosInstance = getAxiosInstance(accessToken as string);
+      setIsLoading(true);
+      await axiosInstance.delete(`/api/Phases/${phaseId}`);
+      await getUpdatedTask();
+    } catch (error: any) {
+      console.log('Error deleting phase: ', error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'An unknown error occurred';
+
+      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isDeletingInProgressPhase = (phaseId: string) => {
+    let p = task.phases.find(p => p.id === phaseId);
+    return p?.status === taskPhaseStatus.InProgress;
   };
 
   const closeEditModal = () => {

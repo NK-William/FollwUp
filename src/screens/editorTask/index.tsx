@@ -138,7 +138,8 @@ const EditorTask = ({route}: {route: any}) => {
               })
             }>
             <TaskPhaseDetails
-              hasLimitedLines
+              hasLimitedDescriptionLines
+              hasLimitedTitleLines
               title={name}
               containerStyle={{
                 height: taskPhaseDetailsHeight,
