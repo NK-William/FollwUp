@@ -2,4 +2,6 @@ run iOS pod install for:
 - react-native-loader-kit
 
 TODO:
-- Task progressToHundred should be updated
+- Re-load home data when displaying contents
+- Add back button in editor page
+- Bind home stats data

@@ -126,12 +126,11 @@ export const useEditorTask = (t: ITask) => {
   //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
-    const totalPhases = task.phases.length;
     const completedPhases = task.phases.filter(
       item => item.status === taskPhaseStatus.Completed,
     ).length;
 
-    return Math.round((completedPhases / totalPhases) * 100);
+    return completedPhases;
 
     // let currentIndexPhase = task.phases.findIndex(
     //   phase => phase.status === taskPhaseStatus.InProgress,
