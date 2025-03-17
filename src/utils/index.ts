@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import {IPhase} from '../interfaces';
+import {taskPhaseStatus} from './enums';
 
 export const flatten = (obj: any) => {
   return StyleSheet.flatten(obj);
@@ -24,4 +26,13 @@ export const resetToScreen = (
     index: 0,
     routes,
   });
+};
+
+export const getTaskPhasePercentageValue = (phases: IPhase[]) => {
+  const totalPhases = phases.length;
+  const completedPhases = phases.filter(
+    item => item.status === taskPhaseStatus.Completed,
+  ).length;
+
+  return Math.round((completedPhases / totalPhases) * 100);
 };

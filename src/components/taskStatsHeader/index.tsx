@@ -47,9 +47,7 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
       ) : (
         <View>
           <Text style={styles.phasesTrackText}>
-            {currentPhase !== undefined
-              ? `${currentPhase} of ${PhasesSum} phases completed`
-              : 'Something went wrong calculating stats'}
+            {`${currentPhase} of ${PhasesSum} phases completed`}
           </Text>
           <Text style={styles.estimationText}>
             {`Estimated completion time is ${getFormattedDate()}`}

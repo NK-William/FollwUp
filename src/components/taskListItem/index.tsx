@@ -14,6 +14,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
     statusText,
     namesOrOrganization,
     inviteLinkVisible,
+    progressToHundred,
   } = useTaskListItem(props);
 
   const styles = getStyling(props, statusViewColor, inviteLinkVisible);
@@ -39,7 +40,7 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
         </View>
       </View>
       <ProgressBar
-        progressToHundred={task.progressToHundred ?? 0}
+        progressToHundred={progressToHundred}
         containerStyle={{
           marginTop: 4,
         }}

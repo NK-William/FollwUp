@@ -126,22 +126,29 @@ export const useEditorTask = (t: ITask) => {
   //#endregion API requests
 
   const getNumberOfCompletedPhases = () => {
-    let currentIndexPhase = task.phases.findIndex(
-      phase => phase.status === taskPhaseStatus.InProgress,
-    );
+    const totalPhases = task.phases.length;
+    const completedPhases = task.phases.filter(
+      item => item.status === taskPhaseStatus.Completed,
+    ).length;
 
-    console.log('Current index: ', currentIndexPhase);
-    if (currentIndexPhase > 0) return task.phases[--currentIndexPhase].number;
+    return Math.round((completedPhases / totalPhases) * 100);
 
-    // If all items are pending
-    if (task.phases.every(phase => phase.status === taskPhaseStatus.Pending))
-      return 0;
+    // let currentIndexPhase = task.phases.findIndex(
+    //   phase => phase.status === taskPhaseStatus.InProgress,
+    // );
 
-    // If all items are completed
-    if (task.phases.every(phase => phase.status === taskPhaseStatus.Completed))
-      return task.phases.length;
+    // console.log('Current index: ', currentIndexPhase);
+    // if (currentIndexPhase > 0) return task.phases[--currentIndexPhase].number;
 
-    return undefined;
+    // // If all items are pending
+    // if (task.phases.every(phase => phase.status === taskPhaseStatus.Pending))
+    //   return 0;
+
+    // // If all items are completed
+    // if (task.phases.every(phase => phase.status === taskPhaseStatus.Completed))
+    //   return task.phases.length;
+
+    // return undefined;
   };
 
   const expandPhaseDetails = (details: IModalPhase) => {

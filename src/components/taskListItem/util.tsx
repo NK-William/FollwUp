@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {ITaskListItemProps} from './interface';
 import {taskStatus, TaskStatusColor} from '../../utils/enums';
+import {getTaskPhasePercentageValue} from '../../utils';
 
 export const useTaskListItem = (props: ITaskListItemProps) => {
   const {task} = props;
@@ -62,5 +63,6 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
     statusText,
     namesOrOrganization,
     inviteLinkVisible: false,
+    progressToHundred: getTaskPhasePercentageValue(task.phases),
   };
 };
