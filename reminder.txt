@@ -1,2 +1,5 @@
 run iOS pod install for:
 - react-native-loader-kit
+
+TODO:
+- Task progressToHundred should be updated

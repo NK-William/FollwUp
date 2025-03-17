@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {primary, primaryButtonText} from '../../constants/colors';
+import {primary, primaryButtonText, grayLight} from '../../constants/colors';
 import type {IFollwUpButtonProps} from './interface';
 import {flatten} from '../../utils';
 
@@ -9,7 +9,7 @@ const getStyling = (props: IFollwUpButtonProps) => {
       {
         height: 58,
         width: 201,
-        backgroundColor: primary,
+        backgroundColor: props.isDisabled ? grayLight : primary,
         borderRadius: 40,
         alignItems: 'center',
         justifyContent: 'center',

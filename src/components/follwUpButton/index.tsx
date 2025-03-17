@@ -6,9 +6,12 @@ import LoaderKit from 'react-native-loader-kit';
 
 const FollwUpButton: FC<IFollwUpButtonProps> = props => {
   const styles = getStyling(props);
-  const {text, loading, onPress} = props;
+  const {text, loading, isDisabled, onPress} = props;
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      disabled={isDisabled}
+      onPress={onPress}
+      style={styles.container}>
       {loading ? (
         <LoaderKit
           style={styles.loader}

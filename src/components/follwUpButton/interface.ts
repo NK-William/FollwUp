@@ -4,6 +4,7 @@ export interface IFollwUpButtonProps {
   text?: string;
   loading?: boolean;
   onPress?: () => void;
+  isDisabled?: boolean;
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }

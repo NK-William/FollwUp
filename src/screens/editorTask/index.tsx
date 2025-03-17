@@ -13,6 +13,7 @@ import {
   ModalEnum,
   PhaseSubmissionActionEnum,
   taskPhaseStatus,
+  taskStatus,
 } from '../../utils/enums';
 import {useEditorTask, useRow} from './util';
 import {
@@ -217,6 +218,7 @@ const EditorTask = ({route}: {route: any}) => {
         renderItem={({item}) => <Row item={item} />}
       />
       <FollwUpButton
+        isDisabled={taskData.status === taskStatus.Completed}
         text="Complete"
         onPress={onCompleteTask}
         containerStyle={{alignSelf: 'center', marginVertical: 8}}
