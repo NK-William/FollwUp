@@ -1,4 +1,11 @@
-import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import React, {FC, useState} from 'react';
 import getStyling from './style';
 import {useHome} from './util';
@@ -9,6 +16,7 @@ import {
   TaskListItem,
   ProfileButton,
   Icon,
+  ScreenBlockerLoader,
 } from '../../components';
 import {TaskTabOptionEnum} from '../../utils/enums';
 import {OpicFiller} from '../../containers';
@@ -23,8 +31,15 @@ const Home = (props: any) => {
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
   );
-  const {tasks, tasksDefined, loading, progressBarTasks, taskItemSelected} =
-    useHome(navigation);
+  const {
+    tasks,
+    tasksDefined,
+    loading,
+    LoadingFromListRefresh,
+    progressBarTasks,
+    taskItemSelected,
+    onDataRefresh,
+  } = useHome(navigation);
 
   const StatsContentPlaceholder = () => {
     return (
@@ -110,6 +125,12 @@ const Home = (props: any) => {
               )}
               keyExtractor={task => task.id}
               ListEmptyComponent={TasksContentPlaceholder}
+              refreshControl={
+                <RefreshControl
+                  refreshing={LoadingFromListRefresh}
+                  onRefresh={onDataRefresh}
+                />
+              }
             />
             <View style={styles.floatingButtonContainer}>
               <TouchableOpacity
@@ -140,6 +161,7 @@ const Home = (props: any) => {
             </View>
           </View>
         </View>
+        {!LoadingFromListRefresh && loading && <ScreenBlockerLoader />}
       </>
     );
   };
@@ -162,36 +184,38 @@ const Home = (props: any) => {
   //     </View>
   //   );
 
-  if (loading)
-    return (
-      <View style={styles.container}>
-        <View style={styles.contentLoader}>
-          <LoaderKit
-            name={'BallClipRotatePulse'}
-            color={primary}
-            style={{width: 50, height: 50}}
-          />
-          <Text style={styles.loadingText}>Please wait</Text>
-        </View>
-      </View>
-    );
+  return <Content />;
 
-  return (
-    <View style={styles.container}>
-      {loading ? (
-        <View style={styles.contentLoader}>
-          <LoaderKit
-            name={'BallClipRotatePulse'}
-            color={primary}
-            style={{width: 50, height: 50}}
-          />
-          <Text style={styles.loadingText}>Please wait</Text>
-        </View>
-      ) : (
-        <Content />
-      )}
-    </View>
-  );
+  // if (loading)
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.contentLoader}>
+  //         <LoaderKit
+  //           name={'BallClipRotatePulse'}
+  //           color={primary}
+  //           style={{width: 50, height: 50}}
+  //         />
+  //         <Text style={styles.loadingText}>Please wait</Text>
+  //       </View>
+  //     </View>
+  //   );
+
+  // return (
+  //   <View style={styles.container}>
+  //     {loading ? (
+  //       <View style={styles.contentLoader}>
+  //         <LoaderKit
+  //           name={'BallClipRotatePulse'}
+  //           color={primary}
+  //           style={{width: 50, height: 50}}
+  //         />
+  //         <Text style={styles.loadingText}>Please wait</Text>
+  //       </View>
+  //     ) : (
+  //       <Content />
+  //     )}
+  //   </View>
+  // );
 };
 
 export default Home;

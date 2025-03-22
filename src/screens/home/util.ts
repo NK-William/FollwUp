@@ -1,4 +1,3 @@
-import {ColorValue} from 'react-native';
 import {IProfile, IReduxUser, ITask} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
@@ -15,6 +14,7 @@ export const useHome = (navigation: any) => {
   //#region Hooks
   const [tasks, setTasks] = useState<ITask[]>();
   const {id: profileId, emailAddress} = useSelector(selectUser);
+  const [LoadingFromListRefresh, setLoadingFromListRefresh] = useState(false);
   const dispatch = useDispatch();
   //#endregion Hooks
 
@@ -57,7 +57,6 @@ export const useHome = (navigation: any) => {
   //#endregion Effects
 
   //#region  Methods
-
   const onScreenFocus = async () => {
     if (!taskReFetched && profileId) {
       await fetchTasks(profileId);
@@ -66,6 +65,10 @@ export const useHome = (navigation: any) => {
 
   const onScreenUnfocused = () => {
     taskReFetched = false;
+  };
+
+  const onDataRefresh = async () => {
+    if (profileId) await fetchTasks(profileId, true);
   };
 
   const fetchProfile = (emailAddress: string) => {
@@ -97,7 +100,11 @@ export const useHome = (navigation: any) => {
       .catch(error => fetchErrorToast(error.message));
   };
 
-  const fetchTasks = (pId: string) => {
+  const fetchTasks = async (
+    pId: string,
+    requestFromListRefresh: boolean = false,
+  ) => {
+    if (requestFromListRefresh) setLoadingFromListRefresh(true);
     taskReFetched = true;
     apiFetchTasks({path: `api/Tasks/ByProfileId/${pId}`})
       .then(response => {
@@ -107,7 +114,11 @@ export const useHome = (navigation: any) => {
           fetchErrorToast('Failed to fetch tasks');
         }
       })
-      .catch(error => fetchErrorToast(error.message));
+      .catch(error => fetchErrorToast(error.message))
+      .finally(() => {
+        console.log('Finally');
+        if (requestFromListRefresh) setLoadingFromListRefresh(false);
+      });
   };
 
   const taskItemSelected = (task: ITask) => {
@@ -135,7 +146,9 @@ export const useHome = (navigation: any) => {
     tasks,
     tasksDefined: tasks?.length,
     loading: isFetchingProfile || isFetchingTasks,
+    LoadingFromListRefresh,
     progressBarTasks,
     taskItemSelected,
+    onDataRefresh,
   };
 };
