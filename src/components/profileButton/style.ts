@@ -4,12 +4,18 @@ import {accent, lightText, primary} from '../../constants/colors';
 const getStyling = () => {
   return StyleSheet.create({
     container: {
-      height: 50,
+      flexDirection: 'row',
       marginTop: 8,
+      justifyContent: 'space-between',
+    },
+    ProfileIconContainer: {
+      height: 50,
+      width: 50,
+      alignSelf: 'flex-end',
       alignItems: 'flex-end',
       justifyContent: 'center',
     },
-    profilePlaceholder: {
+    profileIconPlaceholder: {
       height: 50,
       width: 50,
     },

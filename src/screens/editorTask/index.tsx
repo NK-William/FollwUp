@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  FlatList,
-  Pressable,
-  Modal,
-  ScrollView,
-  TextInput,
-} from 'react-native';
+import {View, FlatList, Pressable, Modal} from 'react-native';
 import React from 'react';
 import {IPhase, ITask} from '../../interfaces';
 import {
