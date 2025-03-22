@@ -5,7 +5,7 @@ import {
   taskPhaseStatus,
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
-import {lazy, useState} from 'react';
+import {useState} from 'react';
 import {ITask, IModalPhase, IPhase, IReduxUser} from '../../interfaces';
 import {useGet, useMutate} from 'restful-react';
 import {MutateRequestOptions} from 'restful-react/dist/Mutate';
@@ -97,12 +97,11 @@ interface IModalVisibilities {
   showPhaseEditModal: boolean;
 }
 
+// Global variables
 var initModalVisibilities: IModalVisibilities = {
   showPhaseDetailsModal: false,
   showPhaseEditModal: false,
 };
-
-// Global variables
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 var accessToken: string | undefined;

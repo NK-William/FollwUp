@@ -2,15 +2,19 @@ import {ColorValue} from 'react-native';
 import {IProfile, IReduxUser, ITask} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {selectUser, setUser} from '../../redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {editorTask} from '../../constants/pageNames';
+import {useFocusEffect} from '@react-navigation/native';
+
+//#region Global variables
+let taskReFetched = false;
 
 export const useHome = (navigation: any) => {
   //#region Hooks
   const [tasks, setTasks] = useState<ITask[]>();
-  const {id, emailAddress} = useSelector(selectUser);
+  const {id: profileId, emailAddress} = useSelector(selectUser);
   const dispatch = useDispatch();
   //#endregion Hooks
 
@@ -25,26 +29,45 @@ export const useHome = (navigation: any) => {
     path: '',
     lazy: true,
   });
-
   //#endregion Apis
 
-  //#region useEffects
+  //#region Effects
   useEffect(() => {
     // emailAddress has to be defined because with get to API by email address
-    // And fetch when we don't have id because is needed as foreign key to other entities.
+    // And fetch when we don't have profileId because is needed as foreign key to other entities.
 
-    console.log('Fetch profile: ', emailAddress, id);
-    if (emailAddress && !id) fetchProfile(emailAddress);
+    if (emailAddress && !profileId) fetchProfile(emailAddress);
     else if (!emailAddress)
+      // TODO: add this in a stack trace.
       console.log(
         'Home util: Failed loading email address from redux global state',
       );
     // TODO: add this in a stack trace.
-    else if (id) fetchTasks(id); // If we already have id and email address, jump to fetching tasks
-  }, [emailAddress, id]);
-  //#endregion useEffects
+    else if (profileId) fetchTasks(profileId); // If we already have profileId and email address, jump to fetching tasks
+  }, [emailAddress, profileId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onScreenFocus();
+      return () => {
+        onScreenUnfocused();
+      };
+    }, []),
+  );
+  //#endregion Effects
 
   //#region  Methods
+
+  const onScreenFocus = async () => {
+    if (!taskReFetched && profileId) {
+      await fetchTasks(profileId);
+    }
+  };
+
+  const onScreenUnfocused = () => {
+    taskReFetched = false;
+  };
+
   const fetchProfile = (emailAddress: string) => {
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
@@ -74,9 +97,9 @@ export const useHome = (navigation: any) => {
       .catch(error => fetchErrorToast(error.message));
   };
 
-  const fetchTasks = (profileId: string) => {
-    console.log('profileId: ', profileId);
-    apiFetchTasks({path: `api/Tasks/ByProfileId/${profileId}`})
+  const fetchTasks = (pId: string) => {
+    taskReFetched = true;
+    apiFetchTasks({path: `api/Tasks/ByProfileId/${pId}`})
       .then(response => {
         if (response) {
           setTasks(response);
@@ -88,8 +111,6 @@ export const useHome = (navigation: any) => {
   };
 
   const taskItemSelected = (task: ITask) => {
-    console.log('Task selected: ', JSON.stringify(task));
-    console.log('**********');
     navigation.navigate(editorTask, task);
   };
 
