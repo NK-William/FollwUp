@@ -10,6 +10,10 @@ const getStyling = () => {
       borderBottomRightRadius: 70,
       height: 185,
     },
+    topButtonsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
     profilePlaceholder: {
       height: 50,
       width: 50,

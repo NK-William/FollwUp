@@ -6,6 +6,7 @@ import {selectUser, setUser} from '../../redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {editorTask} from '../../constants/pageNames';
 import {useFocusEffect} from '@react-navigation/native';
+import {getTaskPhasePercentageValue} from '../../utils';
 
 //#region Global variables
 let taskReFetched = false;
@@ -109,6 +110,11 @@ export const useHome = (navigation: any) => {
     apiFetchTasks({path: `api/Tasks/ByProfileId/${pId}`})
       .then(response => {
         if (response) {
+          // This can be removed when progressToHundred from task api is fixed (not always zero)
+          response.forEach(task => {
+            task.progressToHundred = getTaskPhasePercentageValue(task.phases);
+          });
+
           setTasks(response);
         } else {
           fetchErrorToast('Failed to fetch tasks');

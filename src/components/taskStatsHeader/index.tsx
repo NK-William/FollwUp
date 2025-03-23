@@ -2,7 +2,7 @@ import {View, Text, Image} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {ITaskStatsHeader} from './interface';
-import {ProgressBar, FollwUpButton, ProfileButton} from '..';
+import {ProgressBar, FollwUpButton, ProfileButton, BackButton} from '..';
 import {useTaskStatsHeader} from './utils';
 
 const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
@@ -16,7 +16,10 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
   const styles = getStyling();
   return (
     <View style={styles.container}>
-      <ProfileButton />
+      <View style={styles.topButtonsContainer}>
+        <BackButton />
+        <ProfileButton />
+      </View>
       <Text style={styles.title}>{title}</Text>
       {notLinked ? (
         <View>

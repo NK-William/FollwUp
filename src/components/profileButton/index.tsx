@@ -11,8 +11,7 @@ const ProfileButton: FC = () => {
   const styles = getStyling();
   const globalStyles = getGlobalStyling();
   return (
-    <View style={styles.container}>
-      <BackButton />
+    <View>
       <Pressable
         style={styles.ProfileIconContainer}
         onPress={() => navigation.navigate(profile as never)}>

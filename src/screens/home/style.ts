@@ -72,7 +72,6 @@ const getStyling = () => {
     progressTasksContainer: {
       marginTop: 23,
       marginBottom: 30,
-      flex: 1,
     },
     progressTaskNameContainer: {
       marginTop: 8,

@@ -3,11 +3,6 @@ import {accent, lightText, primary} from '../../constants/colors';
 
 const getStyling = () => {
   return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      marginTop: 8,
-      justifyContent: 'space-between',
-    },
     ProfileIconContainer: {
       height: 50,
       width: 50,
