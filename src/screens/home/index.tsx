@@ -19,14 +19,9 @@ import {
   ScreenBlockerLoader,
 } from '../../components';
 import {TaskTabOptionEnum} from '../../utils/enums';
-import {OpicFiller} from '../../containers';
-import LoaderKit from 'react-native-loader-kit';
-import {primary} from '../../constants/colors';
 import {addTask} from '../../constants/pageNames';
 
-const Home = (props: any) => {
-  const {navigation} = props;
-
+const Home = ({navigation, route}: {navigation: any; route: any}) => {
   const styles = getStyling();
   const [selectedTabOption, setSelectedTabOption] = useState(
     TaskTabOptionEnum.Track,
@@ -39,7 +34,7 @@ const Home = (props: any) => {
     progressBarTasks,
     taskItemSelected,
     onDataRefresh,
-  } = useHome(navigation);
+  } = useHome(navigation, route);
 
   const StatsContentPlaceholder = () => {
     return (
@@ -70,7 +65,7 @@ const Home = (props: any) => {
         <View style={styles.statsContainer}>
           <ProfileButton />
           {tasksDefined ? (
-            <View>
+            <View style={{flex: 0.9}}>
               <View style={styles.progressContainer}>
                 <Text style={styles.progressText}>All Tasks Progress</Text>
                 <StatsProgressBar

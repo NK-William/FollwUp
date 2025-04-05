@@ -1,6 +1,2 @@
 run iOS pod install for:
 - react-native-loader-kit
-
-TODO:
-- Add client first and last names in both back-end and front end.
-- Complete binding home stats data.

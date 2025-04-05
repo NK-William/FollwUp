@@ -11,6 +11,18 @@ export const isEmailValid = (email: string) => {
   return regex.test(email);
 };
 
+export const isPhoneNumberValid = (phoneNumber: string) => {
+  const regex = /^0(6\d|7\d|8\d|9\d)\d{7}$/;
+  return regex.test(phoneNumber);
+};
+
+export const isDateNotPast = (date: Date) => {
+  const today = new Date();
+  console.log('today: ', today);
+  console.log('date: ', date);
+  return date >= today;
+};
+
 // export const resetToScreen = (navigation: any, routes: {name: string}[]) => {
 //   navigation.reset({
 //     index: 0,

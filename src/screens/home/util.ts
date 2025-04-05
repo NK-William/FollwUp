@@ -1,17 +1,17 @@
-import {IProfile, IReduxUser, ITask} from '../../interfaces';
+import {IProfile, IReduxUser, ITask, IReturnHome} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
 import {useCallback, useEffect, useState} from 'react';
 import {selectUser, setUser} from '../../redux/features/user/userSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {editorTask} from '../../constants/pageNames';
-import {useFocusEffect} from '@react-navigation/native';
 import {getTaskPhasePercentageValue} from '../../utils';
+import {useFocusEffect} from '@react-navigation/native';
 
 //#region Global variables
-let taskReFetched = false;
+let taskReFetched: boolean = false;
 
-export const useHome = (navigation: any) => {
+export const useHome = (navigation: any, route: any) => {
   //#region Hooks
   const [tasks, setTasks] = useState<ITask[]>();
   const {id: profileId, emailAddress} = useSelector(selectUser);
@@ -33,10 +33,12 @@ export const useHome = (navigation: any) => {
   //#endregion Apis
 
   //#region Effects
+
   useEffect(() => {
     // emailAddress has to be defined because with get to API by email address
     // And fetch when we don't have profileId because is needed as foreign key to other entities.
-
+    console.log('Use eff');
+    taskReFetched = false;
     if (emailAddress && !profileId) fetchProfile(emailAddress);
     else if (!emailAddress)
       // TODO: add this in a stack trace.
@@ -49,6 +51,7 @@ export const useHome = (navigation: any) => {
 
   useFocusEffect(
     useCallback(() => {
+      console.log('Home util: Screen focused');
       onScreenFocus();
       return () => {
         onScreenUnfocused();
@@ -59,12 +62,20 @@ export const useHome = (navigation: any) => {
 
   //#region  Methods
   const onScreenFocus = async () => {
+    console.log(
+      'onScreenFocus taskReFetched: ',
+      taskReFetched,
+      ', profileId: ',
+      profileId,
+    );
     if (!taskReFetched && profileId) {
+      console.log('Calling fetchTasks');
       await fetchTasks(profileId);
     }
   };
 
   const onScreenUnfocused = () => {
+    console.log('onScreenUnfocused');
     taskReFetched = false;
   };
 
@@ -73,6 +84,7 @@ export const useHome = (navigation: any) => {
   };
 
   const fetchProfile = (emailAddress: string) => {
+    console.log('Fetchiiiiiiiiing');
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
         if (response) {
@@ -110,14 +122,16 @@ export const useHome = (navigation: any) => {
     apiFetchTasks({path: `api/Tasks/ByProfileId/${pId}`})
       .then(response => {
         if (response) {
-          // This can be removed when progressToHundred from task api is fixed (not always zero)
-          response.forEach(task => {
-            task.progressToHundred = getTaskPhasePercentageValue(task.phases);
-          });
+          try {
+            // TODO: This can be removed when progressToHundred from task api is fixed (not always zero)
+            response.forEach(task => {
+              task.progressToHundred = getTaskPhasePercentageValue(task.phases);
+            });
 
-          setTasks(response);
-        } else {
-          fetchErrorToast('Failed to fetch tasks');
+            setTasks(response);
+          } catch (e) {
+            // TODO: Add this in a stack trace
+          }
         }
       })
       .catch(error => fetchErrorToast(error.message))

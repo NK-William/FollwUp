@@ -14,6 +14,10 @@ export interface ITask {
   roles?: IRole[];
   invitation?: IInvitation;
   profileId?: string;
+  clientFirstName?: string;
+  clientLastName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
 }
 
 //

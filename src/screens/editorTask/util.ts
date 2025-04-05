@@ -1,18 +1,26 @@
-import {Alert, ColorValue} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {
   ModalEnum,
   PhaseSubmissionActionEnum,
   taskPhaseStatus,
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
-import {useState} from 'react';
-import {ITask, IModalPhase, IPhase, IReduxUser} from '../../interfaces';
+import {useEffect, useState} from 'react';
+import {
+  ITask,
+  IModalPhase,
+  IPhase,
+  IReduxUser,
+  IReturnHome,
+} from '../../interfaces';
 import {useGet, useMutate} from 'restful-react';
 import {MutateRequestOptions} from 'restful-react/dist/Mutate';
 import getAxiosInstance from '../../utils/axiosConfig';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../../redux/features/user/userSlice';
 import Toast from 'react-native-toast-message';
+import {resetToScreen} from '../../utils';
+import {home} from '../../constants/pageNames';
 
 // Demo data
 const demoTask: ITask = {
@@ -105,8 +113,9 @@ var initModalVisibilities: IModalVisibilities = {
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 var accessToken: string | undefined;
+var backHomeData: IReturnHome | undefined;
 
-export const useEditorTask = (t: ITask) => {
+export const useEditorTask = (navigation: any, t: ITask) => {
   //#region Hooks
   const user = useSelector(selectUser);
   const [modalVisibilities, setModalVisibilities] =

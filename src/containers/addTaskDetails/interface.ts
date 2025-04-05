@@ -2,7 +2,10 @@ import {TaskFormFieldEnum} from '../../utils/enums';
 
 export interface IAddTaskDetailsProps {
   name?: string;
-  // phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
   description?: string;
   organization?: string;
   eta?: Date;

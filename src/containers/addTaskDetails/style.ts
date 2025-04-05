@@ -4,7 +4,7 @@ import {accent, darkText} from '../../constants/colors';
 const getStyling = () => {
   return StyleSheet.create({
     container: {},
-    underlinedText: {alignSelf: 'center'},
+    underlinedText: {alignSelf: 'center', marginBottom: 40},
     entryLabel: {
       marginHorizontal: 22,
       marginVertical: 10,

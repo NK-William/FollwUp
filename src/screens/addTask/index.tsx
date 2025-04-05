@@ -78,9 +78,12 @@ const AddTask = (props: any) => {
       ) : (
         <AddTaskDetails
           name={task?.name}
+          email={task?.clientEmail}
+          phoneNumber={task?.clientPhone}
           organization={task?.organization}
+          firstName={task?.clientFirstName}
+          lastName={task?.clientLastName}
           eta={task?.eta}
-          // phoneNumber={task?.clientPhoneNumber}
           navigation={navigation}
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}

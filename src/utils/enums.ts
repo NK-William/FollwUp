@@ -42,7 +42,10 @@ export enum TaskStatusColor {
 
 export enum TaskFormFieldEnum {
   name,
-  // phoneNumber,
+  clientFirstName,
+  clientLastName,
+  ClientEmailAddress,
+  ClientPhoneNumber,
   description,
   organization,
   eta,

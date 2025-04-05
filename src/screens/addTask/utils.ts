@@ -7,7 +7,12 @@ import {
 } from '../../utils/enums';
 import {Alert} from 'react-native';
 import {useMutate} from 'restful-react';
-import {resetToScreen} from '../../utils';
+import {
+  isDateNotPast,
+  isEmailValid,
+  isPhoneNumberValid,
+  resetToScreen,
+} from '../../utils';
 import {selectUser} from '../../redux/features/user/userSlice';
 import {useSelector} from 'react-redux';
 import {editorTask, home} from '../../constants/pageNames';
@@ -39,14 +44,54 @@ export const useAddTask = (navigation: any) => {
 
   //#region  Methods
   const validateTaskForm = () => {
-    if (!task.name && !task.organization) {
+    const {
+      name,
+      clientFirstName,
+      clientLastName,
+      clientEmail,
+      clientPhone,
+      organization,
+      eta,
+    } = task;
+
+    console.log('task ETA: ', task.eta);
+    if (
+      !name &&
+      !clientFirstName &&
+      !clientLastName &&
+      !clientEmail &&
+      !clientPhone &&
+      !organization
+    ) {
       displayAlert(
         'Please fill all required fields before going to the next step.',
       );
-    } else if (!task.name) {
+    } else if (!name) {
       displayAlert('Please enter task name before going to the next step.');
-    } else if (!task.organization) {
+    } else if (!clientFirstName) {
+      displayAlert(
+        'Please enter client first name before going to the next step.',
+      );
+    } else if (!clientLastName) {
+      displayAlert(
+        'Please enter client last name before going to the next step.',
+      );
+    } else if (!clientEmail) {
+      displayAlert(
+        'Please enter client email address before going to the next step.',
+      );
+    } else if (!isEmailValid(clientEmail)) {
+      displayAlert('Please enter a valid email address.');
+    } else if (!clientPhone) {
+      displayAlert(
+        'Please enter client phone number before going to the next step.',
+      );
+    } else if (!isPhoneNumberValid(clientPhone)) {
+      displayAlert('Please enter a valid phone number.');
+    } else if (!organization) {
       displayAlert('Please enter organization before going to the next step.');
+    } else if (!isDateNotPast(eta)) {
+      displayAlert('Date cannot be in the past.');
     } else {
       setShowTaskPhaseContainer(true);
     }
@@ -60,9 +105,18 @@ export const useAddTask = (navigation: any) => {
       case TaskFormFieldEnum.name:
         setTask({...task, name: value as string});
         break;
-      // case TaskFormFieldEnum.phoneNumber:
-      //   setTask({...task, clientPhoneNumber: value});
-      //   break;
+      case TaskFormFieldEnum.clientFirstName:
+        setTask({...task, clientFirstName: value as string});
+        break;
+      case TaskFormFieldEnum.clientLastName:
+        setTask({...task, clientLastName: value as string});
+        break;
+      case TaskFormFieldEnum.ClientEmailAddress:
+        setTask({...task, clientEmail: value as string});
+        break;
+      case TaskFormFieldEnum.ClientPhoneNumber:
+        setTask({...task, clientPhone: value as string});
+        break;
       case TaskFormFieldEnum.description:
         setTask({...task, description: value as string});
         break;
@@ -150,7 +204,6 @@ export const useAddTask = (navigation: any) => {
   };
 
   const saveTask = () => {
-    console.log('saving task: ', JSON.stringify(task));
     if (validateTaskPhaseForm('Please enter name before submitting task.')) {
       const taskPhases = pushNewPhase();
 
@@ -168,18 +221,14 @@ export const useAddTask = (navigation: any) => {
 
       // TODO: not used with the current version
       taskForm.invitation = {
-        phoneNumber: '0711111111', // TODO: Not needed in the current version
+        phoneNumber: taskForm.clientPhone as string, // TODO: Not needed in the current version
         task: {
           // TODO: Code1 = (When everything is complete) this has to be removed
-          name: taskForm.name,
-          progressToHundred: 0,
-          organization: taskForm.organization,
-          status: 0,
-          description: taskForm.description,
-          color: taskForm.color,
-          eta: taskForm.eta,
+          ...taskForm,
         },
       };
+
+      console.log('saving task: ', JSON.stringify(taskForm));
 
       apiSaveTask(taskForm)
         .then(async response => {

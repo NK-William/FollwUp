@@ -22,7 +22,7 @@ import {
 } from '../../components';
 import getStyling from './style';
 
-const EditorTask = ({route}: {route: any}) => {
+const EditorTask = ({navigation, route}: {navigation: any; route: any}) => {
   // parameters
   const task = route.params as ITask;
 
@@ -45,7 +45,7 @@ const EditorTask = ({route}: {route: any}) => {
     onAddClick,
     phaseModalSaveAction,
     onCompleteTask,
-  } = useEditorTask(task);
+  } = useEditorTask(navigation, task);
   const styles = getStyling();
 
   console.log('Rendered');
