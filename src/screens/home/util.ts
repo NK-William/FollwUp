@@ -3,18 +3,22 @@ import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
 import {useCallback, useEffect, useState} from 'react';
 import {selectUser, setUser} from '../../redux/features/user/userSlice';
+// import {
+//   selectRefetchTasksOnNavBack,
+//   setRefetchTasksOnNavBack,
+// } from '../../redux/features/refetchTasksOnNavBack/refetchTasksOnNavBackSlice'; // code 1
 import {useSelector, useDispatch} from 'react-redux';
 import {editorTask} from '../../constants/pageNames';
 import {getTaskPhasePercentageValue} from '../../utils';
 import {useFocusEffect} from '@react-navigation/native';
 
-//#region Global variables
-let taskReFetched: boolean = false;
-
 export const useHome = (navigation: any, route: any) => {
   //#region Hooks
   const [tasks, setTasks] = useState<ITask[]>();
   const {id: profileId, emailAddress} = useSelector(selectUser);
+  // const selectedRefetchTasksOnNavBack = useSelector(
+  //   selectRefetchTasksOnNavBack,
+  // ); // code 1
   const [LoadingFromListRefresh, setLoadingFromListRefresh] = useState(false);
   const dispatch = useDispatch();
   //#endregion Hooks
@@ -38,7 +42,6 @@ export const useHome = (navigation: any, route: any) => {
     // emailAddress has to be defined because with get to API by email address
     // And fetch when we don't have profileId because is needed as foreign key to other entities.
     console.log('Use eff');
-    taskReFetched = false;
     if (emailAddress && !profileId) fetchProfile(emailAddress);
     else if (!emailAddress)
       // TODO: add this in a stack trace.
@@ -62,7 +65,7 @@ export const useHome = (navigation: any, route: any) => {
 
   //#region  Methods
   const onScreenFocus = async () => {
-    console.log(
+    /*console.log(
       'onScreenFocus taskReFetched: ',
       taskReFetched,
       ', profileId: ',
@@ -71,12 +74,19 @@ export const useHome = (navigation: any, route: any) => {
     if (!taskReFetched && profileId) {
       console.log('Calling fetchTasks');
       await fetchTasks(profileId);
-    }
+    }*/
+    //
+    /*console.log('Can we refetch: ', selectedRefetchTasksOnNavBack);
+    if (selectedRefetchTasksOnNavBack && profileId) {
+      console.log('Calling fetchTasks');
+      await fetchTasks(profileId);
+      dispatch(setRefetchTasksOnNavBack(false));
+    }*/
+    // code 1
   };
 
   const onScreenUnfocused = () => {
     console.log('onScreenUnfocused');
-    taskReFetched = false;
   };
 
   const onDataRefresh = async () => {
@@ -118,7 +128,6 @@ export const useHome = (navigation: any, route: any) => {
     requestFromListRefresh: boolean = false,
   ) => {
     if (requestFromListRefresh) setLoadingFromListRefresh(true);
-    taskReFetched = true;
     apiFetchTasks({path: `api/Tasks/ByProfileId/${pId}`})
       .then(response => {
         if (response) {

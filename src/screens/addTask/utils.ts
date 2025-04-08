@@ -14,9 +14,10 @@ import {
   resetToScreen,
 } from '../../utils';
 import {selectUser} from '../../redux/features/user/userSlice';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {editorTask, home} from '../../constants/pageNames';
 import Toast from 'react-native-toast-message';
+// import {setRefetchTasksOnNavBack} from '../../redux/features/refetchTasksOnNavBack/refetchTasksOnNavBackSlice'; // code 1
 
 const taskInit: ITask = {
   name: '',
@@ -34,6 +35,7 @@ export const useAddTask = (navigation: any) => {
   const [description, setDescription] = useState<string>('');
   const [icon, setIcon] = useState<string>('');
   const {id: profileId} = useSelector(selectUser);
+  // const dispatch = useDispatch(); // code 1
   //#endregion Hooks
 
   //#region API requests
@@ -233,6 +235,7 @@ export const useAddTask = (navigation: any) => {
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {
+            // dispatch(setRefetchTasksOnNavBack(true)); // code 1
             Toast.show({
               type: 'success',
               text1: 'Success',

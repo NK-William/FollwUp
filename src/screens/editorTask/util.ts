@@ -5,7 +5,7 @@ import {
   taskPhaseStatus,
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
   ITask,
   IModalPhase,
@@ -16,11 +16,15 @@ import {
 import {useGet, useMutate} from 'restful-react';
 import {MutateRequestOptions} from 'restful-react/dist/Mutate';
 import getAxiosInstance from '../../utils/axiosConfig';
-import {useSelector} from 'react-redux';
+import {/*useDispatch,*/ useSelector} from 'react-redux'; // code 1
 import {selectUser} from '../../redux/features/user/userSlice';
 import Toast from 'react-native-toast-message';
 import {resetToScreen} from '../../utils';
 import {home} from '../../constants/pageNames';
+// import {
+//   selectRefetchTasksOnNavBack,
+//   setRefetchTasksOnNavBack,
+// } from '../../redux/features/refetchTasksOnNavBack/refetchTasksOnNavBackSlice'; // code 1
 
 // Demo data
 const demoTask: ITask = {
@@ -113,11 +117,14 @@ var initModalVisibilities: IModalVisibilities = {
 var modalPhase: IModalPhase;
 var phaseModalPositiveButtonToPerform = PhaseSubmissionActionEnum.Edit;
 var accessToken: string | undefined;
-var backHomeData: IReturnHome | undefined;
 
 export const useEditorTask = (navigation: any, t: ITask) => {
   //#region Hooks
   const user = useSelector(selectUser);
+  // const selectedRefetchTasksOnNavBack = useSelector(
+  //   selectRefetchTasksOnNavBack,
+  // ); // code 1
+  // const dispatch = useDispatch(); // code 1
   const [modalVisibilities, setModalVisibilities] =
     useState<IModalVisibilities>(initModalVisibilities);
   const [task, setTask] = useState<ITask>(t);
@@ -205,6 +212,7 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       const axiosInstance = getAxiosInstance(accessToken as string);
       setIsLoading(true);
       await axiosInstance.delete(`/api/Phases/${phaseId}`);
+      dispatchTaskRefetchValue();
       await getUpdatedTask();
     } catch (error: any) {
       console.log('Error deleting phase: ', error);
@@ -250,7 +258,6 @@ export const useEditorTask = (navigation: any, t: ITask) => {
         `/api/Phases/${editedPhase.id}?statusOnly=false`,
         {...editedPhase, taskId: task.id},
       );
-
       await getUpdatedTask();
     } catch (error: any) {
       const errorMessage =
@@ -279,7 +286,7 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       const axiosInstance = getAxiosInstance(accessToken as string);
       setIsLoadingOnPhaseModal(true);
       await axiosInstance.post(`/api/Phases`, {...newPhase, taskId: task.id});
-
+      dispatchTaskRefetchValue();
       await getUpdatedTask();
     } catch (error: any) {
       const errorMessage =
@@ -323,7 +330,7 @@ export const useEditorTask = (navigation: any, t: ITask) => {
           `/api/Phases/${phaseToUpdate.id}?statusOnly=true`,
           phaseToUpdate,
         );
-
+        dispatchTaskRefetchValue();
         await getUpdatedTask();
       } catch (error: any) {
         const errorMessage =
@@ -378,7 +385,7 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       const axiosInstance = getAxiosInstance(accessToken as string);
       setIsLoading(true);
       await axiosInstance.put(`/api/Tasks/Complete/${task.id}`);
-
+      dispatchTaskRefetchValue();
       await getUpdatedTask();
     } catch (error: any) {
       const errorMessage =
@@ -430,6 +437,18 @@ export const useEditorTask = (navigation: any, t: ITask) => {
   const getAccessToken = () => {
     const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
     return userObj?.accessToken;
+  };
+
+  const dispatchTaskRefetchValue = () => {
+    /* console.log(
+      'selectedRefetchTasksOnNavBack: ',
+      selectedRefetchTasksOnNavBack,
+    );
+    if (!selectedRefetchTasksOnNavBack) {
+      console.log('Dispatching refetch task on nav back');
+      dispatch(setRefetchTasksOnNavBack(true));
+    }*/
+    // code 1
   };
 
   const confirmPopUp = (message: string, title: string = 'Confirmation') => {
