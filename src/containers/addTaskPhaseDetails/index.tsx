@@ -1,4 +1,4 @@
-import {View, Pressable} from 'react-native';
+import {View, Pressable, ScrollView} from 'react-native';
 import React, {FC} from 'react';
 import getStyling from './style';
 import {
@@ -10,9 +10,7 @@ import {
 } from '../../components';
 import {IAddTaskPhaseDetailsProps} from './interface';
 import {useAddTaskPhaseDetails} from './util';
-import {resetToScreen} from '../../utils';
 import {home} from '../../constants/pageNames';
-import {useNavigation} from '@react-navigation/native';
 
 const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
   const styles = getStyling();
@@ -40,7 +38,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, marginBottom: 40}}>
         <UnderlinedText
           text={`Phase ${phaseNumber}`}
           containerStyle={styles.underlinedText}

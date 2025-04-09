@@ -11,7 +11,7 @@ const getStyling = (props: IIconPicker) => {
     placeholderText: {marginTop: 6},
     popupContainer: {
       height: 250,
-      width: 300,
+      width: 360,
       borderRadius: 50,
     },
     popupInnerContainer: {
@@ -21,6 +21,7 @@ const getStyling = (props: IIconPicker) => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       padding: 5,
+      backgroundColor: '#F7F7F7',
     },
     closeIconContainer: {
       backgroundColor: 'white',
@@ -34,6 +35,8 @@ const getStyling = (props: IIconPicker) => {
     },
     iconPickerScrollView: {
       borderRadius: 20,
+      width: 300,
+      alignSelf: 'center',
       borderTopRightRadius: 0,
       backgroundColor: 'white',
     },

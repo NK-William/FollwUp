@@ -40,54 +40,57 @@ const IconPicker: FC<IIconPicker> = props => {
 
   const IconSelector = () => {
     return (
-      <OpicFiller>
-        <View style={styles.popupContainer}>
-          <View style={{alignItems: 'flex-end'}}>
-            <View style={styles.closeIconContainer}>
-              <TouchableOpacity onPress={() => setShowPickerPopup(false)}>
+      <View style={styles.popupContainer}>
+        <View style={{alignItems: 'flex-end'}}>
+          <View style={styles.closeIconContainer}>
+            <TouchableOpacity onPress={() => setShowPickerPopup(false)}>
+              <Icon
+                iconType="Ionicons"
+                iconName="close"
+                size={25}
+                style={{color: close}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ScrollView style={styles.iconPickerScrollView}>
+          <View style={styles.popupInnerContainer}>
+            {iconNames.map((name, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => setSelectIcon(name)}
+                style={{margin: 2, padding: 5}}>
                 <Icon
                   iconType="Ionicons"
-                  iconName="close"
-                  size={25}
-                  style={{color: close}}
+                  iconName={name}
+                  style={{color: accent}}
                 />
               </TouchableOpacity>
-            </View>
+            ))}
           </View>
-          <ScrollView style={styles.iconPickerScrollView}>
-            <View style={styles.popupInnerContainer}>
-              {iconNames.map((name, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => setSelectIcon(name)}
-                  style={{margin: 2, padding: 5}}>
-                  <Icon
-                    iconType="Ionicons"
-                    iconName={name}
-                    style={{color: accent}}
-                  />
-                </TouchableOpacity>
-              ))}
-            </View>
-          </ScrollView>
-        </View>
-      </OpicFiller>
+        </ScrollView>
+      </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Task Icon</Text>
-      <Pressable
-        style={{marginTop: 8}}
-        onPress={() => setShowPickerPopup(true)}>
-        {iconName ? (
-          <Ionicons name={iconName} size={45} style={styles.icon} />
-        ) : (
-          <Text>Tab to add icon</Text>
-        )}
-      </Pressable>
-      {showPickerPopup && <IconSelector />}
+      {showPickerPopup ? (
+        <IconSelector />
+      ) : (
+        <>
+          <Text style={styles.text}>Task Icon</Text>
+          <Pressable
+            style={{marginTop: 8}}
+            onPress={() => setShowPickerPopup(true)}>
+            {iconName ? (
+              <Ionicons name={iconName} size={45} style={styles.icon} />
+            ) : (
+              <Text>Tab to add icon</Text>
+            )}
+          </Pressable>
+        </>
+      )}
     </View>
   );
 };
