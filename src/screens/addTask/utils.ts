@@ -56,7 +56,6 @@ export const useAddTask = (navigation: any) => {
       eta,
     } = task;
 
-    console.log('task ETA: ', task.eta);
     if (
       !name &&
       !clientFirstName &&
@@ -229,8 +228,6 @@ export const useAddTask = (navigation: any) => {
           ...taskForm,
         },
       };
-
-      console.log('saving task: ', JSON.stringify(taskForm));
 
       apiSaveTask(taskForm)
         .then(async response => {

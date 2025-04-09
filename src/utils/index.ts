@@ -18,9 +18,17 @@ export const isPhoneNumberValid = (phoneNumber: string) => {
 
 export const isDateNotPast = (date: Date) => {
   const today = new Date();
-  console.log('today: ', today);
-  console.log('date: ', date);
-  return date >= today;
+  const todayDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  );
+  const capturedDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  return capturedDate >= todayDate;
 };
 
 // export const resetToScreen = (navigation: any, routes: {name: string}[]) => {
