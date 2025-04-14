@@ -205,7 +205,7 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       if (!accessToken) accessToken = getAccessToken();
 
       if (!accessToken) {
-        Alert.alert('Error', 'Please re-authenticate to and try again');
+        Alert.alert('Error', 'Please re-authenticate and try again');
         return;
       }
 

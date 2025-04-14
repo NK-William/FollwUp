@@ -6,5 +6,6 @@ export interface ITaskListItemProps {
   task: ITask;
   isTracker: boolean;
   OnSelected: (task: ITask) => void;
+  onLongPress: (taskId?: string) => void;
   containerStyle?: StyleProp<ViewStyle>;
 }

@@ -33,6 +33,7 @@ const Home = ({navigation, route}: {navigation: any; route: any}) => {
     LoadingFromListRefresh,
     progressBarTasks,
     taskItemSelected,
+    deleteTask,
     onDataRefresh,
   } = useHome(navigation, route);
 
@@ -116,6 +117,7 @@ const Home = ({navigation, route}: {navigation: any; route: any}) => {
                   isTracker={selectedTabOption === TaskTabOptionEnum.Track}
                   task={task.item}
                   containerStyle={styles.taskListItemContainer}
+                  onLongPress={deleteTask}
                 />
               )}
               keyExtractor={task => task.id}

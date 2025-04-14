@@ -11,6 +11,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {editorTask} from '../../constants/pageNames';
 import {getTaskPhasePercentageValue} from '../../utils';
 import {useFocusEffect} from '@react-navigation/native';
+import {Alert} from 'react-native';
+import getAxiosInstance from '../../utils/axiosConfig';
+
+// Global variables
+var accessToken: string | undefined;
 
 export const useHome = (navigation: any, route: any) => {
   //#region Hooks
@@ -20,6 +25,8 @@ export const useHome = (navigation: any, route: any) => {
   //   selectRefetchTasksOnNavBack,
   // ); // code 1
   const [LoadingFromListRefresh, setLoadingFromListRefresh] = useState(false);
+  const [isDeletingTask, setIsDeletingTask] = useState(false);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   //#endregion Hooks
 
@@ -34,6 +41,7 @@ export const useHome = (navigation: any, route: any) => {
     path: '',
     lazy: true,
   });
+
   //#endregion Apis
 
   //#region Effects
@@ -110,17 +118,17 @@ export const useHome = (navigation: any, route: any) => {
           console.log('Successfully fetched profile: ', response);
 
           if (!response.id) {
-            fetchErrorToast('Failed to fetch tasks');
+            errorToast('Failed to fetch tasks');
             return;
           }
 
           // Retrieve tasks
           fetchTasks(response.id);
         } else {
-          fetchErrorToast('Failed to fetch profile');
+          errorToast('Failed to fetch profile');
         }
       })
-      .catch(error => fetchErrorToast(error.message));
+      .catch(error => errorToast(error.message));
   };
 
   const fetchTasks = async (
@@ -143,18 +151,81 @@ export const useHome = (navigation: any, route: any) => {
           }
         }
       })
-      .catch(error => fetchErrorToast(error.message))
+      .catch(error => errorToast(error.message))
       .finally(() => {
         console.log('Finally');
         if (requestFromListRefresh) setLoadingFromListRefresh(false);
       });
   };
 
+  const deleteTask = async (taskId: string) => {
+    if (taskId) {
+      if (await proceedDeleteTask()) {
+        try {
+          if (!accessToken) accessToken = getAccessToken();
+
+          console.log('Access token: ', accessToken);
+
+          if (!accessToken) {
+            Alert.alert('Error', 'Please re-authenticate and try again');
+            return;
+          }
+
+          const axiosInstance = getAxiosInstance(accessToken as string);
+          setIsDeletingTask(true);
+          await axiosInstance.delete(`api/Tasks/${taskId}`);
+          if (profileId) await fetchTasks(profileId);
+        } catch (error: any) {
+          const errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            'An unknown error occurred';
+
+          Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+        } finally {
+          setIsDeletingTask(false);
+        }
+      }
+
+      // apiDeleteTask({path: `api/Tasks/${taskId}`})
+      //   .then(response => {
+      //     if (response) {
+      //       console.log('Successfully deleted task: ', response);
+      //       // fetchTasks(profileId);
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.log('Iddd: ', taskId);
+      //     console.error(JSON.stringify(error));
+      //     errorToast(error.message);
+      //   });
+    }
+  };
+
   const taskItemSelected = (task: ITask) => {
     navigation.navigate(editorTask, task);
   };
 
-  const fetchErrorToast = (message: string) => {
+  const proceedDeleteTask = async () => {
+    return new Promise(resolve => {
+      Alert.alert('Delete task', 'Are you sure you want to delete this task?', [
+        {
+          text: 'Cancel',
+          onPress: () => resolve(false),
+          style: 'cancel',
+        },
+        {text: 'Proceed', onPress: () => resolve(true)},
+      ]);
+    });
+  };
+
+  // TODO::: suggestion: make axiosConfig.ts a hook and get token there
+  const getAccessToken = () => {
+    const userObj: IReduxUser = JSON.parse(JSON.stringify(user));
+    return userObj?.accessToken;
+  };
+
+  const errorToast = (message: string) => {
     Toast.show({
       type: 'error',
       text1: 'Error',
@@ -174,10 +245,11 @@ export const useHome = (navigation: any, route: any) => {
   return {
     tasks,
     tasksDefined: tasks?.length,
-    loading: isFetchingProfile || isFetchingTasks,
+    loading: isFetchingProfile || isFetchingTasks || isDeletingTask,
     LoadingFromListRefresh,
     progressBarTasks,
     taskItemSelected,
+    deleteTask,
     onDataRefresh,
   };
 };

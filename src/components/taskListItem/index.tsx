@@ -8,6 +8,7 @@ import {accent} from '../../constants/colors';
 import {ProgressBar} from '..';
 
 const TaskListItem: FC<ITaskListItemProps> = props => {
+  const {OnSelected, onLongPress} = props;
   const {
     task,
     statusViewColor,
@@ -19,7 +20,10 @@ const TaskListItem: FC<ITaskListItemProps> = props => {
 
   const styles = getStyling(props, statusViewColor, inviteLinkVisible);
   return (
-    <Pressable onPress={() => props.OnSelected(task)} style={styles.container}>
+    <Pressable
+      onLongPress={() => onLongPress(task.id)}
+      onPress={() => OnSelected(task)}
+      style={styles.container}>
       <View style={styles.taskInfoContainer}>
         <View>
           <Text style={styles.taskName}>{task.name}</Text>
