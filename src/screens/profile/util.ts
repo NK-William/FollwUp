@@ -11,6 +11,7 @@ import {IReduxUser} from '../../interfaces';
 import getAxiosInstance from '../../utils/axiosConfig';
 import Toast from 'react-native-toast-message';
 import {updateProfileEnum} from '../../utils/enums';
+import {Alert} from 'react-native';
 // import {
 //   launchCamera,
 //   launchImageLibrary,
@@ -55,10 +56,33 @@ export const useProfile = (navigation: any) => {
     setState,
   ] = useState<IProfileState>(getInitProfileState());
 
-  const signOut = () => {
-    dispatch(signUserOut());
+  const signOut = async () => {
+    if (await proceedSignout()) dispatch(signUserOut());
     // await AsyncStorage.removeItem(accessTokenKey);
     // resetToScreen(navigation, login);
+  };
+
+  const proceedSignout = async () => {
+    return new Promise(resolve => {
+      Alert.alert(
+        'Sign Out',
+        'Are you sure you want to sign out?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => resolve(false),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              resolve(true);
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    });
   };
 
   const firstNameUpdateClicked = (text: string) =>
