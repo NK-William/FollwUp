@@ -6,6 +6,7 @@ import {
   // PressableText,
   ProfileInput,
   BackButton,
+  ScreenBlockerLoader,
 } from '../../components';
 import {lightText} from '../../constants/colors';
 import getStyling from './style';
@@ -23,9 +24,16 @@ const Profile = (props: any) => {
     lastName,
     emailAddress,
     phoneNumber,
+    prevFirstName,
+    prevLastName,
+    prevPhoneNumber,
+    isLoading,
+    showPopup,
     signOut,
     setState,
-    showPopup,
+    firstNameUpdateClicked,
+    lastNameUpdateClicked,
+    phoneNumberUpdateClicked,
     // cameraClicked,
   } = useProfile(navigation);
 
@@ -44,25 +52,26 @@ const Profile = (props: any) => {
               value={firstName}
               onChangeText={text => setState(s => ({...s, firstName: text}))}
               title="First Name"
-              savedText="Tebogo"
+              savedText={prevFirstName}
               iconType="Ionicons"
               iconName="person-outline"
               iconStyle={{color: lightText}}
+              onSaveIconPress={firstNameUpdateClicked}
             />
             <ProfileInput
               value={lastName}
               onChangeText={text => setState(s => ({...s, lastName: text}))}
               title="Last Name"
-              savedText="Nkuna"
+              savedText={prevLastName}
               iconType="Ionicons"
               iconName="person-outline"
               containerStyle={styles.ProfileInputContainer}
               iconStyle={{color: lightText}}
+              onSaveIconPress={lastNameUpdateClicked}
             />
             <ProfileInput
               value={emailAddress}
               title="Email Address"
-              savedText="Tebog@gmail.com"
               isReadOnly
               iconType="Fontisto"
               iconName="email"
@@ -73,11 +82,12 @@ const Profile = (props: any) => {
               value={phoneNumber}
               onChangeText={text => setState(s => ({...s, phoneNumber: text}))}
               title="Phone Number"
-              savedText="0711111111"
+              savedText={prevPhoneNumber}
               iconType="Feather"
               iconName="phone"
               containerStyle={styles.ProfileInputContainer}
               iconStyle={{color: lightText}}
+              onSaveIconPress={phoneNumberUpdateClicked}
             />
           </ScrollView>
         </View>
@@ -115,6 +125,7 @@ const Profile = (props: any) => {
           </View>
         </OpicFiller>
       )} */}
+      {isLoading && <ScreenBlockerLoader />}
     </View>
   );
 };

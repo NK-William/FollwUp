@@ -49,7 +49,6 @@ export const useHome = (navigation: any, route: any) => {
   useEffect(() => {
     // emailAddress has to be defined because with get to API by email address
     // And fetch when we don't have profileId because is needed as foreign key to other entities.
-    console.log('Use eff');
     if (emailAddress && !profileId) fetchProfile(emailAddress);
     else if (!emailAddress)
       // TODO: add this in a stack trace.
@@ -62,7 +61,6 @@ export const useHome = (navigation: any, route: any) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Home util: Screen focused');
       onScreenFocus();
       return () => {
         onScreenUnfocused();
@@ -93,16 +91,13 @@ export const useHome = (navigation: any, route: any) => {
     // code 1
   };
 
-  const onScreenUnfocused = () => {
-    console.log('onScreenUnfocused');
-  };
+  const onScreenUnfocused = () => {};
 
   const onDataRefresh = async () => {
     if (profileId) await fetchTasks(profileId, true);
   };
 
   const fetchProfile = (emailAddress: string) => {
-    console.log('Fetchiiiiiiiiing');
     apiFetchProfile({path: `api/Profiles/ByEmail/${emailAddress}`})
       .then(response => {
         if (response) {
@@ -114,8 +109,6 @@ export const useHome = (navigation: any, route: any) => {
             phoneNumber: response.phoneNumber,
           };
           dispatch(setUser(reduxUser));
-
-          console.log('Successfully fetched profile: ', response);
 
           if (!response.id) {
             errorToast('Failed to fetch tasks');
@@ -153,7 +146,6 @@ export const useHome = (navigation: any, route: any) => {
       })
       .catch(error => errorToast(error.message))
       .finally(() => {
-        console.log('Finally');
         if (requestFromListRefresh) setLoadingFromListRefresh(false);
       });
   };
@@ -163,8 +155,6 @@ export const useHome = (navigation: any, route: any) => {
       if (await proceedDeleteTask()) {
         try {
           if (!accessToken) accessToken = getAccessToken();
-
-          console.log('Access token: ', accessToken);
 
           if (!accessToken) {
             Alert.alert('Error', 'Please re-authenticate and try again');

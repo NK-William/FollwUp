@@ -8,3 +8,5 @@ export type {IRole} from './role';
 export type {IInvitation} from './invitation';
 export type {IModalPhase} from './modalPhase';
 export type {IReturnHome} from './inner/returnHome';
+export type {IUpdateProfileDTO} from './DTO/updateProfile';
+export type {IProfileDTO} from './DTO/profile';

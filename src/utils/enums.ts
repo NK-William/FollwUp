@@ -61,3 +61,9 @@ export enum PhaseSubmissionActionEnum {
   Add,
   Edit,
 }
+
+export enum updateProfileEnum {
+  FirstName,
+  LastName,
+  PhoneNumber,
+}
