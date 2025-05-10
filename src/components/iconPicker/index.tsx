@@ -23,7 +23,7 @@ const IconPicker: FC<IIconPicker> = props => {
   );
   const [showPickerPopup, setShowPickerPopup] = useState(false);
   const setSelectIcon = (icon: IIconNameType) => {
-    if (icon.name !== iconNameType?.name && icon.type !== iconNameType?.type) {
+    if (icon.name !== iconNameType?.name) {
       iconSelected && iconSelected(icon);
       setIconNameType(icon);
     }

@@ -315,7 +315,11 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       const confirmed = await confirmPopUp('Are you sure you want to update?');
       if (!confirmed) return;
 
-      const phaseToUpdate = {...p, status: taskPhaseStatus.InProgress};
+      const phaseToUpdate = {
+        ...p,
+        taskId: task.id,
+        status: taskPhaseStatus.InProgress,
+      };
 
       console.log('Updating phase: ', JSON.stringify(phaseToUpdate));
 
