@@ -67,3 +67,7 @@ export enum updateProfileEnum {
   LastName,
   PhoneNumber,
 }
+
+export enum IconTypeEnum {
+  Ionicons,
+}

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {IPhase, ITask} from '../../interfaces';
+import {IIconNameType, IPhase, ITask} from '../../interfaces';
 import {
   TaskFormFieldEnum,
   taskPhaseStatus,
@@ -33,7 +33,7 @@ export const useAddTask = (navigation: any) => {
   const [task, setTask] = useState<ITask>(taskInit);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [icon, setIcon] = useState<string>('');
+  const [icon, setIcon] = useState<IIconNameType | undefined>(undefined);
   const {id: profileId} = useSelector(selectUser);
   // const dispatch = useDispatch(); // code 1
   //#endregion Hooks
@@ -135,7 +135,7 @@ export const useAddTask = (navigation: any) => {
   const showTaskForm = (value: boolean) => {
     setName('');
     setDescription('');
-    setIcon('');
+    setIcon(undefined);
     setShowTaskPhaseContainer(value);
   };
 
@@ -145,7 +145,7 @@ export const useAddTask = (navigation: any) => {
     if (poppedPhase) {
       setName(poppedPhase.name);
       setDescription(poppedPhase.description ?? '');
-      setIcon(poppedPhase.icon ?? '');
+      setIcon(poppedPhase.icon ?? undefined);
     }
   };
 
@@ -193,7 +193,7 @@ export const useAddTask = (navigation: any) => {
   const clearPhaseForm = () => {
     setName('');
     setDescription('');
-    setIcon('');
+    setIcon(undefined);
   };
 
   const displayAlert = (message: string, title = 'Alert') => {
@@ -229,6 +229,8 @@ export const useAddTask = (navigation: any) => {
         },
       };
 
+      console.log('Saving task form', JSON.stringify(taskForm));
+
       apiSaveTask(taskForm)
         .then(async response => {
           if (response) {
@@ -247,6 +249,7 @@ export const useAddTask = (navigation: any) => {
           }
         })
         .catch(error => {
+          console.error('Error saving task', JSON.stringify(error));
           if (error?.status === 404) {
             errorToast('Error', 'Failed to save task'); // TODO: push to stack trace
           } else {

@@ -35,7 +35,7 @@ const PhaseEditForm: FC<IPhaseEditForm> = props => {
             iconSelected={selectedIcon => {
               setPhase({...phase, icon: selectedIcon});
             }}
-            iconName={phase.icon}
+            initIcon={phase.icon}
             containerStyle={{alignSelf: 'center', marginVertical: 16}}
           />
           <TaskInput

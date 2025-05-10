@@ -21,6 +21,7 @@ import {
   ScreenBlockerLoader,
 } from '../../components';
 import getStyling from './style';
+import {getIconType} from '../../utils';
 
 const EditorTask = ({navigation, route}: {navigation: any; route: any}) => {
   // parameters
@@ -106,8 +107,8 @@ const EditorTask = ({navigation, route}: {navigation: any; route: any}) => {
             <Icon
               style={{...styles.rowIcon, ...taskIconStyleOverride}}
               size={30}
-              iconType="Ionicons"
-              iconName={icon}
+              iconType={getIconType(icon.type)}
+              iconName={icon.name}
             />
           ) : (
             <View style={{width: 30}} />

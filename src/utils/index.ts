@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {IPhase} from '../interfaces';
-import {taskPhaseStatus} from './enums';
+import {IconTypeEnum, taskPhaseStatus} from './enums';
 
 export const flatten = (obj: any) => {
   return StyleSheet.flatten(obj);
@@ -55,4 +55,22 @@ export const getTaskPhasePercentageValue = (phases: IPhase[]) => {
   ).length;
 
   return Math.round((completedPhases / totalPhases) * 100);
+};
+
+export const getIconType = (
+  value: IconTypeEnum,
+):
+  | 'Ionicons'
+  | 'AntDesign'
+  | 'Fontisto'
+  | 'Feather'
+  | 'FontAwesome5'
+  | 'FontAwesome'
+  | 'Entypo' => {
+  switch (value) {
+    case IconTypeEnum.Ionicons:
+      return 'Ionicons';
+    default:
+      return 'Ionicons';
+  }
 };

@@ -5,24 +5,27 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, {FC, useEffect} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {IIconPicker} from './interface';
 import getStyling from './style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {OpicFiller} from '../../containers';
 import {Icon} from '..';
-import iconNames from '../../constants/iconNames';
+import iconNameTypes from '../../constants/iconNameTypes';
 import {accent, close} from '../../constants/colors';
+import {IIconNameType} from '../../interfaces';
 
 const IconPicker: FC<IIconPicker> = props => {
-  const {iconName: icon, iconSelected} = props;
+  const {initIcon: icon, iconSelected} = props;
 
-  const [iconName, setIconName] = React.useState(icon);
-  const [showPickerPopup, setShowPickerPopup] = React.useState(false);
-  const setSelectIcon = (name: string) => {
-    if (name !== iconName) {
-      iconSelected && iconSelected(name);
-      setIconName(name);
+  const [iconNameType, setIconNameType] = useState<IIconNameType | undefined>(
+    icon,
+  );
+  const [showPickerPopup, setShowPickerPopup] = useState(false);
+  const setSelectIcon = (icon: IIconNameType) => {
+    if (icon.name !== iconNameType?.name && icon.type !== iconNameType?.type) {
+      iconSelected && iconSelected(icon);
+      setIconNameType(icon);
     }
 
     setShowPickerPopup(false);
@@ -30,9 +33,9 @@ const IconPicker: FC<IIconPicker> = props => {
 
   useEffect(() => {
     if (!icon && iconSelected) {
-      setIconName('');
+      setIconNameType(undefined);
     } else {
-      setIconName(icon);
+      setIconNameType(icon);
     }
   }, [icon]);
 
@@ -55,14 +58,14 @@ const IconPicker: FC<IIconPicker> = props => {
         </View>
         <ScrollView style={styles.iconPickerScrollView}>
           <View style={styles.popupInnerContainer}>
-            {iconNames.map((name, index) => (
+            {iconNameTypes.map((iconNameType, index) => (
               <TouchableOpacity
                 key={index}
-                onPress={() => setSelectIcon(name)}
+                onPress={() => setSelectIcon(iconNameType)}
                 style={{margin: 2, padding: 5}}>
                 <Icon
                   iconType="Ionicons"
-                  iconName={name}
+                  iconName={iconNameType.name}
                   style={{color: accent}}
                 />
               </TouchableOpacity>
@@ -83,8 +86,13 @@ const IconPicker: FC<IIconPicker> = props => {
           <Pressable
             style={{marginTop: 8}}
             onPress={() => setShowPickerPopup(true)}>
-            {iconName ? (
-              <Ionicons name={iconName} size={45} style={styles.icon} />
+            {iconNameType ? (
+              // TODO::: Extent this to support other icon types
+              <Ionicons
+                name={iconNameType.name}
+                size={45}
+                style={styles.icon}
+              />
             ) : (
               <Text>Tab to add icon</Text>
             )}

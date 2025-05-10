@@ -1,7 +1,8 @@
 import {StyleProp, ViewStyle} from 'react-native';
+import {IIconNameType} from '../../interfaces';
 
 export interface IIconPicker {
-  iconName?: string;
+  initIcon?: IIconNameType;
   containerStyle?: StyleProp<ViewStyle>;
-  iconSelected?: (iconName: string) => void;
+  iconSelected?: (icon: IIconNameType) => void;
 }

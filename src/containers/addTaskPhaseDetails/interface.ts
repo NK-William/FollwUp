@@ -1,11 +1,13 @@
+import {IIconNameType} from '../../interfaces';
+
 export interface IAddTaskPhaseDetailsProps {
   name?: string;
   description?: string;
   phaseNumber: number;
-  icon?: string;
+  icon?: IIconNameType;
   setName?: (value: string) => void;
   setDescription?: (value: string) => void;
-  IconSelected?: (iconName: string) => void;
+  IconSelected?: (icon: IIconNameType) => void;
   openNextPhaseForm?: () => void;
   updateShowTaskPhaseContainer: (value: boolean) => void;
   displayPreviousPhase: () => void;

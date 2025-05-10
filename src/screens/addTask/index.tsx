@@ -16,7 +16,6 @@ import {BackButton, Icon} from '../../components';
 import {accent, close, primary} from '../../constants/colors';
 import getGlobalStyling from '../../utils/styles';
 import {useAddTask} from './utils';
-import iconNames from '../../constants/iconNames';
 import LoaderKit from 'react-native-loader-kit';
 
 const AddTask = (props: any) => {
