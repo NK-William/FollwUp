@@ -10,7 +10,7 @@ const getStyling = () => {
     },
     innerContainer: {
       backgroundColor: light,
-      height: '70%',
+      height: 'auto',
       justifyContent: 'space-between',
       width: '95%',
       paddingHorizontal: 8,

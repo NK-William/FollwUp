@@ -8,7 +8,7 @@ const getStyling = () => {
       backgroundColor: primary,
       borderBottomLeftRadius: 70,
       borderBottomRightRadius: 70,
-      height: 185,
+      minHeight: 200,
     },
     topButtonsContainer: {
       flexDirection: 'row',
@@ -24,7 +24,6 @@ const getStyling = () => {
       alignSelf: 'center',
       color: lightText,
       fontSize: 30,
-      marginTop: -25,
       fontWeight: 'bold',
     },
     phasesTrackText: {

@@ -12,7 +12,7 @@ const getStyling = (props: IIconPicker) => {
     popupContainer: {
       height: 250,
       width: 360,
-      borderRadius: 50,
+      paddingHorizontal: 8,
     },
     popupInnerContainer: {
       borderRadius: 20,
@@ -24,11 +24,6 @@ const getStyling = (props: IIconPicker) => {
       backgroundColor: '#F7F7F7',
     },
     closeIconContainer: {
-      backgroundColor: 'white',
-      width: 40,
-      height: 30,
-      borderTopRightRadius: 20,
-      borderTopLeftRadius: 20,
       alignItems: 'center',
       justifyContent: 'center',
       paddingTop: 5,

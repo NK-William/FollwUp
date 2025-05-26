@@ -46,7 +46,16 @@ const IconPicker: FC<IIconPicker> = props => {
       <View style={styles.popupContainer}>
         <View style={{alignItems: 'flex-end'}}>
           <View style={styles.closeIconContainer}>
-            <TouchableOpacity onPress={() => setShowPickerPopup(false)}>
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#F7F7F7',
+                width: 30,
+                height: 30,
+                borderRadius: 20,
+              }}
+              onPress={() => setShowPickerPopup(false)}>
               <Icon
                 iconType="Ionicons"
                 iconName="close"
