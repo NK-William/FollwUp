@@ -49,8 +49,6 @@ const EditorTask = ({navigation, route}: {navigation: any; route: any}) => {
   } = useEditorTask(navigation, task);
   const styles = getStyling();
 
-  console.log('Rendered');
-
   const Row = ({item}: {item: IPhase}) => {
     const {id, name, description, number, icon, status} = item;
 
@@ -103,7 +101,7 @@ const EditorTask = ({navigation, route}: {navigation: any; route: any}) => {
               />
             </Pressable>
           </View>
-          {icon ? (
+          {icon?.name ? (
             <Icon
               style={{...styles.rowIcon, ...taskIconStyleOverride}}
               size={30}
