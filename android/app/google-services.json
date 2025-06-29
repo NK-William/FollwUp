@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "121513440553",
+    "project_id": "follwup-ecace",
+    "storage_bucket": "follwup-ecace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121513440553:android:3cb90744ae3977ef77f338",
+        "android_client_info": {
+          "package_name": "com.follwup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2vH9DEBB2Nj7gWQ3OWjzi_UG7VtFPKP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
