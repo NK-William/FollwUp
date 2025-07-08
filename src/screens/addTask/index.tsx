@@ -1,19 +1,11 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {View, BackHandler} from 'react-native';
+import React, {useEffect} from 'react';
 import getStyling from './style';
-import {ITask} from '../../interfaces';
 import {
   AddTaskDetails,
   AddTaskPhaseDetails,
   OpicFiller,
 } from '../../containers';
-import {
-  TaskFormFieldEnum,
-  taskPhaseStatus,
-  taskStatus,
-} from '../../utils/enums';
-import {BackButton, Icon} from '../../components';
-import {accent, close, primary} from '../../constants/colors';
 import getGlobalStyling from '../../utils/styles';
 import {useAddTask} from './utils';
 import LoaderKit from 'react-native-loader-kit';
@@ -38,10 +30,22 @@ const AddTask = (props: any) => {
     validateTaskForm,
     saveTask,
     resetNavigation,
+    handleBackPress,
   } = useAddTask(navigation);
 
   const styles = getStyling();
-  const globalStyles = getGlobalStyling();
+
+  useEffect(() => {
+    const onBackPress = () => {
+      handleBackPress();
+      return true; // prevent default back
+    };
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      onBackPress,
+    );
+    return () => subscription.remove();
+  }, []);
 
   // TODO::: Make this re-usable
   const ScreenBlockerLoader = () => {

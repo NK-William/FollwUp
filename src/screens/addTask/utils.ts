@@ -5,7 +5,7 @@ import {
   taskPhaseStatus,
   taskStatus,
 } from '../../utils/enums';
-import {Alert} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {useMutate} from 'restful-react';
 import {
   isDateNotPast,
@@ -267,6 +267,28 @@ export const useAddTask = (navigation: any) => {
     });
   };
 
+  const handleBackPress = async () => {
+    //TODO::: should be called by a device back button and "Cancel" when at least an input text is filled else return
+    const confirmed = await confirmBackAlert();
+    if (confirmed) {
+      navigation.goBack();
+    }
+  };
+
+  const confirmBackAlert = () => {
+    return new Promise(resolve => {
+      Alert.alert(
+        'Confirm',
+        'Proceeding will discard all changes and take you back to home page, do you wish to proceed',
+        [
+          {text: 'Cancel', onPress: () => resolve(false), style: 'cancel'},
+          {text: 'Yes', onPress: () => resolve(true)},
+        ],
+        {cancelable: true},
+      );
+    });
+  };
+
   const getRandomHexColor = () => {
     let color: string;
     let brightness: number;
@@ -306,5 +328,6 @@ export const useAddTask = (navigation: any) => {
     validateTaskForm,
     saveTask,
     resetNavigation,
+    handleBackPress,
   };
 };
