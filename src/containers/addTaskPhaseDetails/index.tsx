@@ -26,8 +26,8 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
     openNextPhaseForm,
     updateShowTaskPhaseContainer,
     displayPreviousPhase,
-    OnFinish,
-    OnCancel,
+    onFinish,
+    onCancel,
   } = props;
 
   const {returnToPrevious} = useAddTaskPhaseDetails(
@@ -86,7 +86,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
       </View>
       <FollwUpButton
         text="Finish"
-        onPress={OnFinish}
+        onPress={onFinish}
         containerStyle={styles.follwUpPositiveButton}
       />
 
@@ -94,7 +94,7 @@ const AddTaskPhaseDetails: FC<IAddTaskPhaseDetailsProps> = props => {
         text="Cancel"
         textStyle={styles.follwUpNegativeButtonText}
         containerStyle={styles.follwUpNegativeButton}
-        onPress={() => OnCancel([{name: home}])}
+        onPress={() => onCancel()}
       />
     </View>
   );

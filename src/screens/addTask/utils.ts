@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {IIconNameType, IPhase, ITask} from '../../interfaces';
 import {
   TaskFormFieldEnum,
@@ -36,6 +36,26 @@ export const useAddTask = (navigation: any) => {
   const [icon, setIcon] = useState<IIconNameType | undefined>(undefined);
   const {id: profileId} = useSelector(selectUser);
   // const dispatch = useDispatch(); // code 1
+
+  // Create a ref to always hold the latest task value (workaround fixes a handleBackPress() method executed by back button press)
+  const taskRef = useRef(task);
+
+  // Keep the ref updated whenever `task` changes
+  useEffect(() => {
+    taskRef.current = task;
+  }, [task]);
+
+  useEffect(() => {
+    const onBackPress = () => {
+      handleBackPress();
+      return true; // prevent default back
+    };
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      onBackPress,
+    );
+    return () => subscription.remove();
+  }, []);
   //#endregion Hooks
 
   //#region API requests
@@ -268,11 +288,27 @@ export const useAddTask = (navigation: any) => {
   };
 
   const handleBackPress = async () => {
-    //TODO::: should be called by a device back button and "Cancel" when at least an input text is filled else return
-    const confirmed = await confirmBackAlert();
-    if (confirmed) {
+    const currentTask = taskRef.current;
+    if (
+      currentTask.name ||
+      currentTask.clientFirstName ||
+      currentTask.clientLastName ||
+      currentTask.clientEmail ||
+      currentTask.clientPhone ||
+      currentTask.organization ||
+      currentTask.description
+    ) {
+      const confirmed = await confirmBackAlert();
+      if (confirmed) {
+        navigation.goBack();
+      }
+    } else {
       navigation.goBack();
     }
+  };
+
+  const handleCancelPress = async () => {
+    await handleBackPress();
   };
 
   const confirmBackAlert = () => {
@@ -328,6 +364,6 @@ export const useAddTask = (navigation: any) => {
     validateTaskForm,
     saveTask,
     resetNavigation,
-    handleBackPress,
+    handleCancelPress,
   };
 };

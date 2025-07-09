@@ -28,6 +28,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
     description,
     updateTaskFormDetails,
     updateShowTaskPhaseContainer,
+    onCancel,
   } = props;
 
   const styles = getStyling();
@@ -146,7 +147,7 @@ const AddTaskDetails: FC<IAddTaskDetailsProps> = props => {
         text="Cancel"
         textStyle={styles.follwUpButtonText}
         containerStyle={styles.follwUpButton}
-        onPress={() => navigation.goBack()}
+        onPress={() => onCancel()}
       />
       {calendarVisible && (
         <OpicFiller>

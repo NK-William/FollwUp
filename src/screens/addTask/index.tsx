@@ -29,23 +29,10 @@ const AddTask = (props: any) => {
     updateTaskFormDetails,
     validateTaskForm,
     saveTask,
-    resetNavigation,
-    handleBackPress,
+    handleCancelPress,
   } = useAddTask(navigation);
 
   const styles = getStyling();
-
-  useEffect(() => {
-    const onBackPress = () => {
-      handleBackPress();
-      return true; // prevent default back
-    };
-    const subscription = BackHandler.addEventListener(
-      'hardwareBackPress',
-      onBackPress,
-    );
-    return () => subscription.remove();
-  }, []);
 
   // TODO::: Make this re-usable
   const ScreenBlockerLoader = () => {
@@ -75,8 +62,8 @@ const AddTask = (props: any) => {
           openNextPhaseForm={openNextPhaseForm}
           updateShowTaskPhaseContainer={value => showTaskForm(value)}
           displayPreviousPhase={displayPreviousPhase}
-          OnFinish={saveTask}
-          OnCancel={resetNavigation}
+          onFinish={saveTask}
+          onCancel={handleCancelPress}
         />
       ) : (
         <AddTaskDetails
@@ -91,6 +78,7 @@ const AddTask = (props: any) => {
           description={task?.description}
           updateTaskFormDetails={updateTaskFormDetails}
           updateShowTaskPhaseContainer={validateTaskForm}
+          onCancel={handleCancelPress}
         />
       )}
       {isSavingTask && <ScreenBlockerLoader />}

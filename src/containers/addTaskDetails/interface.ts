@@ -15,4 +15,5 @@ export interface IAddTaskDetailsProps {
   ) => void;
   updateShowTaskPhaseContainer: () => void;
   navigation: any;
+  onCancel: () => void;
 }
