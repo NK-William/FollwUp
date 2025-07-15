@@ -70,11 +70,11 @@ const Login = (props: any) => {
           />
         </View>
         <View style={styles.footerContainer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <PressableText
-            onPress={isLoginIn ? undefined : navigateToRegisterPage}
-            text="Sign Up"
-          />
+          <Text style={styles.footerText}>Powered by </Text>
+          {/* <PressableText
+            onPress={isLoginIn ? undefined : navigateToRegisterPage} */}
+          <Text style={styles.companyNameText}>inDevinite</Text>
+          {/* /> */}
         </View>
       </View>
     </View>

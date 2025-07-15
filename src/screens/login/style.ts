@@ -51,6 +51,11 @@ const getStyling = () => {
     passwordAuthInput: {
       marginBottom: 30,
     },
+    companyNameText: {
+      fontWeight: 'bold',
+      color: primary,
+      fontSize: 15,
+    },
   });
 };
 
