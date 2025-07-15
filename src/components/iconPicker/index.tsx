@@ -95,7 +95,7 @@ const IconPicker: FC<IIconPicker> = props => {
           <Pressable
             style={{marginTop: 8}}
             onPress={() => setShowPickerPopup(true)}>
-            {iconNameType ? (
+            {iconNameType?.name ? (
               // TODO::: Extent this to support other icon types
               <Ionicons
                 name={iconNameType.name}
