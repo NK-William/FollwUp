@@ -9,6 +9,7 @@ import {
 import getGlobalStyling from '../../utils/styles';
 import {useAddTask} from './utils';
 import LoaderKit from 'react-native-loader-kit';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const AddTask = (props: any) => {
   const {navigation} = props;
@@ -48,41 +49,43 @@ const AddTask = (props: any) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* <BackButton containerStyle={globalStyles.backButton} /> */}
-      {showTaskPhaseContainer ? (
-        <AddTaskPhaseDetails
-          name={name}
-          IconSelected={setIcon}
-          icon={icon}
-          description={description}
-          phaseNumber={task?.phases.length + 1}
-          setName={setName}
-          setDescription={setDescription}
-          openNextPhaseForm={openNextPhaseForm}
-          updateShowTaskPhaseContainer={value => showTaskForm(value)}
-          displayPreviousPhase={displayPreviousPhase}
-          onFinish={saveTask}
-          onCancel={handleCancelPress}
-        />
-      ) : (
-        <AddTaskDetails
-          name={task?.name}
-          email={task?.clientEmail}
-          phoneNumber={task?.clientPhone}
-          organization={task?.organization}
-          firstName={task?.clientFirstName}
-          lastName={task?.clientLastName}
-          eta={task?.eta}
-          navigation={navigation}
-          description={task?.description}
-          updateTaskFormDetails={updateTaskFormDetails}
-          updateShowTaskPhaseContainer={validateTaskForm}
-          onCancel={handleCancelPress}
-        />
-      )}
-      {isSavingTask && <ScreenBlockerLoader />}
-    </View>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        {/* <BackButton containerStyle={globalStyles.backButton} /> */}
+        {showTaskPhaseContainer ? (
+          <AddTaskPhaseDetails
+            name={name}
+            IconSelected={setIcon}
+            icon={icon}
+            description={description}
+            phaseNumber={task?.phases.length + 1}
+            setName={setName}
+            setDescription={setDescription}
+            openNextPhaseForm={openNextPhaseForm}
+            updateShowTaskPhaseContainer={value => showTaskForm(value)}
+            displayPreviousPhase={displayPreviousPhase}
+            onFinish={saveTask}
+            onCancel={handleCancelPress}
+          />
+        ) : (
+          <AddTaskDetails
+            name={task?.name}
+            email={task?.clientEmail}
+            phoneNumber={task?.clientPhone}
+            organization={task?.organization}
+            firstName={task?.clientFirstName}
+            lastName={task?.clientLastName}
+            eta={task?.eta}
+            navigation={navigation}
+            description={task?.description}
+            updateTaskFormDetails={updateTaskFormDetails}
+            updateShowTaskPhaseContainer={validateTaskForm}
+            onCancel={handleCancelPress}
+          />
+        )}
+        {isSavingTask && <ScreenBlockerLoader />}
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
