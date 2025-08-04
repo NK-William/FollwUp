@@ -14,6 +14,7 @@ export enum taskStatus {
   Accepted,
   Completed,
   Rejected,
+  InProgress,
 }
 
 export enum taskPhaseStatus {
@@ -38,6 +39,7 @@ export enum TaskStatusColor {
   Accepted = '#2D3DCD',
   Completed = '#2C8C2C',
   Pending = 'gray',
+  InProgress = '#F7A600',
 }
 
 export enum TaskFormFieldEnum {

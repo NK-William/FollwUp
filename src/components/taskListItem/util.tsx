@@ -11,6 +11,8 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
         return TaskStatusColor.Rejected;
       case taskStatus.Accepted:
         return TaskStatusColor.Accepted;
+      case taskStatus.InProgress:
+        return TaskStatusColor.InProgress;
       case taskStatus.Completed:
         return TaskStatusColor.Completed;
       case taskStatus.Pending:
@@ -21,11 +23,14 @@ export const useTaskListItem = (props: ITaskListItemProps) => {
   };
 
   const getStatusText = () => {
+    console.log('task.status', task.status);
     switch (task.status) {
       case taskStatus.Rejected:
         return 'Rejected';
       case taskStatus.Accepted:
         return 'Accepted';
+      case taskStatus.InProgress:
+        return 'In Progress';
       case taskStatus.Completed:
         return 'Completed';
       case taskStatus.Pending:
