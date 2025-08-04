@@ -2,7 +2,11 @@ import {IProfile, IReduxUser, ITask, IReturnHome} from '../../interfaces';
 import {useGet} from 'restful-react';
 import Toast from 'react-native-toast-message';
 import {useCallback, useEffect, useState} from 'react';
-import {selectUser, setUser} from '../../redux/features/user/userSlice';
+import {
+  signUserOut,
+  selectUser,
+  setUser,
+} from '../../redux/features/user/userSlice';
 // import {
 //   selectRefetchTasksOnNavBack,
 //   setRefetchTasksOnNavBack,
@@ -13,6 +17,10 @@ import {getTaskPhasePercentageValue} from '../../utils';
 import {useFocusEffect} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import getAxiosInstance from '../../utils/axiosConfig';
+import {
+  paymentRequiredMessage,
+  paymentRequiredTitle,
+} from '../../constants/localStrings';
 
 // Global variables
 var accessToken: string | undefined;
@@ -37,7 +45,11 @@ export const useHome = (navigation: any, route: any) => {
       lazy: true,
     });
 
-  const {loading: isFetchingTasks, refetch: apiFetchTasks} = useGet<ITask[]>({
+  const {
+    loading: isFetchingTasks,
+    refetch: apiFetchTasks,
+    error: apiFetchTasksError,
+  } = useGet<ITask[]>({
     path: '',
     lazy: true,
   });
@@ -67,6 +79,19 @@ export const useHome = (navigation: any, route: any) => {
       };
     }, []),
   );
+
+  // Show error if apiFetchTasksError is present
+  useEffect(() => {
+    if (apiFetchTasksError) {
+      console.log('Login error:', JSON.stringify(apiFetchTasksError));
+      if (apiFetchTasksError?.status === 402) {
+        paymentRequiredAlert();
+        signOut();
+      } else {
+        errorToast(apiFetchTasksError.message);
+      }
+    }
+  }, [apiFetchTasksError]);
   //#endregion Effects
 
   //#region  Methods
@@ -144,7 +169,6 @@ export const useHome = (navigation: any, route: any) => {
           }
         }
       })
-      .catch(error => errorToast(error.message))
       .finally(() => {
         if (requestFromListRefresh) setLoadingFromListRefresh(false);
       });
@@ -196,6 +220,10 @@ export const useHome = (navigation: any, route: any) => {
     navigation.navigate(editorTask, task);
   };
 
+  const paymentRequiredAlert = () => {
+    Alert.alert(paymentRequiredTitle, paymentRequiredMessage);
+  };
+
   const proceedDeleteTask = async () => {
     return new Promise(resolve => {
       Alert.alert('Delete task', 'Are you sure you want to delete this task?', [
@@ -207,6 +235,10 @@ export const useHome = (navigation: any, route: any) => {
         {text: 'Proceed', onPress: () => resolve(true)},
       ]);
     });
+  };
+
+  const signOut = async () => {
+    dispatch(signUserOut());
   };
 
   // TODO::: suggestion: make axiosConfig.ts a hook and get token there

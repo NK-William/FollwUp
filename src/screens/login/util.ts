@@ -7,6 +7,10 @@ import {ILogin} from '../../interfaces';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../../redux/features/user/userSlice';
 import {IReduxUser} from '../../interfaces';
+import {
+  paymentRequiredMessage,
+  paymentRequiredTitle,
+} from '../../constants/localStrings';
 
 export const useLogin = (navigation: any) => {
   // Redux
@@ -65,12 +69,17 @@ export const useLogin = (navigation: any) => {
         }
       })
       .catch(error => {
-        if (error?.status === 404) {
+        if (error?.status === 402) {
+          Alert.alert(paymentRequiredTitle, paymentRequiredMessage);
+        } else if (error?.status === 404) {
           // TODO: push to stack trace
           loginErrorAlert('Something went wrong, please try again later');
         } else {
           // TODO: push to stack trace
-          loginErrorAlert(error.data ?? error.message);
+          // var message = error.data ?? error.message;
+          loginErrorAlert(
+            'Something went wrong trying to login, if the error persists please contact administrator',
+          );
         }
       });
   };
