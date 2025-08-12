@@ -57,7 +57,7 @@ const Login = (props: any) => {
       <View style={styles.buttonActionsContainer}>
         <View style={styles.buttonTextContainer}>
           <FollwUpButton text="Login" onPress={login} loading={isLoginIn} />
-          <PressableText
+          {/* <PressableText
             text="Forgot Password?"
             textStyle={styles.forgotPasswordText}
             onPress={
@@ -67,7 +67,7 @@ const Login = (props: any) => {
                     console.log('Forgot Password?');
                   }
             }
-          />
+          /> */}
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Powered by </Text>
