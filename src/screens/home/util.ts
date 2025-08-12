@@ -88,7 +88,8 @@ export const useHome = (navigation: any, route: any) => {
         paymentRequiredAlert();
         signOut();
       } else {
-        errorToast(apiFetchTasksError.message);
+        // errorToast(apiFetchTasksError.message);
+        errorToast('An error occurred while fetching tasks');
       }
     }
   }, [apiFetchTasksError]);

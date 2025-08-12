@@ -273,7 +273,8 @@ export const useAddTask = (navigation: any) => {
           if (error?.status === 404) {
             errorToast('Error', 'Failed to save task'); // TODO: push to stack trace
           } else {
-            errorToast('Error', error.data ?? error.message); // TODO: push to stack trace
+            // errorToast('Error', error.data ?? error.message); // TODO: push to stack trace
+            errorToast('Error', 'Something went wrong trying to save task');
           }
         });
     }
