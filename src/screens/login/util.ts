@@ -76,9 +76,10 @@ export const useLogin = (navigation: any) => {
           loginErrorAlert('Something went wrong, please try again later');
         } else {
           // TODO: push to stack trace
-          // var message = error.data ?? error.message;
+          // var message = error.data ?? error.message;;
           loginErrorAlert(
-            'Something went wrong trying to login, if the error persists please contact administrator',
+            error?.data ??
+              'Something went wrong trying to login, if the error persists please contact administrator',
           );
         }
       });
