@@ -191,12 +191,15 @@ export const useHome = (navigation: any, route: any) => {
           await axiosInstance.delete(`api/Tasks/${taskId}`);
           if (profileId) await fetchTasks(profileId);
         } catch (error: any) {
-          const errorMessage =
-            error.response?.data?.message ||
-            error.message ||
-            'An unknown error occurred';
+          // const errorMessage =
+          //   error.response?.data?.message ||
+          //   error.message ||
+          //   'An unknown error occurred';
 
-          Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+          Alert.alert(
+            'Error',
+            'Something went wrong trying to delete the task',
+          ); // TODO::: display friendly error message to user, not status codes
         } finally {
           setIsDeletingTask(false);
         }

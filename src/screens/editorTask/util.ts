@@ -5,7 +5,7 @@ import {
   taskPhaseStatus,
 } from '../../utils/enums';
 import {accent, gray, grayLight, primary} from '../../constants/colors';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   ITask,
   IModalPhase,
@@ -135,11 +135,22 @@ export const useEditorTask = (navigation: any, t: ITask) => {
   //#endregion Hooks
 
   //#region API hooks
-  const {refetch: apiFetchTask, loading: isFetchingTask} = useGet<ITask>({
+  const {
+    refetch: apiFetchTask,
+    loading: isFetchingTask,
+    error: apiFetchTasksError,
+  } = useGet<ITask>({
     path: '',
     lazy: true,
   });
   //#endregion API requests
+
+  useEffect(() => {
+    if (apiFetchTasksError) {
+      // fetchErrorToast(apiFetchTasksError.data ?? "Error refreshing tasks");
+      fetchErrorToast('Error refreshing tasks');
+    }
+  }, [apiFetchTasksError]);
 
   const getNumberOfCompletedPhases = () => {
     const completedPhases = task.phases.filter(
@@ -217,12 +228,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       await getUpdatedTask();
     } catch (error: any) {
       console.log('Error deleting phase: ', error);
-      const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        'An unknown error occurred';
+      // const errorMessage =
+      //   error.response?.data?.message ||
+      //   error.message ||
+      //   'An unknown error occurred';
 
-      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+      Alert.alert('Error', 'Something went wrong trying to delete the phase'); // TODO::: display friendly error message to user, not status codes
     } finally {
       setIsLoading(false);
     }
@@ -262,12 +273,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       );
       await getUpdatedTask();
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        'An unknown error occurred';
+      // const errorMessage =
+      //   error.response?.data?.message ||
+      //   error.message ||
+      //   'An unknown error occurred';
 
-      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+      Alert.alert('Error', 'Something went wrong trying to edit the phase'); // TODO::: display friendly error message to user, not status codes
     } finally {
       closeEditModal();
       setIsLoadingOnPhaseModal(false);
@@ -292,12 +303,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       dispatchTaskRefetchValue();
       await getUpdatedTask();
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        'An unknown error occurred';
+      // const errorMessage =
+      //   error.response?.data?.message ||
+      //   error.message ||
+      //   'An unknown error occurred';
 
-      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+      Alert.alert('Error', 'Something went wrong trying to save the phase'); // TODO::: display friendly error message to user, not status codes
     } finally {
       closeEditModal();
       setIsLoadingOnPhaseModal(false);
@@ -341,12 +352,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
         dispatchTaskRefetchValue();
         await getUpdatedTask();
       } catch (error: any) {
-        const errorMessage =
-          error.response?.data?.message ||
-          error.message ||
-          'An unknown error occurred';
+        // const errorMessage =
+        //   error.response?.data?.message ||
+        //   error.message ||
+        //   'An unknown error occurred';
 
-        Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+        Alert.alert('Error', 'Something went wrong trying to update the task'); // TODO::: display friendly error message to user, not status codes
       } finally {
         setIsLoading(false);
       }
@@ -366,14 +377,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
   };
 
   const getUpdatedTask = async () => {
-    apiFetchTask({path: `api/Tasks/${task.id}`})
-      .then(response => {
-        if (response) {
-          console.log('Updated successfully: ');
-          setTask(response);
-        }
-      })
-      .catch(error => fetchErrorToast(error.message));
+    apiFetchTask({path: `api/Tasks/${task.id}`}).then(response => {
+      if (response) {
+        console.log('Updated successfully: ');
+        setTask(response);
+      }
+    });
   };
 
   const onCompleteTask = async () => {
@@ -396,12 +405,12 @@ export const useEditorTask = (navigation: any, t: ITask) => {
       dispatchTaskRefetchValue();
       await getUpdatedTask();
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        'An unknown error occurred';
+      // const errorMessage =
+      //   error.response?.data?.message ||
+      //   error.message ||
+      //   'An unknown error occurred';
 
-      Alert.alert('Error', errorMessage); // TODO::: display friendly error message to user, not status codes
+      Alert.alert('Error', 'Something went wrong trying to complete the task'); // TODO::: display friendly error message to user, not status codes
     } finally {
       setIsLoading(false);
     }
