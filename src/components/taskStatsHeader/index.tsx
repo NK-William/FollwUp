@@ -65,11 +65,11 @@ const TaskStatsHeader: FC<ITaskStatsHeader> = props => {
               progressToHundred={getPercentageValue()}
               containerStyle={styles.progressBar}
             />
-            <FollwUpButton
+            {/* <FollwUpButton
               text="Link"
               containerStyle={styles.positiveButton}
               textStyle={styles.positiveButtonText}
-            />
+            /> */}
           </View>
         </View>
       )}
